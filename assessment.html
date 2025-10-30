@@ -1,0 +1,3025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizational Resilience Equation Calculator | Aftermath Solutions</title>
+    <meta name="description" content="Calculate your organization's resilience equation in 2 minutes. Identify critical factors and get expert recommendations from Aftermath Solutions.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <!-- Chart.js for visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5N4R0BPSXH"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-5N4R0BPSXH');
+    </script>
+    <!-- End Google Analytics 4 -->
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1172415091616062');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1172415091616062&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+
+    <!-- LinkedIn Insight Tag -->
+    <script type="text/javascript">
+    _linkedin_partner_id = "8248948";
+    window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+    window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+    </script>
+    <script type="text/javascript">
+    (function(l) {
+    if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+    window.lintrk.q=[]}
+    var s = document.getElementsByTagName("script")[0];
+    var b = document.createElement("script");
+    b.type = "text/javascript";b.async = true;
+    b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+    s.parentNode.insertBefore(b, s);})(window.lintrk);
+    </script>
+    <noscript>
+    <img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=8248948&fmt=gif" />
+    </noscript>
+    <!-- End LinkedIn Insight Tag -->
+
+    <style>
+        /* ================================
+           VARIABLES & RESET
+           ================================ */
+        :root {
+            --primary: #49aa91;
+            --primary-dark: #3d9580;
+            --secondary: #2E476C;
+            --secondary-dark: #1a2f45;
+            --text-dark: #0f1a24;
+            --text-medium: #6c7a89;
+            --text-light: #a8b0b8;
+            --bg-light: #f8f9fa;
+            --bg-white: #ffffff;
+            --success: #49aa91;
+            --warning: #f4b943;
+            --danger: #dc3545;
+            --border: #e0e0e0;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.15);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* Grid background pattern */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-image:
+                linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ================================
+           MAIN LAYOUT
+           ================================ */
+        .page-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .assessment-container {
+            max-width: 700px;
+            width: 100%;
+            background: var(--bg-white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ================================
+           HEADER
+           ================================ */
+        .assessment-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 50px 40px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .logo {
+            max-width: 200px;
+            margin: 0 auto 20px;
+            opacity: 0.95;
+        }
+
+        .assessment-header h1 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .assessment-header p {
+            font-size: 17px;
+            opacity: 0.95;
+            line-height: 1.5;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        .time-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 600;
+            margin-top: 16px;
+        }
+
+        /* ================================
+           PROGRESS BAR
+           ================================ */
+        .progress-container {
+            background: var(--bg-light);
+            padding: 24px 40px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            height: 12px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-medium);
+        }
+
+        /* ================================
+           QUESTION CONTAINER
+           ================================ */
+        .question-wrapper {
+            padding: 60px 50px;
+            min-height: 500px;
+            position: relative;
+        }
+
+        .question {
+            opacity: 0;
+            transform: translateX(30px);
+            position: absolute;
+            top: 60px;
+            left: 50px;
+            right: 50px;
+            pointer-events: none;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .question.active {
+            opacity: 1;
+            transform: translateX(0);
+            position: relative;
+            pointer-events: all;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .question.exit {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        .question-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 36px;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .question-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .question-subtitle {
+            font-size: 16px;
+            color: var(--text-medium);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        /* ================================
+           CHOICE CARDS
+           ================================ */
+        .choices {
+            display: grid;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .choice-card {
+            background: var(--bg-white);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            padding: 20px 24px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+        }
+
+        .choice-card:hover {
+            border-color: var(--primary);
+            background: rgba(73, 170, 145, 0.03);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .choice-card:focus {
+            outline: 3px solid var(--primary);
+            outline-offset: 2px;
+            border-color: var(--primary);
+        }
+
+        .choice-card.selected {
+            border-color: var(--primary);
+            background: rgba(73, 170, 145, 0.08);
+            box-shadow: 0 0 0 3px rgba(73, 170, 145, 0.15);
+        }
+
+        .choice-radio,
+        .choice-checkbox {
+            width: 26px;
+            height: 26px;
+            border: 2px solid var(--border);
+            flex-shrink: 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .choice-radio {
+            border-radius: 50%;
+        }
+
+        .choice-checkbox {
+            border-radius: 6px;
+        }
+
+        .choice-card.selected .choice-radio,
+        .choice-card.selected .choice-checkbox {
+            border-color: var(--primary);
+            background: var(--primary);
+        }
+
+        .choice-card.selected .choice-radio::after,
+        .choice-card.selected .choice-checkbox::after {
+            content: "✓";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .choice-text {
+            flex: 1;
+            font-size: 17px;
+            color: var(--text-dark);
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .choice-icon {
+            font-size: 26px;
+            flex-shrink: 0;
+        }
+
+        /* ================================
+           INPUT FIELDS
+           ================================ */
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 17px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: var(--bg-white);
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(73, 170, 145, 0.1);
+        }
+
+        textarea.input-field {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* ================================
+           ERROR MESSAGE
+           ================================ */
+        .error-message {
+            display: none;
+            background: rgba(220, 53, 69, 0.1);
+            border: 2px solid var(--danger);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-top: 20px;
+            color: var(--danger);
+            font-size: 15px;
+            font-weight: 600;
+            animation: shake 0.4s ease;
+        }
+
+        .error-message.active {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .error-message::before {
+            content: '⚠️';
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* ================================
+           BUTTONS
+           ================================ */
+        .button-group {
+            display: flex;
+            gap: 16px;
+            margin-top: 40px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 18px 32px;
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 4px 14px rgba(73, 170, 145, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(73, 170, 145, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-medium);
+            border: 2px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* ================================
+           LOADING STATE WITH ANIMATION
+           ================================ */
+        .loading {
+            text-align: center;
+            padding: 80px 50px;
+            display: none;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .loading-visual {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 40px;
+        }
+
+        .loading-circle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid var(--border);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .loading-circle:nth-child(2) {
+            width: 75%;
+            height: 75%;
+            top: 12.5%;
+            left: 12.5%;
+            animation-delay: 0.3s;
+            border-color: var(--primary);
+            opacity: 0.7;
+        }
+
+        .loading-circle:nth-child(3) {
+            width: 50%;
+            height: 50%;
+            top: 25%;
+            left: 25%;
+            animation-delay: 0.6s;
+            border-color: var(--secondary);
+            opacity: 0.5;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .loading-text {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .loading-subtext {
+            font-size: 16px;
+            color: var(--text-medium);
+        }
+
+        .loading-facts {
+            margin-top: 40px;
+            padding: 20px;
+            background: var(--bg-light);
+            border-radius: 12px;
+        }
+
+        .loading-fact {
+            font-size: 14px;
+            color: var(--text-medium);
+            font-style: italic;
+            display: none;
+        }
+
+        .loading-fact.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ================================
+           RESULTS PAGE WITH EQUATION
+           ================================ */
+        .results-container {
+            display: none;
+            padding: 60px 50px;
+        }
+
+        .results-container.active {
+            display: block;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .results-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        .results-subtitle {
+            font-size: 18px;
+            color: var(--text-medium);
+        }
+
+        /* Equation Box */
+        .equation-box {
+            background: linear-gradient(135deg, var(--bg-light), #e9ecef);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 40px 35px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .equation-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.8px;
+            color: var(--text-medium);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .equation {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+            font-family: 'Courier New', monospace;
+            line-height: 1.4;
+        }
+
+        .equation-explanation {
+            font-size: 14px;
+            color: var(--text-medium);
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .equation-divider {
+            width: 80px;
+            height: 2px;
+            background: var(--border);
+            margin: 25px auto;
+        }
+
+        .equation-values {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .equation-value {
+            text-align: center;
+            padding: 15px 10px;
+            background: white;
+            border-radius: 12px;
+            transition: transform 0.2s ease;
+        }
+
+        .equation-value:hover {
+            transform: translateY(-2px);
+        }
+
+        .equation-value-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-medium);
+            margin-bottom: 10px;
+            line-height: 1.4;
+            min-height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .equation-value-score {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background: linear-gradient(135deg, var(--bg-light), #e9ecef);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+            margin-bottom: 30px;
+        }
+
+        .score-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .score-item {
+            text-align: center;
+        }
+
+        .score-item-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-medium);
+            margin-bottom: 8px;
+        }
+
+        .score-item-value {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .score-item-status {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        /* Gap Analysis Cards */
+        .gaps-container {
+            margin: 40px 0;
+            text-align: left;
+        }
+
+        .gaps-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .gap-card {
+            background: var(--bg-white);
+            border: 2px solid var(--border);
+            border-left: 5px solid;
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 16px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gap-card:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .gap-card.critical {
+            border-left-color: var(--danger);
+            background: rgba(220, 53, 69, 0.03);
+        }
+
+        .gap-card.significant {
+            border-left-color: var(--warning);
+            background: rgba(244, 185, 67, 0.03);
+        }
+
+        .gap-card.moderate {
+            border-left-color: #f4b943;
+            background: rgba(244, 185, 67, 0.03);
+        }
+
+        .gap-card.minor {
+            border-left-color: var(--success);
+            background: rgba(73, 170, 145, 0.03);
+        }
+
+        .gap-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .gap-icon {
+            font-size: 24px;
+        }
+
+        .gap-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .gap-description {
+            font-size: 15px;
+            color: var(--text-medium);
+            line-height: 1.6;
+            margin-left: 36px;
+        }
+
+        /* Recommendation Box */
+        .recommendation-box {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .recommendation-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            to { transform: rotate(360deg); }
+        }
+
+        .recommendation-title {
+            font-size: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            opacity: 0.9;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .recommendation-service {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .recommendation-tier {
+            font-size: 14px;
+            font-weight: 600;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .recommendation-description {
+            font-size: 16px;
+            line-height: 1.6;
+            opacity: 0.95;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .recommendation-features {
+            list-style: none;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .recommendation-features li {
+            padding: 10px 0;
+            padding-left: 32px;
+            position: relative;
+            font-size: 16px;
+            opacity: 0.95;
+        }
+
+        .recommendation-features li::before {
+            content: "+";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .btn-cta {
+            background: white;
+            color: var(--primary);
+            font-weight: 700;
+            padding: 18px 36px;
+            border-radius: 12px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Next Steps */
+        .next-steps {
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 2px solid var(--border);
+            text-align: center;
+        }
+
+        .next-steps-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 24px;
+        }
+
+        .next-steps-text {
+            font-size: 16px;
+            color: var(--text-medium);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* ================================
+           RESPONSIVE DESIGN
+           ================================ */
+        @media (max-width: 768px) {
+            .page-wrapper {
+                padding: 0;
+                align-items: flex-start;
+            }
+
+            .assessment-container {
+                border-radius: 0;
+                min-height: 100vh;
+                max-width: 100%;
+            }
+
+            .assessment-header {
+                padding: 40px 30px;
+            }
+
+            .assessment-header h1 {
+                font-size: 26px;
+            }
+
+            .progress-container {
+                padding: 20px 30px;
+            }
+
+            .question-wrapper {
+                padding: 40px 30px;
+                min-height: auto;
+            }
+
+            .question {
+                left: 30px;
+                right: 30px;
+                top: 40px;
+            }
+
+            .question-title {
+                font-size: 22px;
+            }
+
+            .choice-text {
+                font-size: 16px;
+            }
+
+            .button-group {
+                flex-direction: column-reverse;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .results-container {
+                padding: 40px 30px;
+            }
+
+            .chart-wrapper {
+                height: 300px;
+            }
+
+            .recommendation-box {
+                padding: 30px;
+            }
+
+            .recommendation-service {
+                font-size: 22px;
+            }
+
+            .loading {
+                padding: 60px 30px;
+            }
+
+            /* Equation Box - Tablet */
+            .equation-box {
+                padding: 30px 25px;
+            }
+
+            .equation {
+                font-size: 22px;
+            }
+
+            .equation-values {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .equation-value {
+                padding: 12px 8px;
+            }
+
+            .equation-value-label {
+                font-size: 10px;
+                min-height: 28px;
+            }
+
+            .equation-value-score {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .assessment-header h1 {
+                font-size: 24px;
+            }
+
+            .assessment-header p {
+                font-size: 15px;
+            }
+
+            .question-wrapper {
+                padding: 30px 20px;
+            }
+
+            .question {
+                left: 20px;
+                right: 20px;
+            }
+
+            .question-title {
+                font-size: 20px;
+            }
+
+            .choice-card {
+                padding: 16px 18px;
+            }
+
+            .choice-text {
+                font-size: 15px;
+            }
+
+            .results-container {
+                padding: 30px 20px;
+            }
+
+            .score-item-value {
+                font-size: 28px;
+            }
+
+            /* Equation Box - Mobile */
+            .equation-box {
+                padding: 25px 20px;
+            }
+
+            .equation {
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+
+            .equation-explanation {
+                font-size: 13px;
+                margin-bottom: 20px;
+            }
+
+            .equation-divider {
+                width: 60px;
+                margin: 20px auto;
+            }
+
+            .equation-values {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+
+            .equation-value {
+                padding: 10px 6px;
+            }
+
+            .equation-value-label {
+                font-size: 9px;
+                letter-spacing: 0.5px;
+                min-height: 26px;
+            }
+
+            .equation-value-score {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            /* Equation Box - Extra Small Mobile */
+            .equation-box {
+                padding: 20px 15px;
+            }
+
+            .equation {
+                font-size: 16px;
+            }
+
+            .equation-explanation {
+                font-size: 12px;
+            }
+
+            .equation-values {
+                gap: 10px;
+            }
+
+            .equation-value {
+                padding: 8px 5px;
+            }
+
+            .equation-value-label {
+                font-size: 8px;
+                letter-spacing: 0.3px;
+                min-height: 24px;
+            }
+
+            .equation-value-score {
+                font-size: 20px;
+            }
+        }
+
+        /* ================================
+           UTILITIES
+           ================================ */
+        .hidden {
+            display: none !important;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="assessment-container">
+            <!-- Header -->
+            <div class="assessment-header">
+                <h1>Organizational Resilience Equation</h1>
+                <p>Calculate your preparedness factors and identify critical variables in just 2 minutes</p>
+                <span class="time-badge">Solving for what comes after</span>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Assessment progress">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText" aria-live="polite" aria-atomic="true">Getting Started</div>
+            </div>
+
+            <!-- Questions Container -->
+            <div class="question-wrapper" id="questionWrapper">
+                <!-- Questions will be injected here by JavaScript -->
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading" id="loadingState">
+                <div class="loading-visual">
+                    <div class="loading-circle"></div>
+                    <div class="loading-circle"></div>
+                    <div class="loading-circle"></div>
+                </div>
+                <div class="loading-text">Solving for Your Organizational Resilience...</div>
+                <div class="loading-subtext">Mapping factors, applying functions, adjusting for variables</div>
+                <div class="loading-facts">
+                    <div class="loading-fact active" id="loadingFact">
+                        Mapping your preparedness factors...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Container -->
+            <div class="results-container" id="resultsContainer">
+                <!-- Results will be injected here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ================================
+        // CONFIGURATION
+        // ================================
+        const CONFIG = {
+            // Use serverless proxy instead of direct webhook for security
+            submitURL: '/api/submit-assessment', // Change to '/.netlify/functions/submit-assessment' for Netlify
+            bookingURL: 'https://meetings-na2.hubspot.com/josh-garcia/aftermath-solutions',
+            contactEmail: 'team@theaftermathsolutions.com',
+            totalQuestions: 11, // Including conditional question
+            confettiAtQuestion: 5,
+            analytics: {
+                enabled: true,
+                ga4MeasurementId: 'G-5N4R0BPSXH', // Google Analytics 4
+                metaPixelId: '1172415091616062', // Meta Pixel ID
+                linkedInPartnerId: '8248948' // LinkedIn Insight Tag
+            },
+            recaptcha: {
+                siteKey: '6LeBifwrAAAAAPP7daqidrLS870R51IgQEop4GGq' // reCAPTCHA v3 site key
+            }
+        };
+
+        // ================================
+        // ANALYTICS TRACKING
+        // ================================
+        function trackEvent(eventName, eventData = {}) {
+            if (!CONFIG.analytics.enabled) return;
+
+            // Google Analytics 4
+            if (CONFIG.analytics.ga4MeasurementId && typeof gtag === 'function') {
+                gtag('event', eventName, eventData);
+            }
+
+            // Meta Pixel (Facebook)
+            if (CONFIG.analytics.metaPixelId && typeof fbq === 'function') {
+                fbq('trackCustom', eventName, eventData);
+            }
+
+            // LinkedIn Insight Tag
+            if (CONFIG.analytics.linkedInPartnerId && typeof window._linkedin_data_partner_ids !== 'undefined') {
+                // LinkedIn uses conversion tracking
+                if (eventName === 'assessment_completed') {
+                    window.lintrk('track', { conversion_id: eventData.conversionId || 'default' });
+                }
+            }
+
+            // Console log for debugging (remove in production or gate behind debug flag)
+            console.log('Analytics Event:', eventName, eventData);
+        }
+
+        function trackPageView(pageName) {
+            if (!CONFIG.analytics.enabled) return;
+
+            if (CONFIG.analytics.ga4MeasurementId && typeof gtag === 'function') {
+                gtag('event', 'page_view', {
+                    page_title: pageName,
+                    page_location: window.location.href
+                });
+            }
+
+            console.log('Page View:', pageName);
+        }
+
+        // ================================
+        // LOADING FACTS (Brand Language)
+        // ================================
+        const loadingFacts = [
+            "Mapping your preparedness factors...",
+            "Applying response functions...",
+            "Adjusting for recovery variables...",
+            "Calculating support systems...",
+            "Solving for what comes after...",
+            "Identifying critical factors in your equation..."
+        ];
+
+        // ================================
+        // ATTRIBUTION & TRACKING
+        // ================================
+        const attribution = {
+            utm_source: null,
+            utm_medium: null,
+            utm_campaign: null,
+            utm_term: null,
+            utm_content: null,
+            referrer: null,
+            landing_page: null,
+            first_touch_timestamp: null,
+            last_touch_timestamp: null,
+            session_id: null
+        };
+
+        // Capture attribution data from URL and browser
+        function captureAttribution() {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            // Capture UTM parameters
+            attribution.utm_source = urlParams.get('utm_source');
+            attribution.utm_medium = urlParams.get('utm_medium');
+            attribution.utm_campaign = urlParams.get('utm_campaign');
+            attribution.utm_term = urlParams.get('utm_term');
+            attribution.utm_content = urlParams.get('utm_content');
+
+            // Capture referrer
+            attribution.referrer = document.referrer || 'direct';
+
+            // Capture landing page
+            attribution.landing_page = window.location.href;
+
+            // Generate or retrieve session ID
+            let sessionId = localStorage.getItem('aftermath_session_id');
+            if (!sessionId) {
+                sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem('aftermath_session_id', sessionId);
+            }
+            attribution.session_id = sessionId;
+
+            // Handle first touch vs last touch
+            const storedAttribution = localStorage.getItem('aftermath_attribution');
+            if (storedAttribution) {
+                const parsed = JSON.parse(storedAttribution);
+                attribution.first_touch_timestamp = parsed.first_touch_timestamp;
+
+                // Keep first touch UTM data if current visit has no UTM
+                if (!attribution.utm_source && parsed.utm_source) {
+                    // Store first touch separately
+                    attribution.first_utm_source = parsed.utm_source;
+                    attribution.first_utm_medium = parsed.utm_medium;
+                    attribution.first_utm_campaign = parsed.utm_campaign;
+                }
+            } else {
+                attribution.first_touch_timestamp = new Date().toISOString();
+            }
+
+            attribution.last_touch_timestamp = new Date().toISOString();
+
+            // Persist attribution data
+            localStorage.setItem('aftermath_attribution', JSON.stringify(attribution));
+
+            return attribution;
+        }
+
+        // Capture on page load
+        captureAttribution();
+
+        // ================================
+        // STATE MANAGEMENT
+        // ================================
+        const state = {
+            currentQuestionIndex: -1, // Start at consent screen
+            answers: {},
+            answerTimestamps: {}, // Track when each answer was given
+            isAnimating: false,
+            hasConsented: false,
+            consentTimestamp: null,
+            startTimestamp: null,
+            questionSequence: [], // Will be populated based on answers
+            scores: {
+                preparedness: 0,
+                response: 0,
+                recovery: 0,
+                support: 0
+            },
+            attribution: attribution // Include attribution in state
+        };
+
+        // ================================
+        // LOCALSTORAGE PERSISTENCE
+        // ================================
+        const STORAGE_KEY = 'aftermath_assessment_state';
+        const STORAGE_VERSION = '1.0';
+
+        function saveState() {
+            try {
+                const stateToSave = {
+                    version: STORAGE_VERSION,
+                    timestamp: new Date().toISOString(),
+                    ...state
+                };
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
+            } catch (error) {
+                console.error('Failed to save state:', error);
+            }
+        }
+
+        function loadState() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    // Check version compatibility
+                    if (parsed.version === STORAGE_VERSION) {
+                        return parsed;
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to load state:', error);
+            }
+            return null;
+        }
+
+        function clearSavedState() {
+            try {
+                localStorage.removeItem(STORAGE_KEY);
+            } catch (error) {
+                console.error('Failed to clear state:', error);
+            }
+        }
+
+        function showResumePrompt(savedState) {
+            const progress = savedState.currentQuestionIndex + 1;
+            const total = savedState.questionSequence.length;
+            const savedDate = new Date(savedState.timestamp).toLocaleDateString();
+
+            const wrapper = document.getElementById('questionWrapper');
+            wrapper.innerHTML = `
+                <div class="question active" style="text-align: center;">
+                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 40px; color: white;">
+                        ↺
+                    </div>
+                    <h2 style="font-size: 28px; font-weight: 700; color: var(--text-dark); margin-bottom: 20px;">Welcome Back!</h2>
+                    <p style="font-size: 18px; color: var(--text-medium); margin-bottom: 30px; line-height: 1.6;">
+                        We found your saved progress from ${savedDate}.<br>
+                        You were on question ${progress} of ${total}.
+                    </p>
+                    <div class="button-group" style="max-width: 400px; margin: 0 auto;">
+                        <button class="btn btn-primary" onclick="resumeFromSaved()">
+                            Resume Where I Left Off →
+                        </button>
+                        <button class="btn btn-secondary" onclick="startFresh()">
+                            Start Fresh
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ================================
+        // QUESTIONS DATA
+        // ================================
+        const questions = {
+            consent: {
+                id: 'consent',
+                type: 'consent',
+            },
+            q1: {
+                id: 'crisis_experience_ever',
+                number: 1,
+                title: 'Has your organization ever experienced a crisis?',
+                subtitle: 'A few examples of a crisis: death of an employee, tragic incident involving an employee, incident of mass violence, natural disaster, loss of a team member to suicide...',
+                type: 'single',
+                choices: [
+                    { value: 'yes', text: 'Yes' },
+                    { value: 'no', text: 'No' }
+                ]
+            },
+            q1a: {
+                id: 'crisis_experience_recent',
+                number: '1a',
+                title: 'Has your organization experienced a crisis in the past 5 years?',
+                subtitle: 'This helps us understand your recent experience',
+                type: 'single',
+                conditional: (answers) => answers.crisis_experience_ever === 'yes',
+                choices: [
+                    { value: 'major_crisis', text: 'Yes, a major crisis that significantly impacted operations' },
+                    { value: 'minor_incidents', text: 'Yes, minor incidents that we managed internally' },
+                    { value: 'close_calls', text: 'We\'ve had close calls but avoided major impact' },
+                    { value: 'no_recent', text: 'No significant crises in recent years' }
+                ]
+            },
+            q2: {
+                id: 'crisis_readiness',
+                number: 2,
+                title: 'How do you rate your crisis readiness?',
+                subtitle: 'Which option best describes your organization\'s level of readiness?',
+                type: 'single',
+                choices: [
+                    { value: 'unprepared', text: 'We\'re not prepared and don\'t know where to start', icon: '😟' },
+                    { value: 'outdated', text: 'Our plans exist, but are outdated or untested', icon: '📚' },
+                    { value: 'might_have', text: 'I think we might have a plan', icon: '🤔' },
+                    { value: 'solid', text: 'We have a solid plan', icon: '✅' },
+                    { value: 'comprehensive', text: 'We have a comprehensive, proven plan', icon: '🎯' }
+                ]
+            },
+            q3: {
+                id: 'support_systems',
+                number: 3,
+                title: 'How does your organization currently support wellbeing after difficult events or crises?',
+                subtitle: 'We know every organization is different—what\'s your current approach?',
+                type: 'single',
+                choices: [
+                    { value: 'comprehensive', text: 'We have comprehensive support, including an employee assistance program (EAP), access to counseling, peer support, and wellness programs' },
+                    { value: 'external', text: 'We rely on external resources, referrals, or community partners' },
+                    { value: 'informal', text: 'We support each other informally but lack formal programs' },
+                    { value: 'limited', text: 'Limited support - this is an area we need to develop' },
+                    { value: 'varies', text: 'It varies widely depending on the situation and/or organizational structure' }
+                ]
+            },
+            q4: {
+                id: 'capability_assessment',
+                number: 4,
+                title: 'Which areas feel like strengths vs. opportunities for your team?',
+                subtitle: 'Select all that you feel confident handling today',
+                type: 'multiple',
+                choices: [
+                    { value: 'immediate_response', text: 'Immediate crisis response and safety and security protocols' },
+                    { value: 'communication', text: 'Clear communication during emergencies' },
+                    { value: 'emotional_support', text: 'Providing emotional support in the moment' },
+                    { value: 'coordinating_resources', text: 'Coordinating practical help and resources' },
+                    { value: 'grief_knowledge', text: 'Knowledge of the impact of grief in the workplace' },
+                    { value: 'long_term', text: 'Supporting long-term healing and recovery' },
+                    { value: 'community', text: 'Engaging the broader community in recovery' },
+                    { value: 'business_continuity', text: 'Plan to maintain business productivity when a crisis strikes' },
+                    { value: 'none', text: 'None of these - we need help with all areas' }
+                ]
+            },
+            q5: {
+                id: 'timeline_focus',
+                number: 5,
+                title: 'Where do you need the most help in the crisis timeline?',
+                type: 'single',
+                choices: [
+                    { value: 'before', text: 'Before - Building resilience and preparedness', icon: '🔮' },
+                    { value: 'during', text: 'During - Managing the immediate crisis', icon: '⚡' },
+                    { value: 'after_short', text: 'After (First 30 days) - Initial recovery and stabilization', icon: '🩹' },
+                    { value: 'after_long', text: 'After (Months/Years) - Long-term healing and meaning-making', icon: '🌱' },
+                    { value: 'all_phases', text: 'We need support across all phases', icon: '♾️' }
+                ]
+            },
+            q6: {
+                id: 'leadership_readiness',
+                number: 6,
+                title: 'How equipped and confident are your key leaders in their readiness to navigate effectively through a crisis?',
+                type: 'single',
+                choices: [
+                    { value: 'very_confident', text: 'Very confident - we have training and experience' },
+                    { value: 'somewhat_confident', text: 'Somewhat confident but would benefit from more support' },
+                    { value: 'uncertain', text: 'Uncertain - we haven\'t really tested our capabilities' },
+                    { value: 'concerned', text: 'Concerned - we know we have gaps to address' }
+                ]
+            },
+            q7: {
+                id: 'risk_areas',
+                number: 7,
+                title: 'If a crisis happened tomorrow, what area would you be most concerned about?',
+                subtitle: 'Select all that apply - answering honestly helps us provide the right recommendations',
+                type: 'multiple',
+                choices: [
+                    { value: 'no_plan', text: 'We don\'t have a clear plan; everyone knows' },
+                    { value: 'coordination', text: 'Coordinating crisis response protocols across teams and departments' },
+                    { value: 'communication', text: 'Communicating with staff, families, and media' },
+                    { value: 'emotional', text: 'Managing the emotional and psychological impact' },
+                    { value: 'resources', text: 'Access to the right resources and expertise' },
+                    { value: 'leadership_confidence', text: 'Leadership confidence and decision-making' },
+                    { value: 'trauma_support', text: 'Supporting our people through trauma and recovery' },
+                    { value: 'referrals', text: 'Providing adequate referrals or programs' },
+                    { value: 'crisis_comms', text: 'Crisis communications' },
+                    { value: 'reputation', text: 'Protecting our reputation and community trust' },
+                    { value: 'bereavement_policy', text: 'Organizational bereavement policy' },
+                    { value: 'productivity', text: 'Maintaining productivity and operations' }
+                ]
+            },
+            q8: {
+                id: 'org_info',
+                number: 8,
+                title: 'Tell us about your organization',
+                type: 'single',
+                choices: [
+                    { value: 'k12_education', text: 'K-12 School or District', icon: '🏫' },
+                    { value: 'higher_ed', text: 'College or University', icon: '🎓' },
+                    { value: 'nonprofit', text: 'Nonprofit Organization', icon: '🤝' },
+                    { value: 'government', text: 'Government Agency / Municipality', icon: '🏛️' },
+                    { value: 'healthcare', text: 'Healthcare / Hospital', icon: '🏥' },
+                    { value: 'corporate', text: 'Corporation / Business', icon: '🏢' },
+                    { value: 'faith_based', text: 'Faith-Based Organization', icon: '⛪' },
+                    { value: 'community_center', text: 'Community Center / Social Services', icon: '🏘️' },
+                    { value: 'other', text: 'Other', icon: '📍' }
+                ]
+            },
+            q9: {
+                id: 'contact_info',
+                number: 9,
+                title: 'Almost done! Where should we send your results?',
+                type: 'input',
+                fields: [
+                    { id: 'name', label: 'Your Name', type: 'text', placeholder: 'John Smith', required: true },
+                    { id: 'organization', label: 'Organization', type: 'text', placeholder: 'Acme School District', required: true },
+                    { id: 'email', label: 'Work Email', type: 'email', placeholder: 'you@organization.com', required: true },
+                    { id: 'role', label: 'Your Role', type: 'text', placeholder: 'Director of Safety', required: false }
+                ]
+            },
+            q10: {
+                id: 'next_step',
+                number: 10,
+                title: 'What would be most helpful as a next step?',
+                subtitle: 'Select all that interest you - we\'ll customize our follow-up',
+                type: 'multiple',
+                choices: [
+                    { value: 'consultation', text: 'Schedule a free 30-minute consultation', icon: '📞' },
+                    { value: 'report', text: 'Send me a detailed assessment report', icon: '📊' },
+                    { value: 'resources', text: 'Additional resources and guides', icon: '📚' },
+                    { value: 'training', text: 'Learn about training opportunities', icon: '🎯' },
+                    { value: 'newsletter', text: 'Add me to your newsletter for tips and insights', icon: '📬' },
+                    { value: 'just_results', text: 'Just show me my results for now', icon: '👀' }
+                ]
+            }
+        };
+
+        // Build question sequence (will be adjusted based on answers)
+        function buildQuestionSequence() {
+            const sequence = ['q1'];
+
+            // Add Q1a if they answered yes to Q1
+            if (state.answers.crisis_experience_ever === 'yes') {
+                sequence.push('q1a');
+            }
+
+            // Add all other questions
+            sequence.push('q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10');
+
+            return sequence;
+        }
+
+        // ================================
+        // RENDER FUNCTIONS
+        // ================================
+        function renderConsentScreen() {
+            const wrapper = document.getElementById('questionWrapper');
+
+            const html = `
+                <div class="question active consent-screen">
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 40px; color: white;">
+                            √
+                        </div>
+                        <h2 style="font-size: 28px; font-weight: 700; color: var(--text-dark); margin-bottom: 20px;">Before We Begin</h2>
+                    </div>
+
+                    <div style="background: var(--bg-light); padding: 25px; border-radius: 12px; margin-bottom: 30px;">
+                        <h3 style="font-size: 18px; font-weight: 600; color: var(--text-dark); margin-bottom: 15px;">Important Notice:</h3>
+                        <p style="font-size: 15px; color: var(--text-medium); line-height: 1.6; margin-bottom: 15px;">
+                            This calculator is designed to help identify organizational readiness factors and is not a substitute for professional crisis management consultation. If your organization is currently experiencing a crisis or needs immediate support, please contact appropriate emergency services or crisis professionals.
+                        </p>
+                        <p style="font-size: 15px; color: var(--text-medium); line-height: 1.6; margin-bottom: 15px;">
+                            For referrals to immediate crisis support or to develop a comprehensive crisis plan, please contact us at <a href="mailto:${CONFIG.contactEmail}" style="color: var(--primary);">${CONFIG.contactEmail}</a>. A member of our team will contact you within 48 hours.
+                        </p>
+                        <p style="font-size: 14px; color: var(--text-medium); line-height: 1.5;">
+                            <strong>Your information will be used to:</strong><br>
+                            + Generate your personalized resilience equation<br>
+                            + Provide relevant resources and recommendations<br>
+                            + Improve our services using anonymized aggregate data<br>
+                            + Contact you only if you request follow-up
+                        </p>
+                    </div>
+
+                    <div style="background: rgba(73, 170, 145, 0.05); padding: 20px; border-radius: 12px; border: 2px solid var(--primary); margin-bottom: 30px;">
+                        <label style="display: flex; align-items: flex-start; cursor: pointer; font-size: 16px; color: var(--text-dark);">
+                            <input type="checkbox" id="consentCheckbox" style="margin-right: 12px; margin-top: 3px; width: 20px; height: 20px; cursor: pointer;">
+                            <span style="flex: 1; line-height: 1.5;">
+                                I understand this calculator is an evaluation tool, not a substitute for professional consultation. I agree to the assessment being used as described above.
+                            </span>
+                        </label>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <button class="btn btn-primary" id="startAssessmentBtn" disabled onclick="startAssessment()">
+                            Calculate My Equation →
+                        </button>
+                        <p style="font-size: 13px; color: var(--text-light); margin-top: 15px;">
+                            We respect your privacy and do not share individual responses with third parties.
+                        </p>
+                    </div>
+                </div>
+            `;
+
+            wrapper.innerHTML = html;
+
+            // Add checkbox listener
+            document.getElementById('consentCheckbox').addEventListener('change', function() {
+                const btn = document.getElementById('startAssessmentBtn');
+                if (this.checked) {
+                    btn.disabled = false;
+                    state.hasConsented = true;
+                } else {
+                    btn.disabled = true;
+                    state.hasConsented = false;
+                }
+            });
+        }
+
+        function startAssessment() {
+            if (!state.hasConsented) return;
+
+            // Record consent timestamp
+            state.consentTimestamp = new Date().toISOString();
+            state.startTimestamp = new Date().toISOString();
+
+            // Track consent acceptance
+            trackEvent('consent_accepted', {
+                timestamp: state.consentTimestamp
+            });
+
+            // Build initial question sequence
+            state.questionSequence = buildQuestionSequence();
+
+            // Save initial state
+            saveState();
+
+            state.isAnimating = true;
+            const currentEl = document.querySelector('.consent-screen');
+            currentEl.classList.remove('active');
+            currentEl.classList.add('exit');
+
+            setTimeout(() => {
+                state.currentQuestionIndex = 0;
+                renderQuestion(state.questionSequence[0]);
+                state.isAnimating = false;
+            }, 400);
+        }
+
+        function resumeFromSaved() {
+            const savedState = loadState();
+            if (!savedState) {
+                startFresh();
+                return;
+            }
+
+            // Restore state
+            Object.assign(state, savedState);
+
+            // Navigate to current question
+            state.isAnimating = true;
+            const wrapper = document.getElementById('questionWrapper');
+            wrapper.innerHTML = '';
+
+            setTimeout(() => {
+                renderQuestion(state.questionSequence[state.currentQuestionIndex]);
+                state.isAnimating = false;
+                updateProgress();
+            }, 400);
+        }
+
+        function startFresh() {
+            clearSavedState();
+            location.reload();
+        }
+
+        function renderQuestion(questionKey) {
+            const question = questions[questionKey];
+            const wrapper = document.getElementById('questionWrapper');
+
+            let html = `
+                <div class="question active" data-key="${questionKey}" role="main" aria-live="polite">
+                    <div class="question-number" aria-hidden="true">${question.number}</div>
+                    <h2 class="question-title" id="question-title-${question.id}" tabindex="-1">${question.title}</h2>
+                    ${question.subtitle ? `<p class="question-subtitle" id="question-subtitle-${question.id}">${question.subtitle}</p>` : ''}
+            `;
+
+            if (question.type === 'single' || question.type === 'multiple') {
+                const role = question.type === 'single' ? 'radiogroup' : 'group';
+                const describedBy = question.subtitle ? `question-subtitle-${question.id}` : '';
+
+                html += `<div class="choices" role="${role}" aria-labelledby="question-title-${question.id}" ${describedBy ? `aria-describedby="${describedBy}"` : ''}>`;
+
+                question.choices.forEach((choice, index) => {
+                    const isSelected = question.type === 'single'
+                        ? state.answers[question.id] === choice.value
+                        : (state.answers[question.id] || []).includes(choice.value);
+
+                    const choiceRole = question.type === 'single' ? 'radio' : 'checkbox';
+
+                    html += `
+                        <div class="choice-card ${isSelected ? 'selected' : ''}"
+                             data-value="${choice.value}"
+                             data-type="${question.type}"
+                             role="${choiceRole}"
+                             aria-checked="${isSelected}"
+                             tabindex="0"
+                             aria-label="${choice.text}">
+                            ${question.type === 'single'
+                                ? '<div class="choice-radio" aria-hidden="true"></div>'
+                                : '<div class="choice-checkbox" aria-hidden="true"></div>'}
+                            ${choice.icon ? `<span class="choice-icon" aria-hidden="true">${choice.icon}</span>` : ''}
+                            <div class="choice-text">${choice.text}</div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+            } else if (question.type === 'input') {
+                question.fields.forEach(field => {
+                    html += `
+                        <div class="input-group">
+                            <label class="input-label" for="${field.id}">${field.label}${field.required ? ' <span aria-label="required">*</span>' : ''}</label>
+                            <input
+                                type="${field.type}"
+                                id="${field.id}"
+                                class="input-field"
+                                placeholder="${field.placeholder}"
+                                ${field.required ? 'required aria-required="true"' : ''}
+                                aria-describedby="${field.id}-hint"
+                                aria-invalid="false"
+                                value="${state.answers[field.id] || ''}"
+                            >
+                            <span id="${field.id}-hint" class="visually-hidden">Enter your ${field.label.toLowerCase()}</span>
+                        </div>
+                    `;
+                });
+            }
+
+            html += `
+                    <div class="error-message" id="errorMessage" role="alert" aria-live="assertive"></div>
+                    <div class="button-group">
+                        ${state.currentQuestionIndex > 0 ? '<button class="btn btn-secondary" onclick="previousQuestion()" aria-label="Go back to previous question">← Back</button>' : ''}
+                        <button class="btn btn-primary" onclick="nextQuestion()" aria-label="${state.currentQuestionIndex === state.questionSequence.length - 1 ? 'Calculate your results' : 'Continue to next question'}">
+                            ${state.currentQuestionIndex === state.questionSequence.length - 1 ? 'Calculate Results →' : 'Continue →'}
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            wrapper.innerHTML = html;
+            attachEventListeners();
+            updateProgress();
+
+            // Move focus to question title for screen readers
+            setTimeout(() => {
+                const questionTitle = document.getElementById(`question-title-${question.id}`);
+                if (questionTitle) {
+                    questionTitle.focus();
+                }
+            }, 100);
+
+            // Track question view
+            trackEvent('question_view', {
+                question_id: question.id,
+                question_number: question.number,
+                question_index: state.currentQuestionIndex
+            });
+        }
+
+        function attachEventListeners() {
+            const choices = document.querySelectorAll('.choice-card');
+            const currentQuestionKey = state.questionSequence[state.currentQuestionIndex];
+            const question = questions[currentQuestionKey];
+
+            // Keyboard navigation for choices
+            choices.forEach((choice, index) => {
+                // Click handler
+                choice.addEventListener('click', function() {
+                    // Hide error on interaction
+                    hideError();
+
+                    const value = this.dataset.value;
+                    const type = this.dataset.type;
+                    let wasAnswered = false;
+
+                    if (type === 'single') {
+                        // Single select
+                        wasAnswered = state.answers[question.id] !== undefined;
+                        document.querySelectorAll('.choice-card').forEach(c => {
+                            c.classList.remove('selected');
+                            c.setAttribute('aria-checked', 'false');
+                        });
+                        this.classList.add('selected');
+                        this.setAttribute('aria-checked', 'true');
+                        state.answers[question.id] = value;
+                        state.answerTimestamps[question.id] = new Date().toISOString();
+                    } else {
+                        // Multiple select
+                        if (!state.answers[question.id]) state.answers[question.id] = [];
+
+                        if (this.classList.contains('selected')) {
+                            this.classList.remove('selected');
+                            this.setAttribute('aria-checked', 'false');
+                            state.answers[question.id] = state.answers[question.id].filter(v => v !== value);
+                        } else {
+                            this.classList.add('selected');
+                            this.setAttribute('aria-checked', 'true');
+                            state.answers[question.id].push(value);
+                        }
+                        state.answerTimestamps[question.id] = new Date().toISOString();
+                        wasAnswered = state.answers[question.id].length > 0;
+                    }
+
+                    // Track answer (without revealing sensitive data)
+                    trackEvent('question_answered', {
+                        question_id: question.id,
+                        question_type: type,
+                        question_number: question.number,
+                        is_change: wasAnswered, // true if they're changing an existing answer
+                        answer_count: type === 'multiple' ? (state.answers[question.id]?.length || 0) : 1
+                    });
+
+                    // Save state after every change
+                    saveState();
+                });
+
+                // Keyboard handler
+                choice.addEventListener('keydown', function(e) {
+                    const type = this.dataset.type;
+                    const choicesArray = Array.from(choices);
+                    const currentIndex = choicesArray.indexOf(this);
+
+                    switch(e.key) {
+                        case 'ArrowDown':
+                        case 'ArrowRight':
+                            e.preventDefault();
+                            // Move to next choice
+                            const nextIndex = (currentIndex + 1) % choicesArray.length;
+                            choicesArray[nextIndex].focus();
+                            break;
+
+                        case 'ArrowUp':
+                        case 'ArrowLeft':
+                            e.preventDefault();
+                            // Move to previous choice
+                            const prevIndex = currentIndex === 0 ? choicesArray.length - 1 : currentIndex - 1;
+                            choicesArray[prevIndex].focus();
+                            break;
+
+                        case 'Enter':
+                        case ' ':
+                            e.preventDefault();
+                            // Trigger click
+                            this.click();
+                            break;
+                    }
+                });
+            });
+
+            // Input field listeners
+            const inputs = document.querySelectorAll('.input-field');
+            inputs.forEach(input => {
+                let typingTimer;
+                const doneTypingInterval = 1000; // Wait 1 second after user stops typing
+
+                input.addEventListener('input', function() {
+                    // Hide error on input
+                    hideError();
+
+                    state.answers[this.id] = this.value;
+                    state.answerTimestamps[this.id] = new Date().toISOString();
+
+                    // Save state after input
+                    saveState();
+
+                    // Clear the previous timer
+                    clearTimeout(typingTimer);
+
+                    // Track field completion after user stops typing (don't track actual values for privacy)
+                    typingTimer = setTimeout(() => {
+                        if (this.value.trim() !== '') {
+                            trackEvent('question_answered', {
+                                question_id: question.id,
+                                question_type: 'input',
+                                question_number: question.number,
+                                field_id: this.id,
+                                value_length: this.value.length // Track length, not actual value
+                            });
+                        }
+                    }, doneTypingInterval);
+                });
+            });
+        }
+
+        function updateProgress() {
+            const progressBar = document.querySelector('.progress-bar');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+
+            // Don't show progress on consent screen
+            if (state.currentQuestionIndex < 0) {
+                progressFill.style.width = '0%';
+                progressText.textContent = 'Getting Started';
+                if (progressBar) progressBar.setAttribute('aria-valuenow', '0');
+                return;
+            }
+
+            const totalQuestions = state.questionSequence.length;
+            const progress = ((state.currentQuestionIndex + 1) / totalQuestions) * 100;
+            progressFill.style.width = progress + '%';
+            progressText.textContent =
+                `Variable ${state.currentQuestionIndex + 1} of ${totalQuestions}`;
+
+            // Update aria attributes
+            if (progressBar) {
+                progressBar.setAttribute('aria-valuenow', Math.round(progress).toString());
+                progressBar.setAttribute('aria-valuetext', `${state.currentQuestionIndex + 1} of ${totalQuestions} questions completed`);
+            }
+
+            // Fire confetti at midpoint
+            if (state.currentQuestionIndex + 1 === Math.floor(totalQuestions / 2) && !state.confettiFired) {
+                fireConfetti();
+                state.confettiFired = true;
+            }
+        }
+
+        function fireConfetti() {
+            if (typeof confetti !== 'undefined') {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+
+        // ================================
+        // ERROR HANDLING
+        // ================================
+        function showError(message) {
+            const errorEl = document.getElementById('errorMessage');
+            if (errorEl) {
+                errorEl.textContent = message;
+                errorEl.classList.add('active');
+
+                // Scroll error into view
+                errorEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                // Remove animation class after animation completes to allow re-triggering
+                setTimeout(() => {
+                    errorEl.style.animation = 'none';
+                    setTimeout(() => {
+                        errorEl.style.animation = '';
+                    }, 10);
+                }, 400);
+            }
+        }
+
+        function hideError() {
+            const errorEl = document.getElementById('errorMessage');
+            if (errorEl) {
+                errorEl.classList.remove('active');
+            }
+        }
+
+        // ================================
+        // NAVIGATION
+        // ================================
+        function nextQuestion() {
+            if (state.isAnimating) return;
+
+            const currentQuestionKey = state.questionSequence[state.currentQuestionIndex];
+            const question = questions[currentQuestionKey];
+
+            // Validate
+            const validationResult = validateQuestion(question);
+            if (!validationResult.isValid) {
+                showError(validationResult.message);
+                return;
+            }
+
+            // Hide error if validation passed
+            hideError();
+
+            // If this is Q1 and they answered yes, rebuild sequence to include Q1a
+            if (currentQuestionKey === 'q1' && state.answers.crisis_experience_ever === 'yes') {
+                state.questionSequence = buildQuestionSequence();
+            }
+
+            if (state.currentQuestionIndex === state.questionSequence.length - 1) {
+                // Submit
+                submitAssessment();
+            } else {
+                // Next question
+                state.isAnimating = true;
+                const currentEl = document.querySelector('.question.active');
+                currentEl.classList.remove('active');
+                currentEl.classList.add('exit');
+
+                setTimeout(() => {
+                    state.currentQuestionIndex++;
+                    renderQuestion(state.questionSequence[state.currentQuestionIndex]);
+                    state.isAnimating = false;
+                }, 400);
+            }
+        }
+
+        function previousQuestion() {
+            if (state.isAnimating || state.currentQuestionIndex === 0) return;
+
+            state.isAnimating = true;
+            const currentEl = document.querySelector('.question.active');
+            currentEl.classList.remove('active');
+            currentEl.classList.add('exit');
+
+            setTimeout(() => {
+                state.currentQuestionIndex--;
+                renderQuestion(state.questionSequence[state.currentQuestionIndex]);
+                state.isAnimating = false;
+            }, 400);
+        }
+
+        function validateQuestion(question) {
+            if (question.type === 'input') {
+                for (const field of question.fields) {
+                    if (field.required) {
+                        const value = state.answers[field.id];
+
+                        if (!value || value.trim() === '') {
+                            return {
+                                isValid: false,
+                                message: `Please enter your ${field.label.toLowerCase()}.`
+                            };
+                        }
+
+                        if (field.type === 'email') {
+                            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                            if (!emailRegex.test(value)) {
+                                return {
+                                    isValid: false,
+                                    message: 'Please enter a valid email address.'
+                                };
+                            }
+                        }
+                    }
+                }
+                return { isValid: true };
+            } else if (question.type === 'multiple') {
+                const hasAnswer = state.answers[question.id] && state.answers[question.id].length > 0;
+                return {
+                    isValid: hasAnswer,
+                    message: 'Please select at least one option.'
+                };
+            } else {
+                const hasAnswer = state.answers[question.id] !== undefined;
+                return {
+                    isValid: hasAnswer,
+                    message: 'Please select an option to continue.'
+                };
+            }
+        }
+
+        // ================================
+        // SCORING LOGIC (Same as before)
+        // ================================
+        function calculateDetailedScores() {
+            let scores = {
+                preparedness: 0,
+                response: 0,
+                recovery: 0,
+                support: 0
+            };
+
+            // Q1: Crisis Experience Ever
+            if (state.answers.crisis_experience_ever === 'no') {
+                scores.preparedness += 20;
+                scores.response += 15;
+                scores.recovery += 10;
+                scores.support += 10;
+            }
+
+            // Q1a: Crisis Experience Recent
+            if (state.answers.crisis_experience_recent) {
+                const recentMap = {
+                    'major_crisis': { preparedness: 5, response: 5, recovery: 15, support: 12 },
+                    'minor_incidents': { preparedness: 8, response: 8, recovery: 10, support: 10 },
+                    'close_calls': { preparedness: 15, response: 12, recovery: 8, support: 8 },
+                    'no_recent': { preparedness: 12, response: 12, recovery: 8, support: 8 }
+                };
+                const impact = recentMap[state.answers.crisis_experience_recent];
+                if (impact) {
+                    Object.keys(impact).forEach(key => scores[key] += impact[key]);
+                }
+            }
+
+            // Q2: Crisis Readiness
+            const readinessMap = {
+                'unprepared': { preparedness: 30, response: 25, recovery: 20, support: 15 },
+                'outdated': { preparedness: 20, response: 15, recovery: 10, support: 10 },
+                'might_have': { preparedness: 18, response: 18, recovery: 12, support: 12 },
+                'solid': { preparedness: 5, response: 5, recovery: 5, support: 5 },
+                'comprehensive': { preparedness: 0, response: 0, recovery: 0, support: 0 }
+            };
+            const readiness = readinessMap[state.answers.crisis_readiness];
+            if (readiness) {
+                Object.keys(readiness).forEach(key => scores[key] += readiness[key]);
+            }
+
+            // Q3: Support Systems
+            const supportMap = {
+                'comprehensive': { preparedness: 0, response: 0, recovery: 5, support: 0 },
+                'external': { preparedness: 5, response: 5, recovery: 10, support: 10 },
+                'informal': { preparedness: 10, response: 10, recovery: 15, support: 20 },
+                'limited': { preparedness: 15, response: 12, recovery: 25, support: 30 },
+                'varies': { preparedness: 10, response: 10, recovery: 15, support: 18 }
+            };
+            const supportSys = supportMap[state.answers.support_systems];
+            if (supportSys) {
+                Object.keys(supportSys).forEach(key => scores[key] += supportSys[key]);
+            }
+
+            // Q4: Capability Assessment
+            const capabilities = state.answers.capability_assessment || [];
+            if (capabilities.includes('none') || capabilities.length === 0) {
+                scores.preparedness += 15;
+                scores.response += 15;
+                scores.recovery += 15;
+                scores.support += 15;
+            } else {
+                const capabilityImpact = {
+                    'immediate_response': { preparedness: -5, response: -8, recovery: -2, support: -2 },
+                    'communication': { preparedness: -3, response: -5, recovery: -2, support: -3 },
+                    'emotional_support': { preparedness: -2, response: -3, recovery: -4, support: -8 },
+                    'coordinating_resources': { preparedness: -4, response: -5, recovery: -3, support: -2 },
+                    'grief_knowledge': { preparedness: -2, response: -2, recovery: -6, support: -7 },
+                    'long_term': { preparedness: -3, response: -2, recovery: -8, support: -5 },
+                    'community': { preparedness: -2, response: -2, recovery: -5, support: -4 },
+                    'business_continuity': { preparedness: -6, response: -4, recovery: -3, support: -2 }
+                };
+                capabilities.forEach(cap => {
+                    if (capabilityImpact[cap]) {
+                        Object.keys(capabilityImpact[cap]).forEach(key => {
+                            scores[key] = Math.max(0, scores[key] + capabilityImpact[cap][key]);
+                        });
+                    }
+                });
+            }
+
+            // Q5: Timeline Focus
+            const timelineMap = {
+                'before': { preparedness: 25, response: 10, recovery: 8, support: 8 },
+                'during': { preparedness: 10, response: 25, recovery: 8, support: 10 },
+                'after_short': { preparedness: 8, response: 12, recovery: 18, support: 15 },
+                'after_long': { preparedness: 8, response: 8, recovery: 25, support: 20 },
+                'all_phases': { preparedness: 18, response: 18, recovery: 18, support: 18 }
+            };
+            const timeline = timelineMap[state.answers.timeline_focus];
+            if (timeline) {
+                Object.keys(timeline).forEach(key => scores[key] += timeline[key]);
+            }
+
+            // Q6: Leadership Readiness
+            const leadershipMap = {
+                'very_confident': { preparedness: 0, response: 0, recovery: 0, support: 0 },
+                'somewhat_confident': { preparedness: 10, response: 12, recovery: 8, support: 8 },
+                'uncertain': { preparedness: 20, response: 22, recovery: 15, support: 15 },
+                'concerned': { preparedness: 28, response: 28, recovery: 18, support: 15 }
+            };
+            const leadership = leadershipMap[state.answers.leadership_readiness];
+            if (leadership) {
+                Object.keys(leadership).forEach(key => scores[key] += leadership[key]);
+            }
+
+            // Q7: Risk Areas (multiple - cumulative)
+            const risks = state.answers.risk_areas || [];
+            const riskMap = {
+                'no_plan': { preparedness: 18, response: 12, recovery: 5, support: 5 },
+                'coordination': { preparedness: 8, response: 15, recovery: 5, support: 5 },
+                'communication': { preparedness: 5, response: 12, recovery: 8, support: 6 },
+                'emotional': { preparedness: 5, response: 8, recovery: 12, support: 18 },
+                'resources': { preparedness: 10, response: 10, recovery: 8, support: 8 },
+                'leadership_confidence': { preparedness: 15, response: 15, recovery: 8, support: 8 },
+                'trauma_support': { preparedness: 5, response: 6, recovery: 15, support: 18 },
+                'referrals': { preparedness: 5, response: 5, recovery: 10, support: 15 },
+                'crisis_comms': { preparedness: 5, response: 15, recovery: 8, support: 6 },
+                'reputation': { preparedness: 5, response: 10, recovery: 12, support: 8 },
+                'bereavement_policy': { preparedness: 5, response: 5, recovery: 15, support: 12 },
+                'productivity': { preparedness: 8, response: 8, recovery: 10, support: 5 }
+            };
+            risks.forEach(risk => {
+                if (riskMap[risk]) {
+                    Object.keys(riskMap[risk]).forEach(key => {
+                        scores[key] += riskMap[risk][key];
+                    });
+                }
+            });
+
+            // Normalize scores to 0-100 scale
+            Object.keys(scores).forEach(key => {
+                scores[key] = Math.min(100, Math.max(0, Math.round(scores[key])));
+            });
+
+            return scores;
+        }
+
+        function calculateOverallScore(scores) {
+            // Equal weighting across all dimensions
+            return Math.round((scores.preparedness + scores.response + scores.recovery + scores.support) / 4);
+        }
+
+        function identifyGaps(scores) {
+            const gaps = [];
+
+            const gapData = [
+                {
+                    key: 'preparedness',
+                    icon: '📋',
+                    title: 'Preparedness Systems',
+                    description: 'Your organization needs enhanced preparedness infrastructure with systematic protocols, training, and readiness systems.',
+                    score: scores.preparedness
+                },
+                {
+                    key: 'response',
+                    icon: '🚨',
+                    title: 'Response Capability',
+                    description: 'Strengthen your ability to coordinate teams, make decisions under pressure, and communicate effectively during crisis events.',
+                    score: scores.response
+                },
+                {
+                    key: 'recovery',
+                    icon: '🌱',
+                    title: 'Recovery Infrastructure',
+                    description: 'Develop sustainable systems for supporting long-term healing, meaning-making, and organizational recovery after crisis.',
+                    score: scores.recovery
+                },
+                {
+                    key: 'support',
+                    icon: '💙',
+                    title: 'Support Systems',
+                    description: 'Build capacity to address the emotional and psychological impacts of crisis on your community with trauma-informed support.',
+                    score: scores.support
+                }
+            ];
+
+            // Classify each gap and filter those above 30 (minor threshold)
+            gapData.forEach(gap => {
+                if (gap.score > 30) {
+                    let level;
+                    if (gap.score > 70) level = 'critical';
+                    else if (gap.score > 50) level = 'significant';
+                    else if (gap.score > 30) level = 'moderate';
+                    else level = 'minor';
+
+                    gaps.push({ ...gap, level });
+                }
+            });
+
+            // Sort by score descending and return top 3
+            gaps.sort((a, b) => b.score - a.score);
+            return gaps.slice(0, 3);
+        }
+
+        function recommendService(scores, overallScore) {
+            const highGaps = Object.values(scores).filter(s => s > 50).length;
+            const maxScore = Math.max(...Object.values(scores));
+            const maxCategory = Object.keys(scores).find(key => scores[key] === maxScore);
+
+            const maxCategoryLabel = {
+                'preparedness': 'Preparedness',
+                'response': 'Response',
+                'recovery': 'Recovery',
+                'support': 'Support Systems'
+            }[maxCategory];
+
+            if (overallScore > 60 || highGaps >= 3) {
+                return {
+                    solving_for: 'Comprehensive Organizational Resilience',
+                    tier: 'TIER 3: Full-Spectrum Partnership',
+                    name: 'Strategic Consulting & Implementation',
+                    format: '6-18 month engagement',
+                    description: `Your equation reveals multiple critical factors requiring systematic attention. Our Full-Spectrum Partnership provides expert-led design and implementation of resilience systems tailored to ${getOrgTypeText()}.`,
+                    features: [
+                        'Comprehensive gap audit and factor analysis',
+                        'Strategic planning with customized recovery framework',
+                        'Customized curriculum development',
+                        'Ongoing technical assistance and implementation',
+                        'Integration into emergency operations plans',
+                        'Leadership coaching and capability building',
+                        'Quarterly evaluation and optimization'
+                    ]
+                };
+            } else if (maxCategory === 'recovery' || maxCategory === 'support') {
+                if (state.answers.org_info === 'healthcare' || state.answers.risk_areas?.includes('trauma_support')) {
+                    return {
+                        solving_for: maxCategoryLabel,
+                        tier: 'TIER 2: Strategic Intensives',
+                        name: 'Clinician Resilience & Moral Injury Recovery',
+                        format: 'Half-day or Full-day immersive',
+                        description: `Specialized intensive for healthcare teams addressing burnout, moral injury, and systematic resilience building.`,
+                        features: [
+                            'Understanding moral injury in healthcare contexts',
+                            'Building individual and organizational resilience',
+                            'Peer support and debriefing protocols',
+                            'Self-care strategies for sustained practice',
+                            'Implementation toolkit and ongoing resources'
+                        ]
+                    };
+                } else {
+                    return {
+                        solving_for: maxCategoryLabel,
+                        tier: 'TIER 2: Strategic Intensives',
+                        name: 'Crisis Preparedness Assessment & Implementation',
+                        format: 'Full-day engagement + Follow-up',
+                        description: `Deep-dive engagement combining education with implementation support. Apply frameworks with expert guidance to build sustainable recovery and support systems.`,
+                        features: [
+                            'Comprehensive organizational readiness assessment',
+                            'Gap analysis and priority identification',
+                            'Implementation roadmap development',
+                            'Leadership team training and capacity building',
+                            'Follow-up coaching sessions (3-6 months)',
+                            'Customized resource toolkit'
+                        ]
+                    };
+                }
+            } else if (maxCategory === 'preparedness') {
+                return {
+                    solving_for: 'Preparedness',
+                    tier: 'TIER 2: Strategic Intensives',
+                    name: 'Proactive Preparedness Initiative',
+                    format: 'Full-day intensive + Implementation support',
+                    description: `Immersive program to build systematic readiness before crisis strikes. Develop comprehensive plans, train key personnel, and create a culture of preparedness for ${getOrgTypeText()}.`,
+                    features: [
+                        'Comprehensive threat and vulnerability assessment',
+                        'Crisis response plan development',
+                        'Leadership team training (full-day intensive)',
+                        'Tabletop exercise facilitation',
+                        'Communication protocol establishment',
+                        'Implementation support (6-month follow-up)',
+                        'Annual plan review framework'
+                    ]
+                };
+            } else if (maxCategory === 'response') {
+                return {
+                    solving_for: 'Response Capability',
+                    tier: 'TIER 2: Strategic Intensives',
+                    name: 'Leadership Resilience Intensive',
+                    format: '3-session series or Half-day immersive',
+                    description: `Equip your leadership team with systematic tools, training, and confidence to manage critical incidents and lead effectively through crisis.`,
+                    features: [
+                        'Decision-making under pressure frameworks',
+                        'Crisis communication strategies',
+                        'Team coordination and command structure',
+                        'Managing uncertainty and ambiguity',
+                        'Self-care and resilience for leaders',
+                        'Scenario-based practice and application'
+                    ]
+                };
+            } else {
+                return {
+                    solving_for: 'Maintaining Optimal Resilience',
+                    tier: 'TIER 1: Wellness Workshops',
+                    name: 'Ongoing Wellness & Resilience Training',
+                    format: '90-min or Half-day sessions',
+                    description: `Strong equation! Your organization shows solid readiness across most variables. Maintain and enhance your resilience with ongoing wellness training and systematic skill-building.`,
+                    features: [
+                        'Organizational Trauma and Grief Literacy',
+                        'Traumatic Stress Psychoeducation',
+                        'Youth & Family Support workshops',
+                        'Custom wellness programming',
+                        'Quarterly check-ins and refresher training',
+                        'Access to resource library'
+                    ]
+                };
+            }
+        }
+
+        function getOrgTypeText() {
+            const orgTypeMap = {
+                'k12_education': 'schools and districts',
+                'higher_ed': 'colleges and universities',
+                'nonprofit': 'nonprofit organizations',
+                'government': 'government agencies',
+                'healthcare': 'healthcare organizations',
+                'corporate': 'businesses',
+                'faith_based': 'faith communities',
+                'community_center': 'community organizations',
+                'other': 'organizations like yours'
+            };
+            return orgTypeMap[state.answers.org_info] || 'organizations';
+        }
+
+        // ================================
+        // SUBMISSION AND RESULTS
+        // ================================
+        async function submitAssessment() {
+            // Show loading with branded language
+            document.getElementById('questionWrapper').style.display = 'none';
+            document.getElementById('loadingState').classList.add('active');
+
+            // Rotate through loading facts
+            let factIndex = 0;
+            const factRotation = setInterval(() => {
+                factIndex = (factIndex + 1) % loadingFacts.length;
+                const factElement = document.getElementById('loadingFact');
+                factElement.classList.remove('active');
+                setTimeout(() => {
+                    factElement.textContent = loadingFacts[factIndex];
+                    factElement.classList.add('active');
+                }, 300);
+            }, 2500);
+
+            // Calculate results
+            const scores = calculateDetailedScores();
+            const overallScore = calculateOverallScore(scores);
+            const gaps = identifyGaps(scores);
+            const recommendation = recommendService(scores, overallScore);
+
+            // Calculate durations
+            const endTimestamp = new Date().toISOString();
+            const totalDurationMs = state.startTimestamp ?
+                new Date(endTimestamp) - new Date(state.startTimestamp) : 0;
+            const totalDurationSeconds = Math.round(totalDurationMs / 1000);
+
+            // Calculate per-question durations
+            const questionDurations = {};
+            let lastTimestamp = state.startTimestamp;
+            state.questionSequence.forEach(qKey => {
+                const question = questions[qKey];
+                const answerTime = state.answerTimestamps[question.id];
+                if (answerTime && lastTimestamp) {
+                    const duration = new Date(answerTime) - new Date(lastTimestamp);
+                    questionDurations[question.id] = Math.round(duration / 1000);
+                    lastTimestamp = answerTime;
+                }
+            });
+
+            // Calculate lead score (0-100, higher = better quality lead)
+            let leadScore = 50; // baseline
+
+            // Adjust based on overall score (higher gap = more urgency)
+            if (overallScore > 70) leadScore += 20; // Critical need
+            else if (overallScore > 50) leadScore += 15; // Significant need
+            else if (overallScore > 30) leadScore += 10; // Moderate need
+
+            // Adjust based on org type (enterprise/government = higher value)
+            const highValueOrgs = ['government', 'higher_ed', 'healthcare', 'corporate'];
+            if (highValueOrgs.includes(state.answers.org_info)) {
+                leadScore += 10;
+            }
+
+            // Adjust based on engagement
+            if ((state.answers.next_step || []).includes('consultation')) leadScore += 15;
+            if ((state.answers.next_step || []).includes('report')) leadScore += 10;
+            if ((state.answers.next_step || []).includes('training')) leadScore += 10;
+
+            // Adjust based on completion speed (very fast or very slow = lower quality)
+            if (totalDurationSeconds < 60) leadScore -= 20; // Too fast, likely not serious
+            else if (totalDurationSeconds > 1800) leadScore -= 10; // Took > 30 min
+
+            // Cap between 0-100
+            leadScore = Math.max(0, Math.min(100, leadScore));
+
+            // Generate assessment ID
+            const assessmentId = 'assess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+
+            // Prepare webhook data (NO PRICING)
+            const webhookData = {
+                // Assessment metadata
+                assessment_id: assessmentId,
+                assessment_completed: endTimestamp,
+                assessment_version: STORAGE_VERSION,
+
+                // Consent & Privacy
+                has_consented: true,
+                consent_timestamp: state.consentTimestamp,
+
+                // Timing & Engagement
+                start_timestamp: state.startTimestamp,
+                end_timestamp: endTimestamp,
+                total_duration_seconds: totalDurationSeconds,
+                question_durations: questionDurations,
+
+                // Scores
+                overall_score: overallScore,
+                preparedness_score: scores.preparedness,
+                response_score: scores.response,
+                recovery_score: scores.recovery,
+                support_score: scores.support,
+
+                // Classification
+                gap_level: overallScore > 70 ? 'critical' : overallScore > 50 ? 'significant' : overallScore > 30 ? 'moderate' : 'minor',
+                lead_score: leadScore,
+
+                // Attribution
+                ...state.attribution,
+
+                // All answers
+                ...state.answers,
+
+                // Identified gaps
+                top_gaps: gaps.map(g => g.title),
+                highest_gap_area: gaps.length > 0 ? gaps[0].key : null,
+
+                // Recommendation (NO PRICING)
+                recommended_tier: recommendation.tier,
+                recommended_service: recommendation.name,
+                solving_for: recommendation.solving_for,
+
+                // For internal use
+                needs_report: (state.answers.next_step || []).includes('report'),
+                wants_consultation: (state.answers.next_step || []).includes('consultation'),
+                wants_training: (state.answers.next_step || []).includes('training'),
+                wants_newsletter: (state.answers.next_step || []).includes('newsletter')
+            };
+
+            // Send to serverless proxy
+            try {
+                const response = await fetch(CONFIG.submitURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(webhookData)
+                });
+
+                if (!response.ok) {
+                    // Log error but don't show to user - we already collected their data
+                    const errorData = await response.json().catch(() => ({}));
+                    console.error('Submission error:', response.status, errorData);
+
+                    // Track failed submission
+                    trackEvent('submission_failed', {
+                        status: response.status,
+                        error: errorData.error || 'unknown'
+                    });
+                } else {
+                    // Track successful submission
+                    trackEvent('assessment_completed', {
+                        assessment_id: assessmentId,
+                        lead_score: leadScore,
+                        overall_score: overallScore
+                    });
+                }
+            } catch (error) {
+                console.error('Error sending assessment:', error);
+
+                // Track failed submission
+                trackEvent('submission_failed', {
+                    error: error.message || 'network_error'
+                });
+
+                // Don't block results display on submission failure
+                // User experience is more important than guaranteed data capture
+            }
+
+            // Show results after delay
+            setTimeout(() => {
+                clearInterval(factRotation);
+                displayResults(scores, overallScore, gaps, recommendation);
+            }, 3500);
+        }
+
+        function displayResults(scores, overallScore, gaps, recommendation) {
+            // Clear saved state since assessment is complete
+            clearSavedState();
+
+            // Hide loading
+            document.getElementById('loadingState').classList.remove('active');
+
+            // Determine overall status
+            let statusLevel, statusColor, statusLabel;
+            if (overallScore > 70) {
+                statusLevel = 'critical';
+                statusColor = 'var(--danger)';
+                statusLabel = 'Critical Factors Identified';
+            } else if (overallScore > 50) {
+                statusLevel = 'significant';
+                statusColor = '#f4b943';
+                statusLabel = 'Significant Variables to Address';
+            } else if (overallScore > 30) {
+                statusLevel = 'moderate';
+                statusColor = 'var(--warning)';
+                statusLabel = 'Moderate Optimization Needed';
+            } else {
+                statusLevel = 'minor';
+                statusColor = 'var(--success)';
+                statusLabel = 'Strong Equation';
+            }
+
+            // Build results HTML with equation visual
+            let html = `
+                <div class="results-header">
+                    <h1 class="results-title">Your Organizational Resilience Equation</h1>
+                    <p class="results-subtitle">Calculated for ${state.answers.organization}</p>
+                </div>
+
+                <div class="equation-box">
+                    <div class="equation-title">Your Current State</div>
+                    <div class="equation">P + R + RC + S = OR</div>
+                    <div class="equation-explanation">Organizational Resilience</div>
+                    <div class="equation-divider"></div>
+                    <div class="equation-values">
+                        <div class="equation-value">
+                            <div class="equation-value-label">P<br>(Preparedness)</div>
+                            <div class="equation-value-score">${scores.preparedness}</div>
+                        </div>
+                        <div class="equation-value">
+                            <div class="equation-value-label">R<br>(Response)</div>
+                            <div class="equation-value-score">${scores.response}</div>
+                        </div>
+                        <div class="equation-value">
+                            <div class="equation-value-label">RC<br>(Recovery)</div>
+                            <div class="equation-value-score">${scores.recovery}</div>
+                        </div>
+                        <div class="equation-value">
+                            <div class="equation-value-label">S<br>(Support)</div>
+                            <div class="equation-value-score">${scores.support}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-wrapper">
+                        <canvas id="readinessChart"></canvas>
+                    </div>
+                    <div class="score-summary">
+                        <div class="score-item">
+                            <div class="score-item-label">Overall Calculation</div>
+                            <div class="score-item-value">${overallScore}</div>
+                            <div class="score-item-status" style="color: ${statusColor}">
+                                ${statusLabel}
+                            </div>
+                        </div>
+                        <div class="score-item">
+                            <div class="score-item-label">Highest Variable</div>
+                            <div class="score-item-value">${Math.round(Math.max(...Object.values(scores)))}</div>
+                            <div class="score-item-status">${Object.keys(scores).find(key => scores[key] === Math.max(...Object.values(scores)))}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            if (gaps.length > 0) {
+                html += `
+                    <div class="gaps-container">
+                        <h3 class="gaps-title">Critical Factors to Solve For</h3>
+                `;
+                gaps.forEach(gap => {
+                    html += `
+                        <div class="gap-card ${gap.level}">
+                            <div class="gap-card-header">
+                                <span class="gap-icon">${gap.icon}</span>
+                                <span class="gap-title">${gap.title}</span>
+                            </div>
+                            <p class="gap-description">${gap.description}</p>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+            } else {
+                html += `
+                    <div style="text-align: center; padding: 30px; background: var(--bg-light); border-radius: 12px; margin: 30px 0;">
+                        <h3 style="font-size: 22px; font-weight: 700; color: var(--success); margin-bottom: 15px;">√ Optimal Equation!</h3>
+                        <p style="font-size: 16px; color: var(--text-medium);">
+                            Your organization demonstrates strong resilience across all variables. Continue maintaining your preparedness with ongoing optimization.
+                        </p>
+                    </div>
+                `;
+            }
+
+            // Recommendation box (NO PRICING)
+            html += `
+                <div class="recommendation-box">
+                    <div class="recommendation-title">Solving For: ${recommendation.solving_for}</div>
+                    <h2 class="recommendation-service">${recommendation.name}</h2>
+                    <div class="recommendation-tier">${recommendation.tier}</div>
+                    <p class="recommendation-description">${recommendation.description}</p>
+                    <ul class="recommendation-features">
+                        ${recommendation.features.map(f => `<li>${f}</li>`).join('')}
+                    </ul>
+                    ${(state.answers.next_step || []).includes('consultation')
+                        ? `<a href="${CONFIG.bookingURL}" class="btn-cta" target="_blank">Schedule Free Consultation →</a>`
+                        : `<a href="${CONFIG.bookingURL}" class="btn-cta" target="_blank">Discuss Your Solution →</a>`}
+                </div>
+            `;
+
+            // Additional services
+            html += `
+                <div style="margin: 40px 0; padding: 30px; background: var(--bg-light); border-radius: 12px; text-align: center;">
+                    <h3 style="font-size: 18px; font-weight: 700; color: var(--text-dark); margin-bottom: 20px;">Additional Configurations Available</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: left;">
+                        <div>
+                            <h4 style="font-size: 15px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px;">+ Hourly Consulting</h4>
+                            <p style="font-size: 14px; color: var(--text-medium);">Expert consultation on specific challenges</p>
+                        </div>
+                        <div>
+                            <h4 style="font-size: 15px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px;">+ Speaking Engagements</h4>
+                            <p style="font-size: 14px; color: var(--text-medium);">Keynotes and conference workshops</p>
+                        </div>
+                        <div>
+                            <h4 style="font-size: 15px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px;">+ Executive Coaching</h4>
+                            <p style="font-size: 14px; color: var(--text-medium);">One-on-one leadership development</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            html += `
+                <div class="next-steps">
+                    <h3 class="next-steps-title">Configuring Your Next Steps</h3>
+                    <p class="next-steps-text">
+                        ${getNextStepsMessage()}
+                    </p>
+                    <p class="next-steps-text">
+                        <strong>Questions?</strong> Email us at <a href="mailto:${CONFIG.contactEmail}" style="color: var(--primary);">${CONFIG.contactEmail}</a>
+                    </p>
+                </div>
+            `;
+
+            document.getElementById('resultsContainer').innerHTML = html;
+            document.getElementById('resultsContainer').classList.add('active');
+
+            // Track results view
+            trackEvent('results_view', {
+                overall_score: overallScore,
+                preparedness_score: scores.preparedness,
+                response_score: scores.response,
+                recovery_score: scores.recovery,
+                support_score: scores.support,
+                status_level: statusLevel,
+                recommended_tier: recommendation.tier,
+                gap_count: gaps.length
+            });
+
+            // Create the radar chart
+            createRadarChart(scores);
+
+            // Add click tracking to CTA buttons
+            setTimeout(() => {
+                const ctaButtons = document.querySelectorAll('.btn-cta');
+                ctaButtons.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        trackEvent('cta_click', {
+                            button_text: this.textContent.trim(),
+                            button_url: this.href,
+                            recommended_tier: recommendation.tier,
+                            overall_score: overallScore
+                        });
+                    });
+                });
+            }, 100);
+
+            // Fire celebration confetti
+            if (typeof confetti !== 'undefined') {
+                setTimeout(() => {
+                    confetti({
+                        particleCount: 150,
+                        spread: 80,
+                        origin: { y: 0.5 }
+                    });
+                }, 500);
+            }
+        }
+
+        function createRadarChart(scores) {
+            const ctx = document.getElementById('readinessChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Preparedness', 'Response', 'Recovery', 'Support'],
+                    datasets: [{
+                        label: 'Current State',
+                        data: [
+                            scores.preparedness,
+                            scores.response,
+                            scores.recovery,
+                            scores.support
+                        ],
+                        backgroundColor: 'rgba(73, 170, 145, 0.2)',
+                        borderColor: 'rgba(73, 170, 145, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(73, 170, 145, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(73, 170, 145, 1)'
+                    }, {
+                        label: 'Target State',
+                        data: [30, 30, 30, 30],
+                        backgroundColor: 'rgba(46, 71, 108, 0.1)',
+                        borderColor: 'rgba(46, 71, 108, 0.3)',
+                        borderWidth: 1,
+                        borderDash: [5, 5],
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                stepSize: 20,
+                                display: true,
+                                callback: function(value) {
+                                    if (value === 0) return '0 (Optimal)';
+                                    if (value === 100) return '100 (Critical)';
+                                    return value;
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) label += ': ';
+                                    label += context.parsed.r;
+                                    if (context.datasetIndex === 0) {
+                                        if (context.parsed.r > 70) label += ' (Critical Factor)';
+                                        else if (context.parsed.r > 50) label += ' (Significant Variable)';
+                                        else if (context.parsed.r > 30) label += ' (Moderate Factor)';
+                                        else label += ' (Optimal)';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function getNextStepsMessage() {
+            const selectedSteps = state.answers.next_step || [];
+
+            if (selectedSteps.includes('just_results') || selectedSteps.length === 0) {
+                return `Your resilience equation is ready above. When you're ready to optimize your factors, we're here to help solve for what comes after.`;
+            }
+
+            let message = `Based on your preferences, here's what happens next:<br><br>`;
+
+            if (selectedSteps.includes('consultation')) {
+                message += `<strong>+ Free Consultation:</strong> We'll reach out within 24 hours to schedule your free 30-minute consultation to discuss your specific equation.<br><br>`;
+            }
+
+            if (selectedSteps.includes('report')) {
+                message += `<strong>+ Detailed Report:</strong> Our team will review your calculation and prepare a customized analysis. We'll send it to <strong>${state.answers.email}</strong> within 48-72 hours.<br><br>`;
+            }
+
+            if (selectedSteps.includes('resources')) {
+                message += `<strong>+ Resources:</strong> We'll send helpful frameworks, templates, and guides to support your resilience building.<br><br>`;
+            }
+
+            if (selectedSteps.includes('training')) {
+                message += `<strong>+ Training Info:</strong> We'll share information about training opportunities designed for ${getOrgTypeText()}.<br><br>`;
+            }
+
+            if (selectedSteps.includes('newsletter')) {
+                message += `<strong>+ Newsletter:</strong> You'll receive our monthly insights on crisis readiness, recovery frameworks, and resilience optimization.<br><br>`;
+            }
+
+            return message;
+        }
+
+        // ================================
+        // INITIALIZE
+        // ================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check for saved progress
+            const savedState = loadState();
+
+            if (savedState && savedState.hasConsented && savedState.currentQuestionIndex >= 0) {
+                // Show resume prompt
+                showResumePrompt(savedState);
+            } else {
+                // Start fresh
+                renderConsentScreen();
+            }
+
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
