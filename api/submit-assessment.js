@@ -155,6 +155,45 @@ export default async function handler(req, res) {
             return res.status(200).json({ success: true, message: 'Submission received' });
         }
 
+        // Verify reCAPTCHA v3 token
+        const recaptchaToken = data['g-recaptcha-response'];
+        const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY;
+
+        if (recaptchaSecret && recaptchaToken) {
+            try {
+                const recaptchaResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `secret=${encodeURIComponent(recaptchaSecret)}&response=${encodeURIComponent(recaptchaToken)}`
+                });
+
+                const recaptchaResult = await recaptchaResponse.json();
+
+                if (!recaptchaResult.success) {
+                    console.log('reCAPTCHA verification failed:', recaptchaResult['error-codes']);
+                    return res.status(400).json({
+                        error: 'Verification failed',
+                        message: 'Please try again'
+                    });
+                }
+
+                // Check reCAPTCHA score (0.0 - 1.0, higher is better)
+                if (recaptchaResult.score < 0.5) {
+                    console.log('Low reCAPTCHA score:', recaptchaResult.score, 'for IP:', ip);
+                    // Return success but don't forward to webhook (likely bot)
+                    return res.status(200).json({ success: true, message: 'Submission received' });
+                }
+
+                // Add reCAPTCHA score to data
+                data.recaptcha_score = recaptchaResult.score;
+            } catch (recaptchaError) {
+                console.error('reCAPTCHA verification error:', recaptchaError);
+                // Continue with submission if reCAPTCHA service is down
+            }
+        }
+
         // Validate payload
         const validationErrors = validatePayload(data);
         if (validationErrors.length > 0) {

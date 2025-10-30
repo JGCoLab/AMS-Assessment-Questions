@@ -64,6 +64,10 @@
     </noscript>
     <!-- End LinkedIn Insight Tag -->
 
+    <!-- Google reCAPTCHA v3 -->
+    <script src="https://www.google.com/recaptcha/api.js?render=6LeBifwrAAAAAPP7daqidrLS870R51IgQEop4GGq"></script>
+    <!-- End reCAPTCHA v3 -->
+
     <style>
         /* ================================
            VARIABLES & RESET
@@ -2638,14 +2642,34 @@
                 wants_newsletter: (state.answers.next_step || []).includes('newsletter')
             };
 
-            // Send to serverless proxy
+            // Generate reCAPTCHA token and send to serverless proxy
             try {
+                // Get reCAPTCHA v3 token
+                let recaptchaToken = null;
+                if (typeof grecaptcha !== 'undefined' && CONFIG.recaptcha.siteKey) {
+                    try {
+                        await grecaptcha.ready();
+                        recaptchaToken = await grecaptcha.execute(CONFIG.recaptcha.siteKey, {
+                            action: 'submit_assessment'
+                        });
+                    } catch (recaptchaError) {
+                        console.error('reCAPTCHA error:', recaptchaError);
+                        // Continue with submission even if reCAPTCHA fails
+                    }
+                }
+
+                // Add reCAPTCHA token to payload
+                const submissionData = {
+                    ...webhookData,
+                    'g-recaptcha-response': recaptchaToken
+                };
+
                 const response = await fetch(CONFIG.submitURL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(webhookData)
+                    body: JSON.stringify(submissionData)
                 });
 
                 if (!response.ok) {
