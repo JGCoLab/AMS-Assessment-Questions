@@ -1213,67 +1213,298 @@
 
     <!-- Print Stylesheet for PDF Export -->
     <style media="print">
-        /* Hide navigation elements for print */
+        /* Hide UI elements not needed in PDF */
         .assessment-header,
         .progress-container,
-        .btn,
-        .btn-cta,
-        .btn-secondary,
         #questionWrapper,
-        #loadingState {
+        #loadingState,
+        .btn[onclick="window.print()"],
+        button[onclick="window.print()"] {
             display: none !important;
         }
 
-        /* Ensure results are well-formatted for print */
-        .results-container {
-            padding: 20px;
-            font-size: 12pt;
+        /* Page setup */
+        @page {
+            margin: 0.75in;
+            size: letter;
         }
 
-        /* Add branding header for print */
+        body {
+            margin: 0;
+            padding: 0;
+            font-size: 11pt;
+            line-height: 1.4;
+            color: #000 !important;
+        }
+
+        /* Results container formatting */
+        .results-container {
+            padding: 0;
+            max-width: 100%;
+        }
+
+        /* Add professional header to first page */
         .results-container::before {
-            content: "Aftermath Solutions - Organizational Resilience Assessment";
+            content: "Aftermath Solutions";
             display: block;
+            font-size: 24pt;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #49AA91 !important;
+            text-align: center;
+        }
+
+        /* Add report title */
+        .results-header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #49AA91;
+            padding-bottom: 20px;
+        }
+
+        .results-title {
+            font-size: 20pt !important;
+            color: #000 !important;
+            margin-bottom: 8px;
+        }
+
+        .results-subtitle {
+            font-size: 12pt !important;
+            color: #333 !important;
+        }
+
+        /* Equation box */
+        .equation-box {
+            page-break-inside: avoid;
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid #49AA91 !important;
+            background: #f8f9fa !important;
+        }
+
+        .equation-title {
+            font-size: 14pt;
+            font-weight: bold;
+            color: #000 !important;
+        }
+
+        .equation {
             font-size: 18pt;
             font-weight: bold;
-            margin-bottom: 20px;
-            color: #49AA91;
+            color: #000 !important;
         }
 
-        /* Add disclaimer footer for print */
+        .equation-values {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .equation-value-label {
+            font-size: 10pt;
+            color: #000 !important;
+        }
+
+        .equation-value-score {
+            font-size: 16pt;
+            font-weight: bold;
+            color: #000 !important;
+        }
+
+        /* Chart container */
+        .chart-container {
+            page-break-inside: avoid;
+            margin: 20px 0;
+        }
+
+        .chart-wrapper canvas {
+            max-width: 100%;
+            max-height: 300px;
+        }
+
+        .score-summary {
+            margin-top: 15px;
+        }
+
+        .score-item-label {
+            font-size: 10pt;
+            color: #000 !important;
+        }
+
+        .score-item-value {
+            font-size: 16pt;
+            font-weight: bold;
+            color: #000 !important;
+        }
+
+        /* Q&A Summary */
+        .qa-summary-container {
+            page-break-before: auto;
+            page-break-inside: avoid;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa !important;
+            border: 1px solid #ddd !important;
+        }
+
+        .qa-summary-container h3 {
+            font-size: 14pt;
+            color: #000 !important;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .qa-summary-container > div > div {
+            padding: 12px;
+            margin-bottom: 10px;
+            background: white !important;
+            border-left: 3px solid #49AA91 !important;
+            page-break-inside: avoid;
+        }
+
+        /* Gaps container */
+        .gaps-container {
+            page-break-before: auto;
+            margin: 20px 0;
+        }
+
+        .gaps-title {
+            font-size: 14pt;
+            font-weight: bold;
+            color: #000 !important;
+            margin-bottom: 15px;
+        }
+
+        .gap-card {
+            page-break-inside: avoid;
+            margin: 10px 0;
+            padding: 15px;
+            border: 1px solid #ddd !important;
+            background: white !important;
+        }
+
+        .gap-card.critical {
+            border-left: 4px solid #dc3545 !important;
+        }
+
+        .gap-card.significant {
+            border-left: 4px solid #f4b943 !important;
+        }
+
+        .gap-card.moderate {
+            border-left: 4px solid #ffc107 !important;
+        }
+
+        .gap-title {
+            font-size: 12pt;
+            font-weight: bold;
+            color: #000 !important;
+        }
+
+        .gap-description {
+            font-size: 10pt;
+            color: #333 !important;
+            margin-top: 8px;
+        }
+
+        /* Recommendation box */
+        .recommendation-box {
+            page-break-inside: avoid;
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid #49AA91 !important;
+            background: #f0f8f6 !important;
+        }
+
+        .recommendation-title {
+            font-size: 11pt;
+            color: #000 !important;
+        }
+
+        .recommendation-service {
+            font-size: 14pt;
+            font-weight: bold;
+            color: #000 !important;
+        }
+
+        .recommendation-tier {
+            font-size: 10pt;
+            color: #333 !important;
+        }
+
+        .recommendation-description {
+            font-size: 10pt;
+            color: #000 !important;
+            margin: 10px 0;
+        }
+
+        .recommendation-features {
+            font-size: 10pt;
+            color: #000 !important;
+        }
+
+        .recommendation-features li {
+            margin: 5px 0;
+            color: #000 !important;
+        }
+
+        /* Hide CTA buttons in print but show text */
+        .btn-cta {
+            display: none !important;
+        }
+
+        /* Next steps */
+        .next-steps {
+            page-break-inside: avoid;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa !important;
+            border: 1px solid #ddd !important;
+        }
+
+        .next-steps-title {
+            font-size: 12pt;
+            font-weight: bold;
+            color: #000 !important;
+        }
+
+        .next-steps-text {
+            font-size: 10pt;
+            color: #000 !important;
+            margin: 8px 0;
+        }
+
+        /* Add comprehensive disclaimer footer */
         .results-container::after {
-            content: "DISCLAIMER: This assessment tool is designed to provide a general indication of organizational readiness and is not a comprehensive crisis management evaluation. Results are based on self-reported information and should not be considered professional advice. This assessment does not constitute a formal consultation, audit, or guarantee of crisis preparedness. For a comprehensive evaluation of your organization's crisis management capabilities, please contact Aftermath Solutions for a professional consultation. © 2025 Aftermath Solutions. All Rights Reserved. Confidential and Proprietary Information.";
+            content: "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\ADISCLAIMER & LEGAL NOTICE\A\ADISCLAIMER: This assessment tool is designed to provide a general indication of organizational readiness and is not a comprehensive crisis management evaluation. Results are based on self-reported information and should not be considered professional advice.\A\AThis assessment does not constitute a formal consultation, audit, or guarantee of crisis preparedness. For a comprehensive evaluation of your organization's crisis management capabilities, please contact Aftermath Solutions for a professional consultation.\A\A© 2025 Aftermath Solutions. All Rights Reserved.\AConfidential and Proprietary Information.\A\AFor more information, visit: www.theaftermathsolutions.com\AContact: info@theaftermathsolutions.com";
             display: block;
-            font-size: 9pt;
+            font-size: 8pt;
             margin-top: 40px;
             padding-top: 20px;
-            border-top: 1px solid #ccc;
-            color: #666;
-            white-space: pre-wrap;
+            border-top: 2px solid #000;
+            color: #333 !important;
+            white-space: pre-line;
+            text-align: center;
+            page-break-before: auto;
         }
 
-        /* Ensure charts and images print properly */
-        canvas, img {
-            max-width: 100%;
-            page-break-inside: avoid;
-        }
-
-        /* Page break control */
-        .equation-box,
-        .recommendation-box,
-        .gaps-container {
-            page-break-inside: avoid;
-        }
-
-        /* Remove background colors for better printing */
+        /* General print optimizations */
         * {
-            background: white !important;
             box-shadow: none !important;
         }
 
-        /* Ensure text is black for readability */
-        body, p, h1, h2, h3, h4, h5, h6, li {
-            color: black !important;
+        a {
+            text-decoration: none;
+            color: #000 !important;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            page-break-after: avoid;
+            color: #000 !important;
+        }
+
+        p {
+            orphans: 3;
+            widows: 3;
         }
     </style>
     <!-- End Print Stylesheet -->
@@ -2902,6 +3133,67 @@
                             <div class="score-item-value">${Math.round(Math.max(...Object.values(scores)))}</div>
                             <div class="score-item-status">${Object.keys(scores).find(key => scores[key] === Math.max(...Object.values(scores)))}</div>
                         </div>
+                    </div>
+                </div>
+            `;
+
+            // Generate Q&A Summary Section
+            html += `
+                <div class="qa-summary-container" style="margin: 40px 0; padding: 30px; background: var(--bg-light); border-radius: 12px;">
+                    <h3 style="font-size: 22px; font-weight: 700; color: var(--text-dark); margin-bottom: 25px; text-align: center;">
+                        Your Assessment Responses
+                    </h3>
+                    <div style="display: grid; gap: 20px;">
+            `;
+
+            // Loop through all answered questions
+            state.questionSequence.forEach(qKey => {
+                const question = questions[qKey];
+                if (!question || question.type === 'consent') return;
+
+                const answer = state.answers[question.id];
+                if (!answer) return;
+
+                // Format the question
+                const questionNumber = question.number ? `Q${question.number}: ` : '';
+                const questionText = question.title;
+
+                // Format the answer
+                let answerText = '';
+                if (question.type === 'single') {
+                    const choice = question.choices.find(c => c.value === answer);
+                    answerText = choice ? choice.text : answer;
+                } else if (question.type === 'multiple') {
+                    if (Array.isArray(answer)) {
+                        answerText = answer.map(val => {
+                            const choice = question.choices.find(c => c.value === val);
+                            return choice ? choice.text : val;
+                        }).join('; ');
+                    } else {
+                        answerText = answer;
+                    }
+                } else if (question.type === 'text') {
+                    answerText = answer;
+                }
+
+                // Add "other" field if applicable
+                if (question.id === 'org_info' && answer === 'other' && state.answers.org_info_other) {
+                    answerText += ` (${state.answers.org_info_other})`;
+                }
+
+                html += `
+                    <div style="padding: 20px; background: white; border-radius: 8px; border-left: 4px solid var(--primary);">
+                        <div style="font-size: 14px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px;">
+                            ${questionNumber}${questionText}
+                        </div>
+                        <div style="font-size: 14px; color: var(--text-medium); line-height: 1.6;">
+                            ${answerText}
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `
                     </div>
                 </div>
             `;
