@@ -1604,7 +1604,7 @@
                 subtitle: 'Select all that apply - answering honestly helps us provide the right recommendations',
                 type: 'multiple',
                 choices: [
-                    { value: 'no_plan', text: 'We don\'t have a clear plan; everyone knows' },
+                    { value: 'no_plan', text: 'We don\'t have a clear plan' },
                     { value: 'coordination', text: 'Coordinating crisis response protocols across teams and departments' },
                     { value: 'communication', text: 'Communicating with staff, families, and media' },
                     { value: 'emotional', text: 'Managing the emotional and psychological impact' },
@@ -1687,6 +1687,12 @@
 
             const html = `
                 <div class="question active consent-screen">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <a href="https://www.theaftermathsolutions.com" target="_blank" style="display: inline-block; color: var(--primary); font-size: 14px; text-decoration: none; margin-bottom: 20px; font-weight: 600;">
+                            ← Back to TheAftermathSolutions.com
+                        </a>
+                    </div>
+
                     <div style="text-align: center; margin-bottom: 30px;">
                         <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 40px; color: white;">
                             √
@@ -1844,6 +1850,26 @@
                     `;
                 });
                 html += '</div>';
+
+                // Add conditional "other" input field for Q8
+                if (question.id === 'org_info') {
+                    const showOtherField = state.answers[question.id] === 'other';
+                    html += `
+                        <div id="other-org-field" style="display: ${showOtherField ? 'block' : 'none'}; margin-top: 20px;">
+                            <div class="input-group">
+                                <label class="input-label" for="org_info_other">Please specify your organization type <span aria-label="required">*</span></label>
+                                <input
+                                    type="text"
+                                    id="org_info_other"
+                                    class="input-field"
+                                    placeholder="e.g., Manufacturing, Retail, Tech Startup"
+                                    value="${state.answers.org_info_other || ''}"
+                                    aria-required="true"
+                                >
+                            </div>
+                        </div>
+                    `;
+                }
             } else if (question.type === 'input') {
                 question.fields.forEach(field => {
                     html += `
@@ -1938,6 +1964,18 @@
                         }
                         state.answerTimestamps[question.id] = new Date().toISOString();
                         wasAnswered = state.answers[question.id].length > 0;
+                    }
+
+                    // Show/hide "other" field for Q8
+                    if (question.id === 'org_info') {
+                        const otherField = document.getElementById('other-org-field');
+                        if (otherField) {
+                            otherField.style.display = value === 'other' ? 'block' : 'none';
+                            if (value !== 'other') {
+                                // Clear the other field value if not selecting "other"
+                                delete state.answers.org_info_other;
+                            }
+                        }
                     }
 
                     // Track answer (without revealing sensitive data)
@@ -2182,6 +2220,18 @@
                 };
             } else {
                 const hasAnswer = state.answers[question.id] !== undefined;
+
+                // Special validation for Q8 "other" option
+                if (question.id === 'org_info' && state.answers[question.id] === 'other') {
+                    const otherValue = state.answers.org_info_other;
+                    if (!otherValue || otherValue.trim() === '') {
+                        return {
+                            isValid: false,
+                            message: 'Please specify your organization type.'
+                        };
+                    }
+                }
+
                 return {
                     isValid: hasAnswer,
                     message: 'Please select an option to continue.'
