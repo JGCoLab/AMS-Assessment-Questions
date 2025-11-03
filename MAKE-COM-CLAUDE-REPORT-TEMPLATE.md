@@ -330,7 +330,7 @@ Goal: Schedule 30-min call within 1 week
    ```
    {{parseJSON(2.body).content[0].text}}
    ```
-5. **Send report to team** via email or Slack
+5. **Send report to team** via email or Google Chat
 6. **Store in HubSpot** contact record as note
 7. **Use insights** to personalize outreach
 

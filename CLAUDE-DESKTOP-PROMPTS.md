@@ -320,7 +320,7 @@ Please design a comprehensive Airtable base structure including:
 
 5. **Integration points** with:
    - HubSpot (via Make.com): When HubSpot deal closes → Create Airtable project
-   - Slack: Notifications for urgent tasks
+   - Google Chat: Notifications for urgent tasks
    - Google Calendar: Sync deliverable due dates
 
 6. **Reporting dashboards** showing:
@@ -434,7 +434,7 @@ DELIVERABLE FORMAT:
 INTEGRATION REQUIREMENTS:
 - Sync with HubSpot (bidirectional if possible)
 - Trigger from Make.com webhook
-- Send Slack notifications for hot leads
+- Send Google Chat notifications for hot leads
 - Export to Google Sheets for team dashboard
 ```
 
@@ -712,7 +712,7 @@ Design a complete Make.com scenario with these requirements:
    **Route 4A Actions (Hot Lead):**
    - Add to HubSpot list "Hot Leads - Immediate Follow-Up"
    - Create Airtable record in "Hot Leads" table
-   - Send Slack notification to #sales channel
+   - Send Google Chat notification to Sales space
    - Send team email alert with contact details
    - Add to Mailchimp with tag "hot-lead"
    - Create HubSpot task "Call within 24 hours" assigned to sales team
@@ -745,7 +745,7 @@ Design a complete Make.com scenario with these requirements:
    - What if Airtable is down? (Log to Google Sheets backup)
 
 5. **Notifications Setup**:
-   - **Slack Channel**: #sales (for hot leads only)
+   - **Google Chat Space**: Sales Alerts (for hot leads only)
    - **Email**: team@aftermathsolutions.com (for ultra-hot leads)
    - **SMS** (optional): If lead_score > 90 (Twilio integration)
 
@@ -852,7 +852,7 @@ Design Make.com scenario to:
    - Task 3: "Send onboarding materials" (Assigned: Admin, Due: Today + 3 days)
 
 8. **Notifications**:
-   - Send Slack message to #projects: "New project created: {{project.name}}"
+   - Send Google Chat message to Projects space: "New project created: {{project.name}}"
    - Email project owner: "You've been assigned to new project: {{project.name}}"
    - Email client: Welcome email with next steps
 
@@ -977,7 +977,7 @@ Create a Make.com scenario that runs on the 1st of each month to generate execut
 8. **Distribution**:
    - After sheet updated, send email to leadership with summary
    - Attach PDF export of dashboard
-   - Slack message to #leadership with link to sheet
+   - Google Chat message to Leadership space with link to sheet
 
 DELIVERABLE FORMAT:
 - Scenario blueprint with all modules
@@ -1008,7 +1008,7 @@ TOOLS IN STACK:
 3. **HubSpot** (CRM, deals, contacts)
 4. **Airtable** (project management, detailed tracking)
 5. **Mailchimp** (email marketing)
-6. **Slack** (team notifications)
+6. **Google Chat** (team notifications)
 7. **Google Workspace** (Calendar, Sheets, Docs)
 8. **Calendly or HubSpot Meetings** (booking)
 
@@ -1060,7 +1060,7 @@ DELIVERABLE FORMAT:
 
 EXAMPLE FLOWS TO MAP:
 1. Assessment submission → HubSpot contact → Mailchimp subscriber → Airtable lead
-2. HubSpot deal closed → Airtable project created → Google Calendar event → Slack notification
+2. HubSpot deal closed → Airtable project created → Google Calendar event → Google Chat notification
 3. Airtable deliverable completed → HubSpot task closed → Client email sent
 ```
 
@@ -1166,7 +1166,7 @@ Create role-based playbooks with daily workflows:
    - Open HubSpot dashboard
    - Review hot leads from yesterday (filtered view)
    - Check deals in "Proposal Sent" stage (follow up if > 3 days)
-   - Review Slack notifications (any hot leads overnight?)
+   - Review Google Chat notifications (any hot leads overnight?)
 
    **End of Day (5:00 PM)**:
    - Update deal stages for any conversations today
@@ -1188,7 +1188,7 @@ Create role-based playbooks with daily workflows:
    **Client Check-ins**:
    - Weekly email to active clients (Monday)
    - Update client health scores in Airtable
-   - Flag any concerns in Slack
+   - Flag any concerns in Google Chat
 
    **End of Day**:
    - Mark completed tasks
@@ -1232,7 +1232,7 @@ Create role-based playbooks with daily workflows:
 5. **Standard Operating Procedures** (SOPs):
 
    **How to Handle New Assessment Lead**:
-   - Step 1: Receive notification (Slack/Email)
+   - Step 1: Receive notification (Google Chat/Email)
    - Step 2: Review lead score and assessment responses in HubSpot
    - Step 3: If hot lead (score ≥ 70), call within 24 hours
    - Step 4: If warm lead, add to email nurture sequence
