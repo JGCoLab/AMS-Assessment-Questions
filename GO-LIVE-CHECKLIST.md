@@ -276,7 +276,41 @@ Before mapping, create these properties in HubSpot:
    - Subject: "🔥 High-Quality Lead Alert: {{organization}}"
    - Body: Include contact info and scores
 
-### 4.8 (OPTIONAL) Add Claude AI Report Generator
+### 4.8 Add Google Sheets Backup & Dashboard
+
+**Purpose:** Backup all assessment data and create a team dashboard
+
+**See detailed guide:** `GOOGLE-SHEETS-BACKUP-DASHBOARD.md`
+
+**Quick setup (10 minutes):**
+
+1. **Create Google Sheet:**
+   - Go to sheets.google.com
+   - Create new spreadsheet: "Aftermath Assessment Master Log"
+   - Create 6 tabs: Raw Data, Email Log, Lead Dashboard, Conversion Funnel, Monthly Summary, Configuration
+   - Add column headers from detailed guide
+
+2. **Add Google Sheets Module in Make.com:**
+   - After HubSpot module, click **"+"**
+   - Search: **"Google Sheets"**
+   - Select: **"Add a Row"**
+   - Connect your Google account
+   - Spreadsheet: "Aftermath Assessment Master Log"
+   - Sheet: "Raw Data"
+   - Map all 35 fields (A-AI) - see MAKE-COM-SETUP-GUIDE.md Section 4
+
+3. **Test:**
+   - Run scenario with test data
+   - Check Google Sheet for new row
+   - Verify HubSpot link works
+   - Share sheet with team
+
+**Benefits:**
+- ✅ Complete backup if HubSpot fails
+- ✅ Team dashboard without HubSpot licenses
+- ✅ Easy reporting and exports
+
+### 4.9 (OPTIONAL) Add Claude AI Report Generator
 
 Follow instructions in `MAKE-COM-CLAUDE-REPORT-TEMPLATE.md` to add AI-powered discovery call prep.
 
@@ -291,7 +325,7 @@ Follow instructions in `MAKE-COM-CLAUDE-REPORT-TEMPLATE.md` to add AI-powered di
 5. Body: Use the prompt template from the file
 6. Parse response and add to HubSpot contact notes
 
-### 4.9 Save & Activate Scenario
+### 4.10 Save & Activate Scenario
 
 1. Click **"Save"** (floppy disk icon)
 2. Toggle **"Scheduling"** to **ON**
@@ -337,7 +371,13 @@ Follow instructions in `MAKE-COM-CLAUDE-REPORT-TEMPLATE.md` to add AI-powered di
    - [ ] Lead score visible
    - [ ] Contact added to correct lists (if they selected newsletter/consultation)
 
-6. **Test Analytics Tracking**
+6. **Check Google Sheets** (if you set it up)
+   - [ ] New row appears in "Raw Data" tab
+   - [ ] All 35 columns populated correctly
+   - [ ] HubSpot link in column AF works
+   - [ ] Timestamp shows correct date/time
+
+7. **Test Analytics Tracking**
    - [ ] Open browser console (F12)
    - [ ] Check for analytics events firing:
      - `consent_accepted`
@@ -490,6 +530,8 @@ Verify latest commit deployed: Should be the one you're about to make.
 4. **Email your list** to announce the assessment
 5. **Set up email sequences** for nurture campaigns
 6. **Train your team** on following up with hot leads
+7. **Monitor Google Sheets dashboard** daily for new leads and follow-up needs
+8. **Review weekly metrics** in "Conversion Funnel" and "Monthly Summary" tabs
 
 ---
 
@@ -509,11 +551,13 @@ Verify latest commit deployed: Should be the one you're about to make.
 - [ ] Vercel deployed with environment variables
 - [ ] Make.com scenario active
 - [ ] HubSpot custom properties created
+- [ ] Google Sheets backup dashboard created and connected
 - [ ] Test submission completed successfully
 - [ ] PDF export working
 - [ ] CTA text is dark and readable
 - [ ] Analytics tracking verified
 - [ ] Team trained on follow-up process
+- [ ] Google Sheets shared with team members
 
 ### Launch Command:
 

@@ -394,7 +394,100 @@ Scroll to **"Additional Properties"** section.
 
 ---
 
-## ✅ SECTION 4: TESTING YOUR SCENARIO
+## 📊 SECTION 4: GOOGLE SHEETS BACKUP & DASHBOARD
+
+**Purpose:** Backup all assessment data and create a team dashboard
+
+**See detailed guide:** `GOOGLE-SHEETS-BACKUP-DASHBOARD.md`
+
+### Quick Setup (10 minutes):
+
+#### Step 1: Create Google Sheet
+
+1. Go to **sheets.google.com**
+2. Create new spreadsheet: **"Aftermath Assessment Master Log"**
+3. Create 6 tabs:
+   - Raw Data
+   - Email Log
+   - Lead Dashboard
+   - Conversion Funnel
+   - Monthly Summary
+   - Configuration
+4. Add column headers from the detailed guide
+
+#### Step 2: Add Google Sheets Module to Make.com
+
+**Add AFTER the HubSpot module (before Router #2):**
+
+1. Click **"+"** after HubSpot module
+2. Search: **"Google Sheets"**
+3. Select: **"Add a Row"**
+4. Connect your Google account
+5. **Spreadsheet:** Select "Aftermath Assessment Master Log"
+6. **Sheet:** Select "Raw Data"
+7. Click **"OK"**
+
+#### Step 3: Map All Fields
+
+**Map these values to columns A-AI:**
+
+| Column | Field | Make.com Value |
+|--------|-------|----------------|
+| A | Timestamp | `{{now}}` |
+| B | Assessment ID | `{{1.assessment_id}}` |
+| C | Name | `{{1.name}}` |
+| D | Email | `{{1.email}}` |
+| E | Organization | `{{1.organization}}` |
+| F | Role | `{{1.role}}` |
+| G | Org Type | `{{1.org_info}}` |
+| H | Org Type Other | `{{1.org_info_other}}` |
+| I | Overall Score | `{{1.overall_score}}` |
+| J | Preparedness Score | `{{1.preparedness_score}}` |
+| K | Response Score | `{{1.response_score}}` |
+| L | Recovery Score | `{{1.recovery_score}}` |
+| M | Support Score | `{{1.support_score}}` |
+| N | Lead Score | `{{1.lead_score}}` |
+| O | Gap Level | `{{1.gap_level}}` |
+| P | Crisis Experience | `{{1.crisis_experience_ever}}` |
+| Q | Crisis Timeline | `{{1.crisis_timeline}}` |
+| R | Timeline Focus | `{{1.timeline_focus}}` |
+| S | Top Gaps | `{{join(1.top_gaps; ", ")}}` |
+| T | Wants Consultation | `{{1.wants_consultation}}` |
+| U | Wants Newsletter | `{{1.wants_newsletter}}` |
+| V | Wants Training | `{{1.wants_training}}` |
+| W | Wants Resources | `{{1.wants_resources}}` |
+| X | Recommended Tier | `{{1.recommended_tier}}` |
+| Y | Recommended Service | `{{1.recommended_service}}` |
+| Z | reCAPTCHA Score | `{{1.recaptcha_score}}` |
+| AA | UTM Source | `{{1.utm_source}}` |
+| AB | UTM Medium | `{{1.utm_medium}}` |
+| AC | UTM Campaign | `{{1.utm_campaign}}` |
+| AD | Referrer | `{{1.referrer}}` |
+| AE | HubSpot Contact ID | `{{2.id}}` |
+| AF | HubSpot Link | `https://app.hubspot.com/contacts/YOUR_PORTAL_ID/contact/{{2.id}}` |
+| AG | Status | `New` |
+| AH | Assigned To | *(leave blank)* |
+| AI | Notes | *(leave blank)* |
+
+**Note:** Replace `YOUR_PORTAL_ID` with your actual HubSpot portal ID (found in HubSpot URL)
+
+#### Step 4: Test Google Sheets Integration
+
+1. Run scenario with test data
+2. Check Google Sheet "Raw Data" tab
+3. Verify new row appears with all data
+4. Click HubSpot link in column AF to verify it works
+5. Share sheet with team members
+
+**Benefits:**
+- ✅ Complete backup if HubSpot fails
+- ✅ Team dashboard without HubSpot licenses
+- ✅ Easy reporting and exports
+- ✅ Free with Google Workspace
+
+---
+
+## ✅ SECTION 5: TESTING YOUR SCENARIO
 
 ### Step 13: Test with Real Data
 
@@ -445,7 +538,7 @@ Scroll to **"Additional Properties"** section.
 
 ---
 
-## 🎯 SECTION 5: ACTIVATE & MONITOR
+## 🎯 SECTION 6: ACTIVATE & MONITOR
 
 ### Step 14: Save and Activate
 
@@ -465,7 +558,7 @@ Scroll to **"Additional Properties"** section.
 
 ---
 
-## 📊 SECTION 6: MONITORING & MAINTENANCE
+## 📊 SECTION 7: MONITORING & MAINTENANCE
 
 ### Daily Checks (First Week):
 
@@ -483,12 +576,19 @@ Scroll to **"Additional Properties"** section.
 1. Verify subscribers are being added
 2. Check tags are applying correctly
 
+**In Google Sheets:**
+1. Check "Raw Data" tab for new entries
+2. Verify all fields are populating
+3. Check HubSpot links work
+
 ### Weekly Checks (Ongoing):
 
 1. Review Make.com operations count (stay under limit)
 2. Check HubSpot for duplicate contacts (merge if found)
 3. Verify Google Chat notifications working
-4. Test with one real submission
+4. Review Google Sheets "Lead Dashboard" for follow-up needs
+5. Update "Conversion Funnel" tab with manual data
+6. Test with one real submission
 
 ---
 
