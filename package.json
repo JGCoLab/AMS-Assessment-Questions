@@ -1,0 +1,13 @@
+{
+  "name": "aftermath-assessment",
+  "version": "1.0.0",
+  "description": "Organizational Resilience Equation Calculator by Aftermath Solutions",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "author": "Aftermath Solutions",
+  "license": "UNLICENSED"
+}
