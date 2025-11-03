@@ -1959,7 +1959,6 @@
                 type: 'multiple',
                 choices: [
                     { value: 'consultation', text: 'Schedule a free 30-minute consultation', icon: '📞' },
-                    { value: 'report', text: 'Send me a detailed assessment report', icon: '📊' },
                     { value: 'resources', text: 'Additional resources and guides', icon: '📚' },
                     { value: 'training', text: 'Learn about training opportunities', icon: '🎯' },
                     { value: 'newsletter', text: 'Add me to your newsletter for tips and insights', icon: '📬' },
@@ -2990,10 +2989,10 @@
                 solving_for: recommendation.solving_for,
 
                 // For internal use
-                needs_report: (state.answers.next_step || []).includes('report'),
                 wants_consultation: (state.answers.next_step || []).includes('consultation'),
                 wants_training: (state.answers.next_step || []).includes('training'),
-                wants_newsletter: (state.answers.next_step || []).includes('newsletter')
+                wants_newsletter: (state.answers.next_step || []).includes('newsletter'),
+                wants_resources: (state.answers.next_step || []).includes('resources')
             };
 
             // Generate reCAPTCHA token and send to serverless proxy

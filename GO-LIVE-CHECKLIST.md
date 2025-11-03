@@ -233,13 +233,39 @@ Before mapping, create these properties in HubSpot:
    - Subject: "Let's discuss your resilience assessment results"
    - Body: Include booking link from `CONFIG.bookingURL`
 
-#### Route 2: Newsletter Signups
+#### Route 2: Newsletter Signups (Auto-Add to Mailchimp!) 📬
+
+**RECOMMENDED SETUP - Mailchimp Auto-Add:**
 
 1. Add another route from the Router
 2. Add filter: `wants_newsletter` **equals** `true`
-3. Add **HubSpot → Add Contact to List**
+3. Add **Mailchimp → Add/Update Subscriber**
+   - **Connection**: Connect your Mailchimp account (click "Add" if first time)
+   - **List**: Select your newsletter list (or create "Aftermath Assessment Subscribers")
+   - **Email Address**: `{{email}}`
+   - **Status**: `Subscribed`
+   - **Merge Fields** (optional but recommended):
+     - `FNAME`: `{{name}}` (or split first name if you have it)
+     - `ORG`: `{{organization}}`
+     - `LEADSCORE`: `{{lead_score}}`
+   - **Tags**: Add tag "assessment-completed" for segmentation
+   - **Double Opt-In**: Set to `No` (they already opted in via assessment)
+
+4. **ALSO** Add **HubSpot → Add Contact to List** in the same route
    - List: Create a list called **"Newsletter Subscribers"**
-4. Or add **Mailchimp/ActiveCampaign** module to add to your newsletter
+   - This keeps HubSpot in sync with Mailchimp
+
+**Alternative: ActiveCampaign or Other ESP**
+- Use the same logic: Filter by `wants_newsletter = true`
+- Connect your ESP module
+- Map email, name, organization
+- Add tags for segmentation
+
+**Why This Matters:**
+- ✅ Automatic list building - no manual work!
+- ✅ Immediate nurture sequence starts
+- ✅ Segmentation by lead score (send different content to hot leads)
+- ✅ Tag allows you to send assessment-specific campaigns
 
 #### Route 3: High Lead Score (Score ≥ 70)
 
