@@ -1210,6 +1210,73 @@
             border: 0;
         }
     </style>
+
+    <!-- Print Stylesheet for PDF Export -->
+    <style media="print">
+        /* Hide navigation elements for print */
+        .assessment-header,
+        .progress-container,
+        .btn,
+        .btn-cta,
+        .btn-secondary,
+        #questionWrapper,
+        #loadingState {
+            display: none !important;
+        }
+
+        /* Ensure results are well-formatted for print */
+        .results-container {
+            padding: 20px;
+            font-size: 12pt;
+        }
+
+        /* Add branding header for print */
+        .results-container::before {
+            content: "Aftermath Solutions - Organizational Resilience Assessment";
+            display: block;
+            font-size: 18pt;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #49AA91;
+        }
+
+        /* Add disclaimer footer for print */
+        .results-container::after {
+            content: "DISCLAIMER: This assessment tool is designed to provide a general indication of organizational readiness and is not a comprehensive crisis management evaluation. Results are based on self-reported information and should not be considered professional advice. This assessment does not constitute a formal consultation, audit, or guarantee of crisis preparedness. For a comprehensive evaluation of your organization's crisis management capabilities, please contact Aftermath Solutions for a professional consultation. © 2025 Aftermath Solutions. All Rights Reserved. Confidential and Proprietary Information.";
+            display: block;
+            font-size: 9pt;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+            color: #666;
+            white-space: pre-wrap;
+        }
+
+        /* Ensure charts and images print properly */
+        canvas, img {
+            max-width: 100%;
+            page-break-inside: avoid;
+        }
+
+        /* Page break control */
+        .equation-box,
+        .recommendation-box,
+        .gaps-container {
+            page-break-inside: avoid;
+        }
+
+        /* Remove background colors for better printing */
+        * {
+            background: white !important;
+            box-shadow: none !important;
+        }
+
+        /* Ensure text is black for readability */
+        body, p, h1, h2, h3, h4, h5, h6, li {
+            color: black !important;
+        }
+    </style>
+    <!-- End Print Stylesheet -->
 </head>
 <body>
     <div class="page-wrapper">
@@ -2913,6 +2980,26 @@
                     <p class="next-steps-text">
                         <strong>Questions?</strong> Email us at <a href="mailto:${CONFIG.contactEmail}" style="color: var(--primary);">${CONFIG.contactEmail}</a>
                     </p>
+                </div>
+            `;
+
+            // PDF download and website link at end
+            html += `
+                <div style="text-align: center; margin-top: 40px; padding-top: 30px; border-top: 2px solid var(--border);">
+                    <p style="font-size: 16px; color: var(--text-medium); margin-bottom: 20px;">
+                        Save your results or learn more about our solutions
+                    </p>
+                    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                        <button class="btn btn-secondary" onclick="window.print()" style="display: inline-flex; align-items: center; gap: 8px;">
+                            <span>📄</span> Download PDF Report
+                        </button>
+                        <a href="https://www.theaftermathsolutions.com"
+                           class="btn btn-secondary"
+                           target="_blank"
+                           style="display: inline-flex; align-items: center; gap: 8px;">
+                            Visit TheAftermathSolutions.com →
+                        </a>
+                    </div>
                 </div>
             `;
 
