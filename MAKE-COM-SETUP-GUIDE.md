@@ -304,32 +304,46 @@ Scroll to **"Additional Properties"** section.
 6. **Contact ID**: `{{2.id}}` (from previous HubSpot module)
 7. Click **"OK"**
 
-#### Action 2: Send Slack Notification (Optional)
+#### Action 2: Send Google Chat Notification
+
+**First, get your Google Chat Webhook URL:**
+
+1. Open **Google Chat** in browser
+2. Go to the space where you want notifications (or create new space: "Sales Alerts")
+3. Click space name → **Apps & integrations**
+4. Click **Webhooks** → **Add webhook**
+5. Name it: "Hot Lead Alerts"
+6. Click **Save**
+7. **Copy the webhook URL** (looks like: `https://chat.googleapis.com/v1/spaces/...`)
+
+**Now in Make.com:**
 
 1. Click **"+"** after list module
-2. Search: **"Slack"**
-3. Choose: **"Create a Message"**
-4. Connect Slack (if not already)
-5. **Channel**: `#sales` (or your channel)
-6. **Text**:
+2. Search: **"HTTP"**
+3. Choose: **"Make a request"**
+4. **URL**: Paste your Google Chat webhook URL
+5. **Method**: `POST`
+6. **Headers**:
+   - Add header: `Content-Type` = `application/json`
+7. **Body type**: `Raw`
+8. **Content type**: `JSON (application/json)`
+9. **Request content**: Paste this:
+
+```json
+{
+  "text": "🔥 *HOT LEAD ALERT!*\n\n*Name:* {{1.name}}\n*Organization:* {{1.organization}}\n*Email:* {{1.email}}\n*Lead Score:* {{1.lead_score}}/100\n*Assessment Score:* {{1.overall_score}}/100\n\n*Wants Consultation:* {{if(1.wants_consultation = true; \"✅ YES\"; \"No\")}}\n\n*Top Gaps:* {{join(1.top_gaps; \", \")}}\n\n*HubSpot:* https://app.hubspot.com/contacts/YOUR_PORTAL_ID/contact/{{2.id}}\n\n🎯 *ACTION REQUIRED: Call within 24 hours!*"
+}
 ```
-🔥 HOT LEAD ALERT!
 
-Name: {{1.name}}
-Organization: {{1.organization}}
-Email: {{1.email}}
-Lead Score: {{1.lead_score}}/100
-Assessment Score: {{1.overall_score}}/100
+**Replace `YOUR_PORTAL_ID`** with your HubSpot portal ID (find in HubSpot URL)
 
-Wants Consultation: {{if(1.wants_consultation = true; "✅ YES"; "No")}}
+10. Click **"OK"**
 
-Top Gaps: {{join(1.top_gaps; ", ")}}
-
-HubSpot: https://app.hubspot.com/contacts/YOUR_PORTAL_ID/contact/{{2.id}}
-
-🎯 ACTION REQUIRED: Call within 24 hours!
-```
-7. Click **"OK"**
+**What the message looks like in Google Chat:**
+- Bold headers with asterisks
+- Line breaks with `\n`
+- Clickable HubSpot link
+- Emoji for visual alerts
 
 #### Action 3: Add to Mailchimp (if wants_newsletter)
 
@@ -426,8 +440,8 @@ HubSpot: https://app.hubspot.com/contacts/YOUR_PORTAL_ID/contact/{{2.id}}
    - ✅ Merge fields populated
 
 **Verify Notifications:**
-1. Check Slack (for hot lead)
-2. Check that warm/cold didn't trigger Slack
+1. Check Google Chat (for hot lead - should receive notification)
+2. Check that warm/cold didn't trigger Google Chat (only hot leads get notified)
 
 ---
 
@@ -473,7 +487,7 @@ HubSpot: https://app.hubspot.com/contacts/YOUR_PORTAL_ID/contact/{{2.id}}
 
 1. Review Make.com operations count (stay under limit)
 2. Check HubSpot for duplicate contacts (merge if found)
-3. Verify Slack notifications working
+3. Verify Google Chat notifications working
 4. Test with one real submission
 
 ---
@@ -584,7 +598,7 @@ When everything is working, you should have:
 - ✅ Contacts assigned to correct type (Hot/Warm/Cold)
 - ✅ Contacts added to appropriate lists
 - ✅ Mailchimp subscribers added with tags
-- ✅ Slack notifications for hot leads
+- ✅ Google Chat notifications for hot leads
 - ✅ No errors in Make.com execution history
 - ✅ No duplicate contacts
 - ✅ Team can see lead data in HubSpot dashboard
