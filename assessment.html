@@ -652,6 +652,11 @@
             color: var(--text-medium);
         }
 
+        /* Hide Q&A Summary on screen - only show in PDF */
+        .qa-summary-container {
+            display: none !important;
+        }
+
         /* Equation Box */
         .equation-box {
             background: linear-gradient(135deg, var(--bg-light), #e9ecef);
@@ -1218,8 +1223,8 @@
         .progress-container,
         #questionWrapper,
         #loadingState,
-        .btn[onclick="window.print()"],
-        button[onclick="window.print()"] {
+        .btn[onclick="printPDFReport()"],
+        button[onclick="printPDFReport()"] {
             display: none !important;
         }
 
@@ -1336,8 +1341,9 @@
             color: #000 !important;
         }
 
-        /* Q&A Summary */
+        /* Q&A Summary - Show in PDF only */
         .qa-summary-container {
+            display: block !important; /* Override screen hiding */
             page-break-before: auto;
             page-break-inside: avoid;
             margin: 20px 0;
@@ -3236,9 +3242,23 @@
                     <ul class="recommendation-features">
                         ${recommendation.features.map(f => `<li>${f}</li>`).join('')}
                     </ul>
-                    ${(state.answers.next_step || []).includes('consultation')
-                        ? `<a href="${CONFIG.bookingURL}" class="btn-cta" target="_blank">Schedule Free Consultation →</a>`
-                        : `<a href="${CONFIG.bookingURL}" class="btn-cta" target="_blank">Discuss Your Solution →</a>`}
+                    <div style="margin-top: 30px; padding-top: 25px; border-top: 1px solid rgba(73, 170, 145, 0.3);">
+                        <p style="font-size: 15px; color: var(--text-medium); margin-bottom: 18px; text-align: center;">
+                            <strong>Ready to strengthen your organization's resilience?</strong><br>
+                            Book a free 30-minute consultation to discuss your results and next steps.
+                        </p>
+                        <a href="${CONFIG.bookingURL}"
+                           class="btn-cta"
+                           target="_blank"
+                           style="font-size: 18px; padding: 16px 40px; display: block; text-align: center;">
+                            ${(state.answers.next_step || []).includes('consultation')
+                                ? '📅 Schedule Your Free Consultation Now →'
+                                : '📅 Book Free Consultation →'}
+                        </a>
+                        <p style="font-size: 13px; color: var(--text-light); margin-top: 12px; text-align: center;">
+                            No obligation • 30-minute strategy session • Expert guidance
+                        </p>
+                    </div>
                 </div>
             `;
 
@@ -3265,10 +3285,24 @@
 
             html += `
                 <div class="next-steps">
-                    <h3 class="next-steps-title">Configuring Your Next Steps</h3>
+                    <h3 class="next-steps-title">Your Next Steps</h3>
                     <p class="next-steps-text">
                         ${getNextStepsMessage()}
                     </p>
+                    <div style="margin: 25px 0; padding: 25px; background: linear-gradient(135deg, rgba(73, 170, 145, 0.1), rgba(73, 170, 145, 0.05)); border-radius: 12px; text-align: center;">
+                        <p style="font-size: 16px; font-weight: 600; color: var(--text-dark); margin-bottom: 15px;">
+                            🎯 Take Action Now
+                        </p>
+                        <p style="font-size: 14px; color: var(--text-medium); margin-bottom: 20px;">
+                            Our crisis preparedness experts are ready to help you build a resilient organization.
+                        </p>
+                        <a href="${CONFIG.bookingURL}"
+                           class="btn btn-primary"
+                           target="_blank"
+                           style="font-size: 17px; padding: 14px 35px; display: inline-block;">
+                            Schedule Free Consultation →
+                        </a>
+                    </div>
                     <p class="next-steps-text">
                         <strong>Questions?</strong> Email us at <a href="mailto:${CONFIG.contactEmail}" style="color: var(--primary);">${CONFIG.contactEmail}</a>
                     </p>
@@ -3282,7 +3316,7 @@
                         Save your results or learn more about our solutions
                     </p>
                     <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                        <button class="btn btn-secondary" onclick="window.print()" style="display: inline-flex; align-items: center; gap: 8px;">
+                        <button class="btn btn-secondary" onclick="printPDFReport()" style="display: inline-flex; align-items: center; gap: 8px;">
                             <span>📄</span> Download PDF Report
                         </button>
                         <a href="https://www.theaftermathsolutions.com"
@@ -3338,6 +3372,17 @@
                     });
                 }, 500);
             }
+        }
+
+        // Print PDF Report - scrolls to top before printing
+        function printPDFReport() {
+            // Scroll to top of the page
+            window.scrollTo(0, 0);
+
+            // Small delay to ensure scroll completes before print dialog
+            setTimeout(() => {
+                window.print();
+            }, 100);
         }
 
         function createRadarChart(scores) {
