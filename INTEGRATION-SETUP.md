@@ -25,7 +25,7 @@ You have a beautiful assessment tool, but it's only **20% of the system you need
 ### **Problem 4: No Consent Tracking System**
 - **Current**: Consent stored in webhook only
 - **Reality**: You need audit trail for legal compliance
-- **Need**: Google Sheets or database for consent records
+- **Need**: Airtable or database for consent records
 
 ### **Problem 5: No Follow-up Automation**
 - **Current**: Manual follow-up required
@@ -41,7 +41,7 @@ Here's what you **actually need** to make this work:
 ```
 User Completes Assessment
          ↓
-1. CONSENT TRACKING → Google Sheets (legal audit trail)
+1. CONSENT TRACKING → Airtable (legal audit trail + backup)
          ↓
 2. WEBHOOK RECEIVER → Make.com automation hub
          ↓
@@ -60,26 +60,29 @@ User Completes Assessment
 
 ## 🛠️ **STEP-BY-STEP SETUP GUIDE**
 
-### **STEP 1: Set Up Google Sheets for Consent Tracking**
+### **STEP 1: Set Up Airtable for Consent Tracking & Backup**
 
-**Why**: Legal requirement to track who consented and when
+**Why**: Legal requirement to track who consented and when + complete data redundancy
 
-**Create Google Sheet with these columns:**
-```
-| Timestamp | Email | Name | Organization | Consent Given | IP Address | Assessment Completed |
-```
+**IMPORTANT: HubSpot is your PRIMARY CRM. Airtable is for backup and verification.**
+
+**Use Existing Airtable Base:**
+- Base: "Lead Pipeline Dashboard" (appt66MN9uPoEOriV)
+- Table: "📊 Assessment Raw Data" (tblMzZTZM7puKj9L0)
+- All fields already configured (see AIRTABLE-ASSESSMENT-TRACKING-SYSTEM.md)
 
 **Make.com Setup:**
 1. Create new scenario in Make.com
 2. Add "Webhooks" trigger (this is your webhook URL)
-3. Add "Google Sheets: Add a row" action
-4. Map fields from webhook to sheet
+3. Add "Airtable: Create a Record" action
+4. Map fields from webhook to Airtable (see detailed guide)
 5. **Get webhook URL** and put it in `assessment.html` line 1044
 
 **Test It:**
 - Complete assessment
-- Check Google Sheet for new row
-- Verify timestamp and consent flag
+- Check Airtable for new record
+- Verify timestamp and all fields populated
+- Compare to HubSpot data for accuracy
 
 ---
 
@@ -111,7 +114,7 @@ organization_type (Dropdown: K-12/Higher Ed/Healthcare/Corporate/etc.)
 
 **Make.com HubSpot Setup:**
 
-After Google Sheets step, add:
+After Airtable step, add:
 
 1. **Module**: HubSpot → Search for a Contact
    - Search by: Email
@@ -584,7 +587,7 @@ Save this as a separate HTML template for report generation:
 1. **Consent Tracking** (CRITICAL)
    - Store: Email, Name, Timestamp, IP address, consent text
    - Retention: 7 years minimum
-   - Access: Audit-ready Google Sheet or database
+   - Access: Audit-ready Airtable base or database
 
 2. **Privacy Policy Link** (CRITICAL)
    - Must be visible on consent screen
@@ -593,8 +596,8 @@ Save this as a separate HTML template for report generation:
 
 3. **Data Security**
    - Webhook must use HTTPS only
-   - HubSpot: Enable 2FA for all users
-   - Google Sheets: Restrict access to team only
+   - HubSpot: Enable 2FA for all users (PRIMARY CRM)
+   - Airtable: Restrict access to team only
    - Make.com: Use API keys, not OAuth
 
 4. **GDPR/CCPA Compliance** (if applicable)
@@ -662,8 +665,8 @@ gtag('event', 'assessment_completed', {
 ### **Before You Launch:**
 
 - [ ] Make.com scenario created and tested
-- [ ] Google Sheets consent tracking working
-- [ ] HubSpot custom properties created
+- [ ] Airtable consent tracking & backup working
+- [ ] HubSpot custom properties created (PRIMARY)
 - [ ] HubSpot workflows created
 - [ ] PDF report generation tested
 - [ ] Team notification email tested
@@ -671,8 +674,8 @@ gtag('event', 'assessment_completed', {
 - [ ] Privacy policy link added to consent screen
 - [ ] Webhook URL added to assessment.html
 - [ ] Test assessment end-to-end 3 times
-- [ ] Verify all data flowing to HubSpot correctly
-- [ ] Verify consent tracked in Google Sheets
+- [ ] Verify all data flowing to HubSpot correctly (PRIMARY)
+- [ ] Verify consent tracked in Airtable (BACKUP)
 - [ ] Verify team gets email notifications
 - [ ] Test with different score scenarios
 
@@ -696,8 +699,8 @@ gtag('event', 'assessment_completed', {
 | Tool | Purpose | Cost |
 |------|---------|------|
 | **Make.com** | Automation hub | $9-29/month (Pro plan) |
-| **Google Sheets** | Consent tracking | Free |
-| **HubSpot CRM** | Contact management | Free (or existing plan) |
+| **Airtable** | Consent tracking & backup | Free (or Plus: $20/mo) |
+| **HubSpot CRM** | Contact management (PRIMARY) | Free (or existing plan) |
 | **PDF.co or CloudConvert** | Report generation | $9-49/month |
 | **Domain & Hosting** | Assessment hosting | Existing |
 | **Google Analytics** | Tracking | Free |
@@ -729,10 +732,10 @@ gtag('event', 'assessment_completed', {
 - **Fix**: Verify API key for PDF service
 - **Fix**: Test with simple HTML first
 
-**Problem**: Consent not tracked in Google Sheets
-- **Fix**: Check Google Sheets module has correct sheet ID
-- **Fix**: Verify column mapping is correct
-- **Fix**: Check permissions on Google Sheet
+**Problem**: Consent not tracked in Airtable
+- **Fix**: Check Airtable module has correct Base ID and Table ID
+- **Fix**: Verify field mapping is correct
+- **Fix**: Check permissions on Airtable base
 
 ---
 
@@ -801,8 +804,8 @@ Create these internal docs:
 
 **Priority Order:**
 1. **THIS WEEK**: Fix recommendation logic + remove confetti + add privacy link (I'm doing this now)
-2. **THIS WEEK**: Set up Make.com → Google Sheets consent tracking
-3. **THIS WEEK**: Set up Make.com → HubSpot integration
+2. **THIS WEEK**: Set up Make.com → Airtable consent tracking & backup
+3. **THIS WEEK**: Set up Make.com → HubSpot integration (PRIMARY CRM)
 4. **NEXT WEEK**: Set up team notification emails
 5. **NEXT WEEK**: Set up client "thank you" emails
 6. **NEXT 2 WEEKS**: Set up PDF report generation

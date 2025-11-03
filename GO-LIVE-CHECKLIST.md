@@ -276,37 +276,38 @@ Before mapping, create these properties in HubSpot:
    - Subject: "🔥 High-Quality Lead Alert: {{organization}}"
    - Body: Include contact info and scores
 
-### 4.8 Add Google Sheets Backup & Dashboard
+### 4.8 Add Airtable Backup & Verification System
 
-**Purpose:** Backup all assessment data and create a team dashboard
+**Purpose:** Backup all assessment data and verify HubSpot data integrity
 
-**See detailed guide:** `GOOGLE-SHEETS-BACKUP-DASHBOARD.md`
+**IMPORTANT:** HubSpot remains your PRIMARY CRM. Airtable is for backup/redundancy only.
+
+**See detailed guide:** `AIRTABLE-ASSESSMENT-TRACKING-SYSTEM.md`
 
 **Quick setup (10 minutes):**
 
-1. **Create Google Sheet:**
-   - Go to sheets.google.com
-   - Create new spreadsheet: "Aftermath Assessment Master Log"
-   - Create 6 tabs: Raw Data, Email Log, Lead Dashboard, Conversion Funnel, Monthly Summary, Configuration
-   - Add column headers from detailed guide
+1. **Access Airtable Base:**
+   - Base already created: "Lead Pipeline Dashboard"
+   - Base ID: `appt66MN9uPoEOriV`
+   - 6 tables already configured (see guide)
 
-2. **Add Google Sheets Module in Make.com:**
+2. **Add Airtable Module in Make.com:**
    - After HubSpot module, click **"+"**
-   - Search: **"Google Sheets"**
-   - Select: **"Add a Row"**
-   - Connect your Google account
-   - Spreadsheet: "Aftermath Assessment Master Log"
-   - Sheet: "Raw Data"
-   - Map all 35 fields (A-AI) - see MAKE-COM-SETUP-GUIDE.md Section 4
+   - Search: **"Airtable"**
+   - Select: **"Create a Record"**
+   - Connect your Airtable account
+   - Base: "Lead Pipeline Dashboard"
+   - Table: "📊 Assessment Raw Data"
+   - Map all fields - see AIRTABLE-ASSESSMENT-TRACKING-SYSTEM.md
 
 3. **Test:**
    - Run scenario with test data
-   - Check Google Sheet for new row
+   - Check Airtable for new record
    - Verify HubSpot link works
-   - Share sheet with team
+   - Compare data between HubSpot and Airtable
 
 **Benefits:**
-- ✅ Complete backup if HubSpot fails
+- ✅ Complete backup if HubSpot data is lost
 - ✅ Team dashboard without HubSpot licenses
 - ✅ Easy reporting and exports
 
@@ -371,10 +372,10 @@ Follow instructions in `MAKE-COM-CLAUDE-REPORT-TEMPLATE.md` to add AI-powered di
    - [ ] Lead score visible
    - [ ] Contact added to correct lists (if they selected newsletter/consultation)
 
-6. **Check Google Sheets** (if you set it up)
-   - [ ] New row appears in "Raw Data" tab
-   - [ ] All 35 columns populated correctly
-   - [ ] HubSpot link in column AF works
+6. **Check Airtable** (if you set it up)
+   - [ ] New record appears in "Assessment Raw Data" table
+   - [ ] All fields populated correctly
+   - [ ] HubSpot link works
    - [ ] Timestamp shows correct date/time
 
 7. **Test Analytics Tracking**
@@ -530,7 +531,7 @@ Verify latest commit deployed: Should be the one you're about to make.
 4. **Email your list** to announce the assessment
 5. **Set up email sequences** for nurture campaigns
 6. **Train your team** on following up with hot leads
-7. **Monitor Google Sheets dashboard** daily for new leads and follow-up needs
+7. **Monitor HubSpot daily** for new leads and follow-up needs (Airtable for weekly verification)
 8. **Review weekly metrics** in "Conversion Funnel" and "Monthly Summary" tabs
 
 ---
@@ -551,13 +552,13 @@ Verify latest commit deployed: Should be the one you're about to make.
 - [ ] Vercel deployed with environment variables
 - [ ] Make.com scenario active
 - [ ] HubSpot custom properties created
-- [ ] Google Sheets backup dashboard created and connected
+- [ ] Airtable backup system created and connected
 - [ ] Test submission completed successfully
 - [ ] PDF export working
 - [ ] CTA text is dark and readable
 - [ ] Analytics tracking verified
 - [ ] Team trained on follow-up process
-- [ ] Google Sheets shared with team members
+- [ ] Airtable base shared with team members
 
 ### Launch Command:
 

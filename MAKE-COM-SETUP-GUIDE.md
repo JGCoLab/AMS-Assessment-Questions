@@ -109,7 +109,7 @@ https://hook.us2.make.com/y7n8tnm51v3hesxlxnn907vhur4iddp9
 1. Click **"Add route"**
 2. Label: **"Spam/Bot Traffic"**
 3. Leave as fallback (no filter)
-4. Add **Google Sheets** or **Airtable** module to log spam submissions
+4. Add **Airtable** module to log spam submissions (for monitoring)
 5. We'll focus on Route 1 for now
 
 ---
@@ -394,96 +394,69 @@ Scroll to **"Additional Properties"** section.
 
 ---
 
-## 📊 SECTION 4: GOOGLE SHEETS BACKUP & DASHBOARD
+## 📊 SECTION 4: AIRTABLE BACKUP & VERIFICATION SYSTEM
 
-**Purpose:** Backup all assessment data and create a team dashboard
+**Purpose:** Backup all assessment data and verify HubSpot data integrity
 
-**See detailed guide:** `GOOGLE-SHEETS-BACKUP-DASHBOARD.md`
+**IMPORTANT:** HubSpot is your PRIMARY CRM. Airtable serves as backup and verification.
+
+**See detailed guide:** `AIRTABLE-ASSESSMENT-TRACKING-SYSTEM.md`
 
 ### Quick Setup (10 minutes):
 
-#### Step 1: Create Google Sheet
+#### Step 1: Access Airtable Base
 
-1. Go to **sheets.google.com**
-2. Create new spreadsheet: **"Aftermath Assessment Master Log"**
-3. Create 6 tabs:
-   - Raw Data
-   - Email Log
-   - Lead Dashboard
-   - Conversion Funnel
-   - Monthly Summary
-   - Configuration
-4. Add column headers from the detailed guide
+**Base already created:**
+- Base Name: "Lead Pipeline Dashboard"
+- Base ID: `appt66MN9uPoEOriV`
+- 6 tables already configured (see detailed guide)
 
-#### Step 2: Add Google Sheets Module to Make.com
+#### Step 2: Add Airtable Module to Make.com
 
 **Add AFTER the HubSpot module (before Router #2):**
 
 1. Click **"+"** after HubSpot module
-2. Search: **"Google Sheets"**
-3. Select: **"Add a Row"**
-4. Connect your Google account
-5. **Spreadsheet:** Select "Aftermath Assessment Master Log"
-6. **Sheet:** Select "Raw Data"
+2. Search: **"Airtable"**
+3. Select: **"Create a Record"**
+4. Connect your Airtable account
+5. **Base:** Select "Lead Pipeline Dashboard"
+6. **Table:** Select "📊 Assessment Raw Data"
 7. Click **"OK"**
 
-#### Step 3: Map All Fields
+#### Step 3: Map All Fields to Airtable
 
-**Map these values to columns A-AI:**
+**Map these values to Airtable fields:**
 
-| Column | Field | Make.com Value |
-|--------|-------|----------------|
-| A | Timestamp | `{{now}}` |
-| B | Assessment ID | `{{1.assessment_id}}` |
-| C | Name | `{{1.name}}` |
-| D | Email | `{{1.email}}` |
-| E | Organization | `{{1.organization}}` |
-| F | Role | `{{1.role}}` |
-| G | Org Type | `{{1.org_info}}` |
-| H | Org Type Other | `{{1.org_info_other}}` |
-| I | Overall Score | `{{1.overall_score}}` |
-| J | Preparedness Score | `{{1.preparedness_score}}` |
-| K | Response Score | `{{1.response_score}}` |
-| L | Recovery Score | `{{1.recovery_score}}` |
-| M | Support Score | `{{1.support_score}}` |
-| N | Lead Score | `{{1.lead_score}}` |
-| O | Gap Level | `{{1.gap_level}}` |
-| P | Crisis Experience | `{{1.crisis_experience_ever}}` |
-| Q | Crisis Timeline | `{{1.crisis_timeline}}` |
-| R | Timeline Focus | `{{1.timeline_focus}}` |
-| S | Top Gaps | `{{join(1.top_gaps; ", ")}}` |
-| T | Wants Consultation | `{{1.wants_consultation}}` |
-| U | Wants Newsletter | `{{1.wants_newsletter}}` |
-| V | Wants Training | `{{1.wants_training}}` |
-| W | Wants Resources | `{{1.wants_resources}}` |
-| X | Recommended Tier | `{{1.recommended_tier}}` |
-| Y | Recommended Service | `{{1.recommended_service}}` |
-| Z | reCAPTCHA Score | `{{1.recaptcha_score}}` |
-| AA | UTM Source | `{{1.utm_source}}` |
-| AB | UTM Medium | `{{1.utm_medium}}` |
-| AC | UTM Campaign | `{{1.utm_campaign}}` |
-| AD | Referrer | `{{1.referrer}}` |
-| AE | HubSpot Contact ID | `{{2.id}}` |
-| AF | HubSpot Link | `https://app.hubspot.com/contacts/YOUR_PORTAL_ID/contact/{{2.id}}` |
-| AG | Status | `New` |
-| AH | Assigned To | *(leave blank)* |
-| AI | Notes | *(leave blank)* |
+See complete field mapping in `AIRTABLE-ASSESSMENT-TRACKING-SYSTEM.md` Section "Make.com Integration".
+
+**Key fields to map:**
+- Assessment ID: `{{1.assessment_id}}`
+- Submission Date: `{{now}}`
+- Name: `{{1.name}}`
+- Email: `{{1.email}}`
+- Organization: `{{1.organization}}`
+- All scores (Overall, Preparedness, Response, Recovery, Support, Lead Score)
+- All preferences (Wants Consultation, Newsletter, Training, Resources)
+- HubSpot Contact ID: `{{2.id}}`
+- HubSpot Link: `https://app.hubspot.com/contacts/YOUR_PORTAL_ID/contact/{{2.id}}`
+- Status: `New`
 
 **Note:** Replace `YOUR_PORTAL_ID` with your actual HubSpot portal ID (found in HubSpot URL)
 
-#### Step 4: Test Google Sheets Integration
+#### Step 4: Test Airtable Integration
 
 1. Run scenario with test data
-2. Check Google Sheet "Raw Data" tab
-3. Verify new row appears with all data
-4. Click HubSpot link in column AF to verify it works
-5. Share sheet with team members
+2. Check Airtable "Assessment Raw Data" table
+3. Verify new record appears with all data
+4. Click HubSpot link to verify it works
+5. Compare data between HubSpot and Airtable for accuracy
 
 **Benefits:**
-- ✅ Complete backup if HubSpot fails
+- ✅ Complete backup if HubSpot data is lost
+- ✅ Data verification and cross-checking
 - ✅ Team dashboard without HubSpot licenses
-- ✅ Easy reporting and exports
-- ✅ Free with Google Workspace
+- ✅ Superior filtering and linked records
+- ✅ Mobile app access
 
 ---
 
@@ -576,18 +549,19 @@ Scroll to **"Additional Properties"** section.
 1. Verify subscribers are being added
 2. Check tags are applying correctly
 
-**In Google Sheets:**
-1. Check "Raw Data" tab for new entries
+**In Airtable:**
+1. Check "Assessment Raw Data" table for new records
 2. Verify all fields are populating
 3. Check HubSpot links work
+4. Compare to HubSpot data to verify accuracy
 
 ### Weekly Checks (Ongoing):
 
 1. Review Make.com operations count (stay under limit)
-2. Check HubSpot for duplicate contacts (merge if found)
+2. Check HubSpot for duplicate contacts (merge if found - HubSpot is PRIMARY)
 3. Verify Google Chat notifications working
-4. Review Google Sheets "Lead Dashboard" for follow-up needs
-5. Update "Conversion Funnel" tab with manual data
+4. Review Airtable "Lead Dashboard" for follow-up needs
+5. Compare HubSpot and Airtable data for discrepancies
 6. Test with one real submission
 
 ---
@@ -708,10 +682,10 @@ When everything is working, you should have:
 ## 📞 NEXT STEPS AFTER THIS IS WORKING
 
 1. ✅ **Set up Mailchimp automations** (welcome series)
-2. ✅ **Create HubSpot workflows** (follow-up tasks)
-3. ✅ **Build Airtable integration** (project tracking)
+2. ✅ **Create HubSpot workflows** (follow-up tasks - HubSpot is PRIMARY)
+3. ✅ **Build Airtable integration** (backup and verification)
 4. ✅ **Add Claude AI report generation** (discovery prep)
-5. ✅ **Set up monthly reporting** (Google Sheets dashboard)
+5. ✅ **Set up monthly reporting** (Analytics dashboard)
 
 **All documented in:** `CLAUDE-DESKTOP-PROMPTS.md`
 

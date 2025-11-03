@@ -432,10 +432,10 @@ DELIVERABLE FORMAT:
 - Reporting dashboard mockup
 
 INTEGRATION REQUIREMENTS:
-- Sync with HubSpot (bidirectional if possible)
+- Sync with HubSpot (PRIMARY CRM - bidirectional if possible)
 - Trigger from Make.com webhook
 - Send Google Chat notifications for hot leads
-- Export to Google Sheets for team dashboard
+- Airtable serves as backup and verification system
 ```
 
 ---
@@ -740,9 +740,9 @@ Design a complete Make.com scenario with these requirements:
    - If `wants_newsletter = false` AND `wants_consultation = false` → Still add to database but mark as "Low Intent"
 
 4. **Error Handling**:
-   - What happens if HubSpot API fails? (Retry logic)
+   - What happens if HubSpot API fails? (Retry logic - HubSpot is PRIMARY)
    - What if email already exists in Mailchimp? (Update, don't duplicate)
-   - What if Airtable is down? (Log to Google Sheets backup)
+   - What if Airtable backup fails? (Log error and send alert to team)
 
 5. **Notifications Setup**:
    - **Google Chat Space**: Sales Alerts (for hot leads only)
@@ -881,6 +881,8 @@ ADDITIONAL CONTEXT:
 
 ```
 I need a Make.com scenario that runs monthly to compile assessment metrics, lead data, and project status into a Google Sheets executive dashboard.
+
+IMPORTANT: HubSpot is the PRIMARY CRM. Airtable is the backup/verification system. Use both for comprehensive reporting.
 
 REPORTING NEEDS:
 - Assessment submissions and conversion rates
@@ -1043,7 +1045,7 @@ Create a complete integration architecture including:
 
 5. **Redundancy & Backup**:
    - What happens if HubSpot API is down?
-   - Backup data stores (Google Sheets as fallback?)
+   - Backup data stores (Airtable is primary backup)
    - How to recover from failed syncs?
 
 6. **Permission & Access Control**:
@@ -1120,7 +1122,7 @@ Design a comprehensive data governance framework:
 
 4. **Archiving Strategy**:
    - When to archive vs. delete?
-   - Where to store archived data? (Separate Airtable base? Google Sheets?)
+   - Where to store archived data? (Separate Airtable base preferred, or export to storage)
    - How long to retain data? (GDPR compliance: right to be forgotten)
 
 5. **Data Enrichment**:
