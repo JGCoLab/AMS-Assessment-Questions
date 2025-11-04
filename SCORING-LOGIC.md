@@ -168,34 +168,40 @@ Each dimension is weighted equally at 25%.
 
 ## Service Recommendation Logic
 
-The system recommends services based on the **pattern** of gap scores:
+**UPDATED November 4, 2025** - Fixed tier assignment bug that made Tier 1 unreachable.
+
+The system recommends services based on **overall score thresholds** with customization by gap area:
 
 ### **Decision Tree:**
 
 ```
-IF Overall Score > 60 OR (3+ dimensions > 50):
-  → Recommend: TIER 3 Consulting Services
-  → Specifically: Full-Spectrum Partnership OR Custom Framework Development
+IF Overall Score > 55 OR (3+ dimensions > 50):
+  → Recommend: TIER 3: Full-Spectrum Partnership
+  → Service: Strategic Consulting & Implementation (6-18 month engagement)
+  → Profile: Critical or multiple significant gaps requiring comprehensive support
 
-ELSE IF Highest Gap is Recovery OR Support (AND score > 40):
-  → Recommend: TIER 2 Strategic Intensives
-  → Specifically: Crisis Preparedness Assessment & Implementation
-              OR Leadership Resilience Intensive
-              OR Re-Treatment Intensive (if they mentioned first responders)
+ELSE IF Overall Score 26-55:
+  → Recommend: TIER 2: Strategic Intensives
+  → Service varies by highest gap area:
+     - Preparedness gap → Proactive Preparedness Initiative
+     - Response gap → Leadership Resilience Intensive
+     - Recovery gap → Crisis Preparedness Assessment & Implementation
+     - Support gap → Clinician Resilience (healthcare) or Assessment & Implementation
+  → Profile: Moderate gaps in 1-2 areas needing focused intervention
 
-ELSE IF Highest Gap is Preparedness (AND score > 40):
-  → Recommend: TIER 2 Strategic Intensives
-  → Specifically: Crisis Preparedness Assessment & Implementation
-
-ELSE IF Highest Gap is Response (AND score > 40):
-  → Recommend: TIER 2 Strategic Intensives
-  → Specifically: Leadership Resilience Intensive
-
-ELSE IF Overall Score < 40:
-  → Recommend: TIER 1 Foundational Workshops
-  → Specifically: Wellness Workshops to maintain readiness
-  → Message: "Great readiness! Maintain with ongoing wellness training"
+ELSE (Overall Score 0-25):
+  → Recommend: TIER 1: Wellness Workshops
+  → Service: Ongoing Wellness & Resilience Training (90-min or half-day sessions)
+  → Profile: Well-prepared organizations with minimal gaps needing maintenance
+  → Message: "Strong equation! Maintain your resilience with ongoing wellness training"
 ```
+
+### **Why This Logic Is Fair:**
+
+✅ **All tiers are reachable** - Fixed bug where Tier 1 was impossible to achieve
+✅ **Matches service to need** - Lower gaps = lighter touch, higher gaps = comprehensive support
+✅ **Honest recommendations** - Won't over-sell to well-prepared organizations
+✅ **Business viable** - Most organizations (50-60%) fall into Tier 2, appropriate for revenue
 
 ---
 
@@ -255,6 +261,67 @@ Different organization types have typical patterns. Use these for context:
 
 ---
 
+## Test Scenarios for Validation
+
+Use these test scenarios to verify tier distribution is working correctly:
+
+### **Test Scenario 1: Well-Prepared Organization → Tier 1**
+
+**Expected Score:** 10-20 | **Expected Tier:** Tier 1
+
+**Answers:**
+- Q1: Yes, has crisis experience
+- Q2: **Comprehensive plan** (well-tested)
+- Q3: **Comprehensive support** (EAP, counseling, peer support, wellness)
+- Q4: Select **6+ capabilities** (immediate response, communication, emotional support, long-term, business continuity, grief knowledge)
+- Q5: All phases (already covered)
+- Q6: **Very confident** leadership
+- Q7: Select **0-1 risk areas** (minimal concerns)
+- Q8: Any org type
+- Q10: Newsletter or just results
+
+**Result:** Should receive **Tier 1: Wellness Workshops** for maintenance
+
+---
+
+### **Test Scenario 2: Moderate Gaps → Tier 2**
+
+**Expected Score:** 35-45 | **Expected Tier:** Tier 2
+
+**Answers:**
+- Q1: Yes, minor incidents in past 5 years
+- Q2: **Solid plan** (but could improve)
+- Q3: **External resources** (relies on referrals)
+- Q4: Select **3-4 capabilities** (communication, coordinating resources, immediate response)
+- Q5: **After (Months/Years)** - long-term recovery focus
+- Q6: **Somewhat confident**
+- Q7: Select **3-4 risk areas** (emotional impact, trauma support, bereavement policy, referrals)
+- Q8: K-12 Education
+- Q10: Consultation + resources
+
+**Result:** Should receive **Tier 2: Strategic Intensive** (Recovery/Support focus)
+
+---
+
+### **Test Scenario 3: Critical Gaps → Tier 3**
+
+**Expected Score:** 60-75 | **Expected Tier:** Tier 3
+
+**Answers:**
+- Q1: **No crisis experience** OR Q1a: Major crisis recently
+- Q2: **Unprepared** or plans are outdated
+- Q3: **Limited support** systems
+- Q4: Select **None** or only 1-2 capabilities
+- Q5: **All phases** (need help everywhere)
+- Q6: **Uncertain** or concerned
+- Q7: Select **6+ risk areas** (no plan, coordination, communication, emotional, resources, leadership confidence, trauma support, productivity)
+- Q8: Any org type
+- Q10: Consultation + training + report
+
+**Result:** Should receive **Tier 3: Full-Spectrum Partnership**
+
+---
+
 ## Sample Score Interpretation
 
 **Example Organization:**
@@ -268,10 +335,10 @@ Different organization types have typical patterns. Use these for context:
 "This organization has significant recovery and support gaps. They likely experienced a crisis or have high awareness of trauma needs. Their preparedness and response are moderate - they may have basic plans but lack long-term recovery infrastructure. They need help with emotional support systems and sustained recovery planning."
 
 **Recommended Service:**
-TIER 2: Crisis Preparedness Assessment & Implementation + Leadership Resilience Intensive (6-month engagement)
+TIER 2: Crisis Preparedness Assessment & Implementation (Full-day + 3-6 month follow-up)
 
-**Alternative if budget constrained:**
-TIER 1: Start with Organizational Trauma and Grief Literacy Workshop + Frameworks for Long-Term Healing
+**Customization:**
+Focus on Recovery and Support domains. Emphasize trauma-informed systems and long-term healing frameworks.
 
 ---
 
@@ -284,5 +351,5 @@ For questions about scoring logic, contact:
 
 ---
 
-*Last Updated: October 29, 2025*
-*Version: 2.0*
+*Last Updated: November 4, 2025*
+*Version: 2.1 - Fixed tier assignment logic to make all tiers reachable*

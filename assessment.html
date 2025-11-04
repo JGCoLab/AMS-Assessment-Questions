@@ -2991,7 +2991,8 @@
                 'support': 'Support Systems'
             }[maxCategory];
 
-            if (overallScore > 60 || highGaps >= 3) {
+            // TIER 3: Critical/Multiple Gaps - Comprehensive Partnership (Score > 55 or 3+ high gaps)
+            if (overallScore > 55 || highGaps >= 3) {
                 return {
                     solving_for: 'Comprehensive Organizational Resilience',
                     tier: 'TIER 3: Full-Spectrum Partnership',
@@ -3008,89 +3009,96 @@
                         'Quarterly evaluation and optimization'
                     ]
                 };
-            } else if (maxCategory === 'recovery' || maxCategory === 'support') {
-                if (state.answers.org_info === 'healthcare' || state.answers.risk_areas?.includes('trauma_support')) {
+            }
+
+            // TIER 2: Moderate Gaps - Focused Strategic Work (Score 25-55)
+            if (overallScore > 25) {
+                // Customize Tier 2 based on primary gap area
+                if (maxCategory === 'recovery' || maxCategory === 'support') {
+                    if (state.answers.org_info === 'healthcare' || state.answers.risk_areas?.includes('trauma_support')) {
+                        return {
+                            solving_for: maxCategoryLabel,
+                            tier: 'TIER 2: Strategic Intensives',
+                            name: 'Clinician Resilience & Moral Injury Recovery',
+                            format: 'Half-day or Full-day immersive',
+                            description: `Specialized intensive for healthcare teams addressing burnout, moral injury, and systematic resilience building.`,
+                            features: [
+                                'Understanding moral injury in healthcare contexts',
+                                'Building individual and organizational resilience',
+                                'Peer support and debriefing protocols',
+                                'Self-care strategies for sustained practice',
+                                'Implementation toolkit and ongoing resources'
+                            ]
+                        };
+                    } else {
+                        return {
+                            solving_for: maxCategoryLabel,
+                            tier: 'TIER 2: Strategic Intensives',
+                            name: 'Crisis Preparedness Assessment & Implementation',
+                            format: 'Full-day engagement + Follow-up',
+                            description: `Deep-dive engagement combining education with implementation support. Apply frameworks with expert guidance to build sustainable recovery and support systems.`,
+                            features: [
+                                'Comprehensive organizational readiness assessment',
+                                'Gap analysis and priority identification',
+                                'Implementation roadmap development',
+                                'Leadership team training and capacity building',
+                                'Follow-up coaching sessions (3-6 months)',
+                                'Customized resource toolkit'
+                            ]
+                        };
+                    }
+                } else if (maxCategory === 'preparedness') {
                     return {
-                        solving_for: maxCategoryLabel,
+                        solving_for: 'Preparedness',
                         tier: 'TIER 2: Strategic Intensives',
-                        name: 'Clinician Resilience & Moral Injury Recovery',
-                        format: 'Half-day or Full-day immersive',
-                        description: `Specialized intensive for healthcare teams addressing burnout, moral injury, and systematic resilience building.`,
+                        name: 'Proactive Preparedness Initiative',
+                        format: 'Full-day intensive + Implementation support',
+                        description: `Immersive program to build systematic readiness before crisis strikes. Develop comprehensive plans, train key personnel, and create a culture of preparedness for ${getOrgTypeText()}.`,
                         features: [
-                            'Understanding moral injury in healthcare contexts',
-                            'Building individual and organizational resilience',
-                            'Peer support and debriefing protocols',
-                            'Self-care strategies for sustained practice',
-                            'Implementation toolkit and ongoing resources'
+                            'Comprehensive threat and vulnerability assessment',
+                            'Crisis response plan development',
+                            'Leadership team training (full-day intensive)',
+                            'Tabletop exercise facilitation',
+                            'Communication protocol establishment',
+                            'Implementation support (6-month follow-up)',
+                            'Annual plan review framework'
                         ]
                     };
-                } else {
+                } else { // response
                     return {
-                        solving_for: maxCategoryLabel,
+                        solving_for: 'Response Capability',
                         tier: 'TIER 2: Strategic Intensives',
-                        name: 'Crisis Preparedness Assessment & Implementation',
-                        format: 'Full-day engagement + Follow-up',
-                        description: `Deep-dive engagement combining education with implementation support. Apply frameworks with expert guidance to build sustainable recovery and support systems.`,
+                        name: 'Leadership Resilience Intensive',
+                        format: '3-session series or Half-day immersive',
+                        description: `Equip your leadership team with systematic tools, training, and confidence to manage critical incidents and lead effectively through crisis.`,
                         features: [
-                            'Comprehensive organizational readiness assessment',
-                            'Gap analysis and priority identification',
-                            'Implementation roadmap development',
-                            'Leadership team training and capacity building',
-                            'Follow-up coaching sessions (3-6 months)',
-                            'Customized resource toolkit'
+                            'Decision-making under pressure frameworks',
+                            'Crisis communication strategies',
+                            'Team coordination and command structure',
+                            'Managing uncertainty and ambiguity',
+                            'Self-care and resilience for leaders',
+                            'Scenario-based practice and application'
                         ]
                     };
                 }
-            } else if (maxCategory === 'preparedness') {
-                return {
-                    solving_for: 'Preparedness',
-                    tier: 'TIER 2: Strategic Intensives',
-                    name: 'Proactive Preparedness Initiative',
-                    format: 'Full-day intensive + Implementation support',
-                    description: `Immersive program to build systematic readiness before crisis strikes. Develop comprehensive plans, train key personnel, and create a culture of preparedness for ${getOrgTypeText()}.`,
-                    features: [
-                        'Comprehensive threat and vulnerability assessment',
-                        'Crisis response plan development',
-                        'Leadership team training (full-day intensive)',
-                        'Tabletop exercise facilitation',
-                        'Communication protocol establishment',
-                        'Implementation support (6-month follow-up)',
-                        'Annual plan review framework'
-                    ]
-                };
-            } else if (maxCategory === 'response') {
-                return {
-                    solving_for: 'Response Capability',
-                    tier: 'TIER 2: Strategic Intensives',
-                    name: 'Leadership Resilience Intensive',
-                    format: '3-session series or Half-day immersive',
-                    description: `Equip your leadership team with systematic tools, training, and confidence to manage critical incidents and lead effectively through crisis.`,
-                    features: [
-                        'Decision-making under pressure frameworks',
-                        'Crisis communication strategies',
-                        'Team coordination and command structure',
-                        'Managing uncertainty and ambiguity',
-                        'Self-care and resilience for leaders',
-                        'Scenario-based practice and application'
-                    ]
-                };
-            } else {
-                return {
-                    solving_for: 'Maintaining Optimal Resilience',
-                    tier: 'TIER 1: Wellness Workshops',
-                    name: 'Ongoing Wellness & Resilience Training',
-                    format: '90-min or Half-day sessions',
-                    description: `Strong equation! Your organization shows solid readiness across most variables. Maintain and enhance your resilience with ongoing wellness training and systematic skill-building.`,
-                    features: [
-                        'Organizational Trauma and Grief Literacy',
-                        'Traumatic Stress Psychoeducation',
-                        'Youth & Family Support workshops',
-                        'Custom wellness programming',
-                        'Quarterly check-ins and refresher training',
-                        'Access to resource library'
-                    ]
-                };
             }
+
+            // TIER 1: Minimal Gaps - Wellness & Maintenance (Score 0-25)
+            return {
+                solving_for: 'Maintaining Optimal Resilience',
+                tier: 'TIER 1: Wellness Workshops',
+                name: 'Ongoing Wellness & Resilience Training',
+                format: '90-min or Half-day sessions',
+                description: `Strong equation! Your organization shows solid readiness across most variables. Maintain and enhance your resilience with ongoing wellness training and systematic skill-building.`,
+                features: [
+                    'Organizational Trauma and Grief Literacy',
+                    'Traumatic Stress Psychoeducation',
+                    'Youth & Family Support workshops',
+                    'Custom wellness programming',
+                    'Quarterly check-ins and refresher training',
+                    'Access to resource library'
+                ]
+            };
         }
 
         function getOrgTypeText() {
