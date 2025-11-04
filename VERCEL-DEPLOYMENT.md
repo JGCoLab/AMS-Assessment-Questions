@@ -4,6 +4,24 @@ Complete guide for deploying your assessment tool to Vercel with secure webhook 
 
 ---
 
+## ⚠️ TROUBLESHOOTING: "Data Not Being Captured"
+
+**Symptom:** Assessment completes, but data doesn't appear in Make.com/HubSpot/Airtable
+
+**Most Common Cause:** Missing `WEBHOOK_URL` environment variable in Vercel
+
+**Fix:**
+1. Open browser console (F12) when testing assessment
+2. Look for error: `❌ SUBMISSION FAILED: 500` or `Configuration error`
+3. If you see this, go to **Vercel Dashboard** → **Settings** → **Environment Variables**
+4. Add `WEBHOOK_URL` = `https://hook.us2.make.com/y7n8tnm51v3hesxlxnn907vhur4iddp9`
+5. **IMPORTANT:** Select all 3 environments (Production, Preview, Development)
+6. Redeploy: `vercel --prod`
+
+**Verification:** After submitting assessment, console should show `✅ SUBMISSION SUCCESSFUL!`
+
+---
+
 ## 🚀 Quick Deployment Steps
 
 ### **1. Install Vercel CLI**
@@ -35,20 +53,24 @@ vercel
 - **Directory:** `./` (current directory)
 - **Override settings?** `N`
 
-### **4. Add Environment Variables**
+### **4. Add Environment Variables** ⚠️ **CRITICAL - REQUIRED FOR DATA CAPTURE**
+
+**⚠️ WITHOUT THESE ENVIRONMENT VARIABLES, ASSESSMENT DATA WILL NOT BE SAVED!**
 
 **Via Vercel Dashboard:**
 
 1. Go to: https://vercel.com/dashboard
 2. Select your project: `aftermath-assessment`
 3. Go to: **Settings** → **Environment Variables**
-4. Add the following variables:
+4. Add the following variables **(ALL ARE REQUIRED)**:
 
 | Variable Name | Value | Environment |
 |--------------|-------|-------------|
-| `WEBHOOK_URL` | `https://hook.us2.make.com/y7n8tnm51v3hesxlxnn907vhur4iddp9` | Production, Preview, Development |
-| `RECAPTCHA_SECRET_KEY` | `YOUR_RECAPTCHA_SECRET_KEY` | Production, Preview, Development |
-| `RATE_LIMIT_MAX` | `10` | Production, Preview, Development |
+| `WEBHOOK_URL` | `https://hook.us2.make.com/y7n8tnm51v3hesxlxnn907vhur4iddp9` | ✅ Production, ✅ Preview, ✅ Development |
+| `RECAPTCHA_SECRET_KEY` | `YOUR_RECAPTCHA_SECRET_KEY` | ✅ Production, ✅ Preview, ✅ Development |
+| `RATE_LIMIT_MAX` | `10` | ✅ Production, ✅ Preview, ✅ Development |
+
+**✅ IMPORTANT:** Make sure to select ALL THREE environments for each variable (Production, Preview, Development)
 
 **Via Vercel CLI:**
 

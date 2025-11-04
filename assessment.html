@@ -1615,7 +1615,7 @@
             contactEmail: 'team@theaftermathsolutions.com',
             totalQuestions: 11, // Including conditional question
             confettiAtQuestion: 5,
-            debug: false, // Set to true for development debugging
+            debug: true, // Set to true for development debugging
             analytics: {
                 enabled: true,
                 ga4MeasurementId: 'G-5N4R0BPSXH', // Google Analytics 4
@@ -3066,6 +3066,12 @@
 
             // Generate reCAPTCHA token and send to serverless proxy
             try {
+                if (CONFIG.debug) {
+                    console.log('=== WEBHOOK SUBMISSION DEBUG ===');
+                    console.log('Webhook Data:', webhookData);
+                    console.log('Submit URL:', CONFIG.submitURL);
+                }
+
                 // Get reCAPTCHA v3 token
                 let recaptchaToken = null;
                 if (typeof grecaptcha !== 'undefined' && CONFIG.recaptcha.siteKey) {
@@ -3074,6 +3080,9 @@
                         recaptchaToken = await grecaptcha.execute(CONFIG.recaptcha.siteKey, {
                             action: 'submit_assessment'
                         });
+                        if (CONFIG.debug) {
+                            console.log('reCAPTCHA token obtained');
+                        }
                     } catch (recaptchaError) {
                         if (CONFIG.debug) {
                             console.error('reCAPTCHA error:', recaptchaError);
@@ -3088,6 +3097,10 @@
                     'g-recaptcha-response': recaptchaToken
                 };
 
+                if (CONFIG.debug) {
+                    console.log('Sending submission to:', CONFIG.submitURL);
+                }
+
                 const response = await fetch(CONFIG.submitURL, {
                     method: 'POST',
                     headers: {
@@ -3099,9 +3112,9 @@
                 if (!response.ok) {
                     // Log error but don't show to user - we already collected their data
                     const errorData = await response.json().catch(() => ({}));
-                    if (CONFIG.debug) {
-                        console.error('Submission error:', response.status, errorData);
-                    }
+                    console.error('❌ SUBMISSION FAILED:', response.status, response.statusText);
+                    console.error('Error details:', errorData);
+                    console.error('This usually means the WEBHOOK_URL environment variable is not set in Vercel');
 
                     // Track failed submission
                     trackEvent('submission_failed', {
@@ -3109,6 +3122,10 @@
                         error: errorData.error || 'unknown'
                     });
                 } else {
+                    console.log('✅ SUBMISSION SUCCESSFUL!');
+                    const responseData = await response.json().catch(() => ({}));
+                    console.log('Response:', responseData);
+
                     // Track successful submission
                     trackEvent('assessment_completed', {
                         assessment_id: assessmentId,
@@ -3138,6 +3155,18 @@
         }
 
         function displayResults(scores, overallScore, gaps, recommendation) {
+            // Debug logging
+            if (CONFIG.debug) {
+                console.log('=== DISPLAY RESULTS DEBUG ===');
+                console.log('Scores:', scores);
+                console.log('Overall Score:', overallScore);
+                console.log('Gaps:', gaps);
+                console.log('Recommendation:', recommendation);
+                console.log('State:', state);
+                console.log('State answers:', state.answers);
+                console.log('Question sequence:', state.questionSequence);
+            }
+
             // Clear saved state since assessment is complete
             clearSavedState();
 
@@ -3405,6 +3434,11 @@
 
             document.getElementById('resultsContainer').innerHTML = html;
             document.getElementById('resultsContainer').classList.add('active');
+
+            if (CONFIG.debug) {
+                console.log('✅ Results HTML rendered successfully');
+                console.log('Results container is now active');
+            }
 
             // Track results view
             trackEvent('results_view', {
