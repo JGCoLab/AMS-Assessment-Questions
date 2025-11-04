@@ -169,27 +169,37 @@ If the new webhook URL is different, you'll need to update your Vercel environme
 | **Website** | Leave blank |
 | **Phone Number** | Leave blank |
 
-**Click "Show advanced settings" and map custom properties:**
+**⚠️ IMPORTANT: Property Names Don't Match!**
 
-| Custom Property | Webhook Field | Notes |
-|-----------------|---------------|-------|
-| `lead_score` | `lead_score` | Number (0-100) |
-| `overall_score` | `overall_score` | Number (0-100) |
-| `preparedness_score` | `preparedness_score` | Number |
-| `response_score` | `response_score` | Number |
-| `recovery_score` | `recovery_score` | Number |
-| `support_score` | `support_score` | Number |
-| `gap_level` | `gap_level` | Text (critical/significant/moderate/minor) |
-| `recommended_service` | `recommended_service` | Text |
-| `recommended_tier` | `recommended_tier` | Text |
-| `wants_consultation` | `wants_consultation` | Boolean |
-| `wants_newsletter` | `wants_newsletter` | Boolean |
-| `assessment_id` | `assessment_id` | Text |
-| `assessment_date` | `assessment_completed` | Date/time |
-| `organization_type` | `org_info` | Text |
-| `crisis_experience` | `crisis_experience_ever` | Text |
+Your assessment sends field names like `overall_score`, `response_score`, but your HubSpot properties use names like `assessment_total_score`, `assessment_score_communication`.
 
-**Note:** If you haven't created these custom properties in HubSpot yet, see "HubSpot Properties Setup" section at the end of this guide.
+**See HUBSPOT-PROPERTY-MAPPING.md for the CORRECT mappings!**
+
+**Quick Reference - Existing Properties (Map these first):**
+
+| HubSpot Property | Webhook Field | Formula |
+|------------------|---------------|---------|
+| `lead_score` | `lead_score` | `{{3.lead_score}}` |
+| `gap_category` | `gap_level` | `{{3.gap_level}}` |
+| `recommended_service` | `recommended_service` | `{{3.recommended_service}}` |
+| `priority_level` | *(calculated)* | `{{if(3.lead_score >= 80; "A+"; if(3.lead_score >= 70; "A"; if(3.lead_score >= 50; "B"; "C")))}}` |
+
+**Phase 2 Properties (Create these in HubSpot first!):**
+
+| HubSpot Property | Webhook Field | Formula |
+|------------------|---------------|---------|
+| `assessment_completion_status` | *(set manually)* | Type: `Completed` |
+| `assessment_score_preparedness` | `preparedness_score` | `{{3.preparedness_score}}` |
+| `assessment_score_communication` | `response_score` | `{{3.response_score}}` ⚠️ Different name! |
+| `assessment_score_capacity` | `support_score` | `{{3.support_score}}` ⚠️ Different name! |
+| `assessment_score_resilience` | `recovery_score` | `{{3.recovery_score}}` ⚠️ Different name! |
+| `assessment_total_score` | `overall_score` | `{{3.overall_score}}` ⚠️ Different name! |
+| `assessment_completion_date` | `assessment_completed` | `{{3.assessment_completed}}` |
+| `recommended_tier` | `recommended_tier` | `{{3.recommended_tier}}` |
+
+**Replace "3" with your webhook module number!**
+
+**For complete property setup instructions:** See `HUBSPOT-PROPERTY-MAPPING.md`
 
 10. Click **"OK"**
 
