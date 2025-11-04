@@ -2811,6 +2811,174 @@
             return gaps.slice(0, 3);
         }
 
+        function identifyGranularGap(scores) {
+            // Score each of the 16 granular gaps based on user responses
+            const granularGaps = {
+                // PREPAREDNESS DOMAIN
+                'preparedness__crisis_plan_missing': 0,
+                'preparedness__plan_not_tested': 0,
+                'preparedness__leadership_not_trained': 0,
+                'preparedness__staff_not_trained': 0,
+
+                // COMMUNICATION DOMAIN (maps to response)
+                'communication__internal_breakdown': 0,
+                'communication__external_messaging_weak': 0,
+                'communication__stakeholder_management': 0,
+                'communication__media_relations': 0,
+
+                // CAPACITY DOMAIN (maps to support)
+                'capacity__insufficient_staffing': 0,
+                'capacity__inadequate_resources': 0,
+                'capacity__funding_constraints': 0,
+                'capacity__infrastructure_gaps': 0,
+
+                // RESILIENCE DOMAIN (maps to recovery)
+                'resilience__no_longterm_plan': 0,
+                'resilience__trauma_response_missing': 0,
+                'resilience__staff_wellness_neglected': 0,
+                'resilience__organizational_culture_issues': 0
+            };
+
+            // Q2: Crisis Readiness
+            if (state.answers.crisis_readiness === 'unprepared') {
+                granularGaps['preparedness__crisis_plan_missing'] += 30;
+            } else if (state.answers.crisis_readiness === 'outdated' || state.answers.crisis_readiness === 'might_have') {
+                granularGaps['preparedness__plan_not_tested'] += 20;
+            }
+
+            // Q6: Leadership Readiness
+            if (state.answers.leadership_readiness === 'concerned') {
+                granularGaps['preparedness__leadership_not_trained'] += 28;
+            } else if (state.answers.leadership_readiness === 'uncertain') {
+                granularGaps['preparedness__leadership_not_trained'] += 20;
+            } else if (state.answers.leadership_readiness === 'somewhat_confident') {
+                granularGaps['preparedness__leadership_not_trained'] += 10;
+            }
+
+            // Q3: Support Systems
+            if (state.answers.support_systems === 'limited') {
+                granularGaps['capacity__inadequate_resources'] += 25;
+                granularGaps['resilience__staff_wellness_neglected'] += 20;
+            } else if (state.answers.support_systems === 'informal') {
+                granularGaps['resilience__staff_wellness_neglected'] += 15;
+            } else if (state.answers.support_systems === 'external') {
+                granularGaps['capacity__inadequate_resources'] += 10;
+            } else if (state.answers.support_systems === 'varies') {
+                granularGaps['resilience__organizational_culture_issues'] += 15;
+            }
+
+            // Q4: Capability Assessment (negative scoring - what they DON'T have)
+            const capabilities = state.answers.capability_assessment || [];
+            if (capabilities.includes('none') || capabilities.length === 0) {
+                granularGaps['preparedness__staff_not_trained'] += 15;
+                granularGaps['communication__internal_breakdown'] += 15;
+                granularGaps['resilience__no_longterm_plan'] += 15;
+                granularGaps['capacity__infrastructure_gaps'] += 15;
+            } else {
+                if (!capabilities.includes('immediate_response')) {
+                    granularGaps['preparedness__staff_not_trained'] += 8;
+                }
+                if (!capabilities.includes('communication')) {
+                    granularGaps['communication__internal_breakdown'] += 8;
+                }
+                if (!capabilities.includes('long_term')) {
+                    granularGaps['resilience__no_longterm_plan'] += 10;
+                }
+                if (!capabilities.includes('business_continuity')) {
+                    granularGaps['capacity__infrastructure_gaps'] += 8;
+                }
+                if (!capabilities.includes('grief_knowledge')) {
+                    granularGaps['resilience__trauma_response_missing'] += 8;
+                }
+                if (!capabilities.includes('emotional_support')) {
+                    granularGaps['resilience__staff_wellness_neglected'] += 8;
+                }
+            }
+
+            // Q5: Timeline Focus
+            if (state.answers.timeline_focus === 'before') {
+                granularGaps['preparedness__crisis_plan_missing'] += 12;
+                granularGaps['preparedness__plan_not_tested'] += 10;
+            } else if (state.answers.timeline_focus === 'during') {
+                granularGaps['communication__internal_breakdown'] += 12;
+                granularGaps['communication__external_messaging_weak'] += 10;
+            } else if (state.answers.timeline_focus === 'after_short') {
+                granularGaps['resilience__trauma_response_missing'] += 12;
+            } else if (state.answers.timeline_focus === 'after_long') {
+                granularGaps['resilience__no_longterm_plan'] += 15;
+            }
+
+            // Q7: Risk Areas (multiple selection - most detailed mapping)
+            const risks = state.answers.risk_areas || [];
+            if (risks.includes('no_plan')) {
+                granularGaps['preparedness__crisis_plan_missing'] += 18;
+            }
+            if (risks.includes('coordination')) {
+                granularGaps['communication__internal_breakdown'] += 15;
+            }
+            if (risks.includes('communication')) {
+                granularGaps['communication__external_messaging_weak'] += 12;
+            }
+            if (risks.includes('crisis_comms')) {
+                granularGaps['communication__media_relations'] += 15;
+            }
+            if (risks.includes('emotional')) {
+                granularGaps['resilience__trauma_response_missing'] += 15;
+            }
+            if (risks.includes('resources')) {
+                granularGaps['capacity__inadequate_resources'] += 10;
+            }
+            if (risks.includes('leadership_confidence')) {
+                granularGaps['preparedness__leadership_not_trained'] += 15;
+            }
+            if (risks.includes('trauma_support')) {
+                granularGaps['resilience__trauma_response_missing'] += 18;
+            }
+            if (risks.includes('referrals')) {
+                granularGaps['capacity__infrastructure_gaps'] += 12;
+            }
+            if (risks.includes('reputation')) {
+                granularGaps['communication__stakeholder_management'] += 10;
+            }
+            if (risks.includes('bereavement_policy')) {
+                granularGaps['resilience__organizational_culture_issues'] += 12;
+            }
+            if (risks.includes('productivity')) {
+                granularGaps['capacity__insufficient_staffing'] += 10;
+            }
+
+            // Find the highest scoring granular gap
+            let topGranularGap = null;
+            let highestScore = 0;
+
+            Object.keys(granularGaps).forEach(gapKey => {
+                if (granularGaps[gapKey] > highestScore) {
+                    highestScore = granularGaps[gapKey];
+                    topGranularGap = gapKey;
+                }
+            });
+
+            // Determine high-level category based on granular gap
+            let highLevelCategory = 'preparedness';
+            if (topGranularGap) {
+                if (topGranularGap.startsWith('preparedness__')) {
+                    highLevelCategory = 'preparedness';
+                } else if (topGranularGap.startsWith('communication__')) {
+                    highLevelCategory = 'response';
+                } else if (topGranularGap.startsWith('capacity__')) {
+                    highLevelCategory = 'support';
+                } else if (topGranularGap.startsWith('resilience__')) {
+                    highLevelCategory = 'long-term recovery';
+                }
+            }
+
+            return {
+                granular_gap: topGranularGap || 'preparedness__crisis_plan_missing',
+                high_level_category: highLevelCategory,
+                gap_score: highestScore
+            };
+        }
+
         function recommendService(scores, overallScore) {
             const highGaps = Object.values(scores).filter(s => s > 50).length;
             const maxScore = Math.max(...Object.values(scores));
@@ -2964,6 +3132,7 @@
             const scores = calculateDetailedScores();
             const overallScore = calculateOverallScore(scores);
             const gaps = identifyGaps(scores);
+            const granularGapData = identifyGranularGap(scores);
             const recommendation = recommendService(scores, overallScore);
 
             // Calculate durations
@@ -3048,9 +3217,11 @@
                 // All answers
                 ...state.answers,
 
-                // Identified gaps
+                // Identified gaps (granular for HubSpot)
                 top_gaps: gaps.map(g => g.title),
                 highest_gap_area: gaps.length > 0 ? gaps[0].key : null,
+                gap_category: granularGapData.high_level_category,
+                assessment_top_gap: granularGapData.granular_gap,
 
                 // Recommendation (NO PRICING)
                 recommended_tier: recommendation.tier,
