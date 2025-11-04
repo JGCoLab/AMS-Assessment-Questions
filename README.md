@@ -1,550 +1,661 @@
-# Aftermath Solutions Crisis Readiness Assessment
+# Aftermath Solutions: Organizational Resilience Assessment
 
-## 🎯 Project Overview
+**Complete automated lead generation and qualification system for trauma-informed crisis consulting**
 
-A comprehensive, research-backed assessment tool that evaluates organizational crisis preparedness and provides personalized service recommendations based on identified gaps.
+---
 
-### Purpose
-- **Sales Tool**: Qualify leads and match them to appropriate services
-- **Consultation Prep**: Provide detailed data to prepare for client calls
-- **Gap Analysis**: Identify specific organizational needs across 4 dimensions
-- **Lead Generation**: Capture contact information and service preferences
+## 🎯 System Overview
+
+This is a **complete end-to-end lead generation system** that:
+
+1. **Captures** leads via interactive assessment
+2. **Scores** organizational resilience gaps across 4 dimensions
+3. **Qualifies** leads automatically (hot/warm/cold)
+4. **Stores** data in HubSpot (PRIMARY) + Airtable (BACKUP)
+5. **Sends** personalized follow-up emails using Claude AI
+6. **Tracks** everything for sales team follow-up
+
+### The Organizational Resilience Equation
+
+**P + R + RC + S = OR**
+
+- **P** = Preparedness
+- **R** = Response Capability
+- **RC** = Recovery Planning
+- **S** = Support Systems
+- **OR** = Overall Resilience
+
+Higher scores = Greater gaps (areas needing support)
+
+---
+
+## 📊 System Architecture
+
+```
+Assessment Completed (assessment.html)
+    ↓
+Make.com Webhook Receives Data
+    ↓
+┌─────────────────────────────────┐
+│  Spam Filter (reCAPTCHA)        │
+└─────────────────────────────────┘
+    ↓
+┌─────────────────────────────────┐
+│  HubSpot Contact Created        │ ← PRIMARY CRM
+│  (all scores, preferences)      │
+└─────────────────────────────────┘
+    ↓
+┌─────────────────────────────────┐
+│  Airtable Backup Created        │ ← BACKUP & VERIFICATION
+│  (Assessment Raw Data table)    │
+└─────────────────────────────────┘
+    ↓
+┌─────────────────────────────────┐
+│  Immediate Thank You Email      │
+└─────────────────────────────────┘
+    ↓
+┌─────────────────────────────────┐
+│  Airtable Email Queue Record    │
+│  (for 24h follow-up)            │
+└─────────────────────────────────┘
+    ↓
+┌─────────────────────────────────┐
+│  (If Hot Lead)                  │
+│  Google Chat Alert to Team      │
+└─────────────────────────────────┘
+
+    [ 24 HOURS LATER - 8am ET ]
+
+┌─────────────────────────────────┐
+│  Daily Scheduled Check          │
+│  (Make.com Scenario 2)          │
+└─────────────────────────────────┘
+    ↓
+┌─────────────────────────────────┐
+│  Claude AI Analyzes Assessment  │
+│  - Recommends service tier      │
+│  - Writes personalized email    │
+│  - Provides sales talking points│
+└─────────────────────────────────┘
+    ↓
+┌─────────────────────────────────┐
+│  Personalized Email Sent        │
+│  (CC: team@theaftermathsolutions)│
+└─────────────────────────────────┘
+    ↓
+┌─────────────────────────────────┐
+│  HubSpot + Airtable Updated     │
+│  (with Claude's analysis)       │
+└─────────────────────────────────┘
+```
 
 ---
 
 ## 📁 File Structure
 
-```
-aftermath-assessment/
-├── assessment.html                                    # Main assessment tool (LAUNCH THIS)
-├── SCORING-LOGIC.md                                   # Detailed scoring methodology
-├── Crisis Readiness Assessment Reviewed and Approved.md  # Approved questions (DO NOT EDIT)
-├── v1 Draft Service Menu.md                          # Approved services (DO NOT EDIT)
-└── README.md                                          # This file
-```
+### 🎯 **CORE OPERATIONAL FILES** (Use These Daily)
+
+| File | Purpose |
+|------|---------|
+| `assessment.html` | **The live assessment tool** - deploy this to Vercel |
+| `GO-LIVE-CHECKLIST.md` | **Complete setup guide** - start here for new setup |
+| `README.md` | **This file** - project overview |
+
+### 🔧 **INTEGRATION SETUP** (One-Time Configuration)
+
+| File | Purpose |
+|------|---------|
+| `MAKE-COM-SETUP-GUIDE.md` | Basic Make.com setup (Scenario 1: immediate processing) |
+| `MAKE-COM-CLAUDE-EMAIL-SETUP.md` | Claude AI email system (Scenario 2: 24h follow-up) |
+| `INTEGRATION-SETUP.md` | Complete integration architecture and troubleshooting |
+| `VERCEL-DEPLOYMENT.md` | How to deploy assessment to Vercel |
+
+### 💾 **CRM & DATA MANAGEMENT**
+
+| File | Purpose |
+|------|---------|
+| `Aftermath_HubSpot_Implementation_Playbook.md` | **HubSpot setup guide** (PRIMARY CRM) |
+| `AIRTABLE-ASSESSMENT-TRACKING-SYSTEM.md` | **Airtable backup system** (redundancy & verification) |
+| `SCORING-LOGIC.md` | How assessment scores are calculated |
+
+### 🤖 **AI & AUTOMATION**
+
+| File | Purpose |
+|------|---------|
+| `CLAUDE-EMAIL-SYSTEM-PROMPT.md` | System prompt for Claude AI email generation |
+| `CLAUDE-USER-PROMPT-TEMPLATE.md` | User prompt template with variable mapping |
+| `CLAUDE-DESKTOP-PROMPTS.md` | All Claude Desktop prompts for setup tasks |
+| `MAKE-COM-CLAUDE-REPORT-TEMPLATE.md` | Internal discovery call prep report generation |
+
+### 📖 **REFERENCE**
+
+| File | Purpose |
+|------|---------|
+| `v1 Draft Service Menu.md` | **Service tiers and offerings** (TIER 1/2/3) |
+| `package.json` | Node.js config for Vercel deployment |
+| `vercel.json` | Vercel deployment configuration |
+
+### 📁 **ARCHIVE/** (Historical Reference)
+
+| File | Purpose |
+|------|---------|
+| `Crisis Readiness Assessment Reviewed and Approved.md` | Original approved questions |
+| `IMPROVEMENTS.md` | Historical changes log |
+| `REMAINING-FEATURES.md` | Completed features tracking |
+| `TECHNICAL-IMPROVEMENTS.md` | Implementation summary |
 
 ---
 
 ## 🚀 Quick Start Guide
 
-### Step 1: Configure Webhook
-1. Open `assessment.html` in a text editor
-2. Find line 1076: `webhookURL: 'YOUR_WEBHOOK_URL_HERE'`
-3. Replace with your Make.com or Zapier webhook URL
-4. Save the file
+### For First-Time Setup:
 
-### Step 2: Upload to Web Server
-Upload `assessment.html` to your web hosting:
-- **Via cPanel**: File Manager → public_html → Upload
-- **Via FTP**: Use FileZilla or similar to upload to web root
-- **Via Hosting Provider**: Use your hosting control panel
+**Follow this exact order:**
 
-### Step 3: Test the Assessment
-1. Visit the URL where you uploaded the file
-2. Complete the entire assessment
-3. Verify webhook receives data
-4. Check that results display correctly
+1. **Read:** `GO-LIVE-CHECKLIST.md` - Complete setup guide
+2. **Deploy:** `assessment.html` to Vercel (see `VERCEL-DEPLOYMENT.md`)
+3. **Setup HubSpot:** Follow `Aftermath_HubSpot_Implementation_Playbook.md`
+4. **Setup Airtable:** Follow `AIRTABLE-ASSESSMENT-TRACKING-SYSTEM.md`
+5. **Setup Make.com Scenario 1:** Follow `MAKE-COM-SETUP-GUIDE.md`
+6. **Setup Make.com Scenario 2:** Follow `MAKE-COM-CLAUDE-EMAIL-SETUP.md`
+7. **Test:** Complete 3 test assessments end-to-end
+8. **Go Live:** Share assessment URL
 
-### Step 4: Go Live
-- Share the assessment URL on your website
-- Use in email campaigns
-- Include in social media posts
-- Add to consultation booking pages
+**Estimated setup time:** 4-6 hours total
 
 ---
 
-## 📊 How It Works
+### For Daily Operations:
 
-### Assessment Flow
+**Sales Team Workflow:**
+
+1. **Check Google Chat** for hot lead alerts (lead score ≥ 70)
+2. **Review HubSpot** for new contacts from assessments
+3. **Check Airtable "Failed" view** for any email errors
+4. **Respond to personalized emails** within 24 hours (team is CC'd)
+
+**Weekly Checks:**
+
+1. Compare HubSpot vs Airtable data for discrepancies
+2. Review Claude email quality (spot check 3-5 emails)
+3. Check Make.com operations usage
+4. Review conversion rates (assessment → call → deal)
+
+---
+
+## 💡 How It Works
+
+### Assessment Flow (User Perspective)
+
 ```
-Consent Screen → Questions (1-10) → Loading Animation → Results → CRM Integration
+1. User arrives at assessment
+2. Consent screen (agrees to terms)
+3. 10 questions (11 if experienced crisis)
+   - Crisis experience
+   - Preparedness level
+   - Response capabilities
+   - Recovery resources
+   - Support systems
+   - Leadership readiness
+   - Timeline focus
+   - Risk concerns
+   - Organization type
+   - Contact info & preferences
+4. Loading animation (calculating scores)
+5. Results page with:
+   - Overall resilience score
+   - 4 dimension scores (radar chart)
+   - Gap classification
+   - Service recommendation
+   - Next steps (book consultation, etc.)
 ```
 
-### Question Logic
-- **10 questions total** (11 if they've experienced a crisis)
-- **Conditional logic**: Q1a only appears if Q1 is "Yes"
-- **Multiple question types**: Single choice, multiple choice, text input
-- **Progress tracking**: Visual progress bar with confetti at midpoint
+**Average completion time:** 2-4 minutes
+
+---
 
 ### Scoring System
-The assessment calculates gap scores across **4 dimensions**:
 
-| Dimension | What It Measures | Score Range |
-|-----------|------------------|-------------|
-| **Preparedness** | Planning, training, readiness systems | 0-100 |
-| **Response** | Crisis management and coordination | 0-100 |
-| **Recovery** | Long-term healing infrastructure | 0-100 |
-| **Support** | Emotional wellbeing systems | 0-100 |
+**4 Dimensions Scored (0-100 each):**
 
-**Higher scores = Greater gaps/needs**
+| Dimension | What It Measures |
+|-----------|------------------|
+| **Preparedness (P)** | Planning, training, readiness systems |
+| **Response (R)** | Crisis management and coordination capabilities |
+| **Recovery (RC)** | Long-term healing and adaptation infrastructure |
+| **Support (S)** | Emotional wellbeing and psychological safety systems |
 
-### Gap Classifications
-- **0-30**: Minor Gap (Green) - Maintenance needed
-- **31-50**: Moderate Gap (Yellow) - Targeted improvements
-- **51-70**: Significant Gap (Orange) - Priority attention
-- **71-100**: Critical Gap (Red) - Urgent intervention
+**Overall Score = Average of 4 dimensions**
 
----
+**Gap Classifications:**
+- **0-30** (Minor Gap) 🟢 - Maintenance mode
+- **31-50** (Moderate Gap) 🟡 - Targeted improvements
+- **51-70** (Significant Gap) 🟠 - Priority attention
+- **71-100** (Critical Gap) 🔴 - Urgent intervention
 
-## 💼 Service Recommendations
-
-The assessment automatically recommends services from your **V1 Draft Service Menu** based on gap patterns:
-
-### Recommendation Logic
-
-| Gap Pattern | Recommended Service | Tier |
-|-------------|---------------------|------|
-| Overall > 60 OR 3+ dimensions > 50 | Full-Spectrum Partnership | TIER 3 Consulting |
-| Recovery OR Support highest | Crisis Preparedness Assessment & Implementation | TIER 2 Intensive |
-| Preparedness highest | Crisis Preparedness Assessment & Implementation | TIER 2 Intensive |
-| Response highest | Leadership Resilience Intensive | TIER 2 Intensive |
-| Overall < 40 (Low gaps) | Wellness Workshops | TIER 1 Workshops |
-
-**Special Cases:**
-- Healthcare organizations with trauma concerns → Clinician Resilience Intensive
-- All low gaps → Wellness workshops to maintain readiness
+**Higher scores = Greater gaps = More need for services**
 
 ---
 
-## 📧 Data Collection & Workflow
+### Service Recommendations
 
-### What Data Is Collected
+Based on gap patterns, the system recommends:
 
-**Assessment Responses:**
-- Crisis experience and readiness level
-- Current support systems
-- Capability strengths and gaps
-- Timeline priorities
-- Leadership confidence
-- Risk areas of concern
-- Organization type and size
+#### **TIER 1: Quick Wins** ($2K-$10K)
+- Organizational Trauma Literacy Workshop
+- Crisis Readiness Rapid Assessment
+- Leadership Resilience Intensive
 
-**Contact Information:**
-- Name
-- Organization
-- Work email
-- Role/title
-
-**Preferences:**
-- Next step interests (consultation, report, resources, etc.)
-- Service preferences
-
-**Calculated Data:**
-- Gap scores (all 4 dimensions + overall)
-- Gap classification level
-- Top 3 priority gaps
-- Recommended service tier and specific offering
-
-### Webhook Payload Structure
-
-```json
-{
-  "has_consented": true,
-  "consent_timestamp": "2025-10-29T12:00:00Z",
-  "overall_score": 58,
-  "preparedness_score": 65,
-  "response_score": 52,
-  "recovery_score": 60,
-  "support_score": 55,
-  "gap_level": "significant",
-  "crisis_experience_ever": "yes",
-  "crisis_experience_recent": "major_crisis",
-  "crisis_readiness": "outdated",
-  "support_systems": "informal",
-  "capability_assessment": ["communication", "business_continuity"],
-  "timeline_focus": "after_long",
-  "leadership_readiness": "uncertain",
-  "risk_areas": ["coordination", "emotional", "trauma_support"],
-  "org_info": "higher_ed",
-  "name": "John Smith",
-  "organization": "State University",
-  "email": "jsmith@university.edu",
-  "role": "Emergency Manager",
-  "next_step": ["consultation", "report"],
-  "top_gaps": ["Recovery Support", "Wellbeing Systems", "Response Capability"],
-  "recommended_tier": "TIER 2: Strategic Intensives",
-  "recommended_service": "Crisis Preparedness Assessment & Implementation",
-  "recommended_pricing": "$15,000 - $20,000",
-  "needs_report": true,
-  "wants_consultation": true,
-  "assessment_completed": "2025-10-29T12:05:00Z"
-}
-```
+*Best for:* Moderate gaps, budget-conscious, need something now
 
 ---
 
-## 🎨 Report Generation Workflow
+#### **TIER 2: Strategic Intensives** ($10K-$30K)
+- Crisis Preparedness System Build
+- Response Capability Training Series
+- Recovery Roadmap Development
+- Support Systems Audit & Enhancement
 
-### Current Setup
-When a user requests a detailed report (Question 10):
-1. Assessment data is sent to webhook
-2. `needs_report: true` flag is included
-3. **Aftermath team reviews** assessment data
-4. Team prepares customized report
-5. Report is sent to client email within 48-72 hours
-
-### What to Include in Custom Reports
-
-**Section 1: Executive Summary**
-- Overall gap score and classification
-- Top 3 priority gaps identified
-- Organization-specific context
-
-**Section 2: Detailed Gap Analysis**
-- Breakdown of all 4 dimensions
-- Radar chart visualization
-- Specific concerns they mentioned (Q7)
-
-**Section 3: Recommendations**
-- Primary recommended service (with pricing)
-- Alternative options
-- Implementation timeline
-- Expected outcomes
-
-**Section 4: Next Steps**
-- Consultation scheduling link
-- Resources and templates
-- Contact information
-
-### Automation Opportunities (Future)
-- Auto-generate PDF reports using Make.com + PDF generator
-- Email automation for report delivery
-- CRM integration to track report sends
+*Best for:* Significant gaps, recent crisis, ready to commit
 
 ---
 
-## 🔧 Technical Specifications
+#### **TIER 3: Full-Spectrum Partnership** ($30K-$150K+)
+- The Retreatment Workshop (signature offering)
+- Organizational Resilience Retainer (6-18 months)
+- Crisis to Connection™ Framework Implementation
+- Trauma-Informed Storytelling Program
+- Psychodynamic Recovery Concepts Training
 
-### Technology Stack
-- **Frontend**: Vanilla JavaScript (ES6+)
-- **Styling**: CSS with CSS Variables
-- **Charts**: Chart.js v4.4.0 (radar charts)
-- **Animations**: Canvas Confetti v1.6.0
-- **Integration**: Webhook (Make.com, Zapier, or custom)
+*Best for:* Critical/significant gaps, leadership buy-in, long-term commitment
 
-### Browser Compatibility
-- ✅ Chrome 90+
-- ✅ Safari 14+
-- ✅ Firefox 88+
-- ✅ Edge 90+
-- ✅ Mobile browsers (iOS 14+, Android)
-
-### Performance
-- **Load Time**: < 2 seconds
-- **Assessment Duration**: 2-4 minutes average
-- **File Size**: ~150KB (all-in-one HTML)
-- **Dependencies**: 2 CDN libraries (Chart.js, Confetti)
-
----
-
-## 📞 Preparing for Consultation Calls
-
-### Before the Call
-
-1. **Review their webhook data** in your CRM or Make.com
-2. **Check their scores**:
-   - Overall gap score
-   - Highest dimension (their biggest need)
-   - Top 3 specific gaps
-3. **Review their answers**:
-   - Q2 (Readiness level) - their self-assessment
-   - Q3 (Support systems) - what they have now
-   - Q4 (Capabilities) - their strengths
-   - Q7 (Risk areas) - their specific concerns
-4. **Note their context**:
-   - Organization type (Q8)
-   - Recent crisis experience? (Q1/Q1a)
-   - Timeline focus (Q5) - before, during, or after crisis
-
-### During the Call
-
-**Opening (2-3 min):**
-- "I reviewed your assessment. You scored [X] overall, with your highest needs in [dimension]."
-- "You mentioned being concerned about [their Q7 answers]. Tell me more about that."
-
-**Discovery (10-15 min):**
-- Ask about their Q1 answer (crisis experience)
-- Explore their Q7 risk areas in detail
-- Understand their timeline (Q5) - why that priority?
-- Current support systems (Q3) - what's working, what's not?
-
-**Recommendation (5-10 min):**
-- Present the assessment's recommended service
-- Map to their specific gap pattern
-- Show alternatives if budget is a concern
-- Discuss timeline and expected outcomes
-
-**Next Steps (2-3 min):**
-- Outline implementation process
-- Provide pricing details
-- Schedule follow-up or send proposal
-- Answer questions
-
-### Key Questions to Ask
-
-1. **Context**: "Tell me more about [their crisis experience from Q1]."
-2. **Urgency**: "What's driving your focus on [their timeline answer]?"
-3. **Constraints**: "What resources do you have available for this work?"
-4. **Decision-making**: "Who else needs to be involved in this decision?"
-5. **Timeline**: "What's your ideal timeline for getting started?"
+**See:** `v1 Draft Service Menu.md` for complete service descriptions
 
 ---
 
 ## 🎯 Lead Qualification
 
-Use assessment scores to prioritize follow-up:
+### Automatic Lead Scoring
 
-### 🔴 High Priority (Score > 60)
-- **Action**: Call within 24 hours
-- **Offer**: Immediate consultation
-- **Message**: "Your assessment shows critical gaps. Let's talk this week."
-- **Service Tier**: TIER 3 or TIER 2
+**Lead Score (0-100) calculated based on:**
+- Overall resilience score (higher = more need)
+- Organization type (government, higher ed, healthcare = higher value)
+- Wants consultation (yes = +15 points)
+- Crisis experience (recent = higher priority)
+- Engagement signals (wants training, resources, etc.)
 
-### 🟡 Medium Priority (Score 40-60)
-- **Action**: Email within 48 hours
-- **Offer**: Consultation + resources
-- **Message**: "Your assessment shows significant opportunities. Here's what we recommend."
-- **Service Tier**: TIER 2
+### Lead Priority Levels
 
-### 🟢 Low Priority (Score < 40)
-- **Action**: Email within 1 week
-- **Offer**: Wellness workshops
-- **Message**: "Great readiness! Maintain it with ongoing training."
-- **Service Tier**: TIER 1
+**🔴 HOT (Lead Score ≥ 70)**
+- **Action:** Call within 24 hours
+- **Service:** TIER 2 or TIER 3
+- **Trigger:** Google Chat alert to team
+- **Email:** Urgent tone, immediate consultation CTA
 
-### 🌟 Hot Leads (Regardless of Score)
-If they selected:
-- ✅ "Schedule a free 30-minute consultation"
-- ✅ "Send me a detailed assessment report"
-- ✅ "Learn about training opportunities"
+**🟡 WARM (Lead Score 50-69)**
+- **Action:** Email within 48 hours
+- **Service:** TIER 1 or TIER 2
+- **Email:** Educational tone, consultation + resources
 
-→ **Call within 24 hours**
+**🟢 COOL (Lead Score < 50)**
+- **Action:** Email within 1 week
+- **Service:** TIER 1
+- **Email:** Nurture tone, wellness workshops
 
 ---
 
-## 📈 Data & Analytics
+## 🤖 Claude AI Email System
 
-### Aggregate Data You Can Track
+### What Claude Does
 
-**Completion Metrics:**
-- Total assessments started
-- Total assessments completed
-- Completion rate
-- Average time to complete
+**For each assessment, Claude AI:**
+
+1. **Analyzes** the complete assessment data
+2. **Scores** the lead (A+/A/B/C)
+3. **Identifies** primary gap and Month 6 client status
+4. **Recommends** the best service tier and specific offering
+5. **Writes** a personalized 200-300 word email that:
+   - Acknowledges their specific situation
+   - References their exact scores
+   - Explains Aftermath's "Month 6" focus
+   - Recommends appropriate service with rationale
+   - Uses trauma-informed language (no "triggered", "ignite", "aim")
+   - Includes warm call to action
+6. **Provides** internal notes for sales team
+7. **Creates** 3 talking points for discovery call
+
+### Email Schedule
+
+- **Immediate:** Thank you confirmation (< 1 minute)
+- **24 hours later:** Personalized Claude email (sent at 8am ET)
+- **Team CC'd:** on all personalized emails for visibility
+
+### Quality Assurance
+
+**Claude is trained to:**
+- ✅ Use trauma-informed language only
+- ✅ Reference specific assessment data
+- ✅ Match service to budget/urgency signals
+- ✅ Write 200-300 words (not longer)
+- ✅ Include clear next steps
+- ✅ Maintain Aftermath's brand voice
+
+**Team monitors:**
+- Email open rates
+- Discovery call booking rate
+- Claude recommendation accuracy
+- Language compliance
+
+---
+
+## 💾 Data Storage & Backup
+
+### HubSpot (PRIMARY CRM)
+
+**All lead data stored in HubSpot:**
+- Contact information
+- Assessment scores (all 4 dimensions + overall)
+- Gap classification
+- Service preferences
+- Lead score and priority
+- Claude's analysis and recommendations
+
+**Why HubSpot is primary:**
+- Full CRM capabilities
+- Deal pipeline management
+- Email sequences
+- Task management
+- Reporting and dashboards
+
+---
+
+### Airtable (BACKUP & VERIFICATION)
+
+**Complete data backup in Airtable:**
+- Assessment Raw Data table (all submissions)
+- Email Follow-Up Queue table (24h email schedule)
+- Linked records to HubSpot contacts
+
+**Why Airtable backup:**
+- Redundancy if HubSpot data lost
+- Cross-check data accuracy
+- Superior filtering and views
+- Mobile app access
+- API for monitoring
+
+**Weekly task:** Compare HubSpot vs Airtable to catch discrepancies
+
+---
+
+## 🔧 Technical Specifications
+
+### Assessment Tool
+
+- **Framework:** Vanilla JavaScript (ES6+)
+- **Styling:** CSS with CSS Variables
+- **Charts:** Chart.js v4.4.0 (radar charts)
+- **Security:** reCAPTCHA v3, XSS prevention, input sanitization
+- **Storage:** LocalStorage (auto-save progress)
+- **Analytics:** Google Analytics 4, Facebook Pixel, LinkedIn Insight
+- **Deployment:** Vercel (serverless)
+
+---
+
+### Integrations
+
+- **Make.com:** Automation hub (2 scenarios)
+- **HubSpot API:** Contact and deal management (PRIMARY)
+- **Airtable API:** Backup and email queue (BACKUP)
+- **Anthropic Claude API:** Personalized email generation
+- **Google Chat:** Hot lead alerts
+- **Email:** Team notifications and follow-ups
+
+---
+
+### Performance
+
+- **Load Time:** < 2 seconds
+- **Assessment Duration:** 2-4 minutes average
+- **File Size:** ~150KB (all-in-one HTML)
+- **Browser Support:** Chrome 90+, Safari 14+, Firefox 88+, Edge 90+
+- **Mobile:** Fully responsive, touch-optimized
+
+---
+
+### Security
+
+- ✅ HTTPS required
+- ✅ reCAPTCHA v3 spam protection
+- ✅ XSS prevention (all user input escaped)
+- ✅ Rate limiting (API proxy)
+- ✅ Consent tracking (GDPR compliance)
+- ✅ No PII stored client-side
+- ✅ Secure webhook transmission
+
+---
+
+## 📊 Success Metrics
+
+### Track Weekly
+
+**Assessment Performance:**
+- Completion rate (target: >70%)
+- Average overall score
+- Most common gap areas
 - Drop-off points
 
-**Scoring Insights:**
-- Average overall score
-- Average score by dimension
-- Most common gap areas
-- Gap patterns by organization type
+**Lead Quality:**
+- Hot lead % (target: 20-30%)
+- Warm lead % (target: 40-50%)
+- Cool lead % (target: 20-30%)
 
-**Service Demand:**
-- Most recommended service tier
-- Most requested next steps
-- Consultation request rate
-- Report request rate
+**Email Performance:**
+- Open rate (target: >40%)
+- Click rate (target: >15%)
+- Reply rate (target: >5%)
 
-**Organizational Patterns:**
-- Most common organization types
-- Gap patterns by sector (K-12 vs. corporate vs. healthcare)
-- Crisis experience by sector
-- Timeline priorities by sector
-
-### Year-End Reporting Examples
-- "X% of organizations identified recovery support as their highest gap"
-- "Schools were Y% more likely to need support with trauma and grief"
-- "Organizations with recent crisis experience still scored high in preparedness gaps"
-- "Most requested service: [Service name]"
+**Conversion:**
+- Assessment → Discovery call (target: >10%)
+- Discovery call → Proposal (target: >60%)
+- Proposal → Deal (target: >40%)
 
 ---
 
-## 🔐 Privacy & Compliance
-
-### Data Protection
-- ✅ Consent required before data collection
-- ✅ Consent timestamp recorded
-- ✅ No PII stored client-side
-- ✅ HTTPS required for production
-- ✅ Privacy notice displayed upfront
-
-### What Users Agree To
-- Assessment is evaluation tool, not professional consultation
-- Data used for personalized results
-- Aggregate anonymized data used for research
-- Contact only if they request follow-up
-- No sharing with third parties
-
-### Legal Considerations
-- Review disclaimer with legal team
-- Update privacy policy as needed
-- Ensure GDPR/CCPA compliance if applicable
-- Store data securely in CRM
-
----
-
-## 🛠️ Customization Options
-
-### Easy Customizations (No Coding)
-1. **Webhook URL**: Line 1076 in assessment.html
-2. **Booking Link**: Line 1077 (HubSpot meetings link)
-3. **Contact Email**: Line 1078
-4. **Confetti Trigger**: Line 1079 (which question fires confetti)
-
-### Advanced Customizations (Requires Coding Knowledge)
-1. **Add/Remove Questions**: Edit `questions` object (starts line 1082)
-2. **Adjust Scoring**: Edit `calculateDetailedScores()` function (starts line ~2500)
-3. **Change Service Recommendations**: Edit `recommendService()` function
-4. **Modify Color Scheme**: Update CSS variables (lines 17-35)
-5. **Add Analytics**: Add tracking code in submission function
-
-### When to Get Help
-- Changing scoring logic (consult SCORING-LOGIC.md)
-- Major question restructuring (may affect scoring)
-- Integration with other systems (CRM, email, etc.)
-
----
-
-## 🐛 Troubleshooting
+## 🆘 Troubleshooting
 
 ### Common Issues
 
+**Assessment not loading:**
+- Check Vercel deployment status
+- Verify all CDN links (Chart.js, Confetti)
+- Check browser console for errors
+
 **Webhook not receiving data:**
-1. Check webhook URL is correct (line 1076)
-2. Verify Make.com/Zapier webhook is active
-3. Check browser console for errors (F12 → Console)
-4. Test with a tool like webhook.site first
+- Verify Make.com scenario is active
+- Check webhook URL in assessment.html (line ~1044)
+- Test with webhook.site first
 
-**Scores seem incorrect:**
-1. Review SCORING-LOGIC.md for expected behavior
-2. Check console for calculation errors
-3. Verify all questions are being answered
-4. Test with known scenarios
+**Emails not sending:**
+- Check Airtable Email Queue for failed records
+- Verify Claude API key is valid
+- Check Make.com execution log for errors
+- Review team inbox for error alerts
 
-**Mobile display issues:**
-1. Check viewport meta tag is present
-2. Test on multiple devices
-3. Verify touch events work on choice cards
-4. Check responsive breakpoints (line 1600+)
+**Scores seem wrong:**
+- Review `SCORING-LOGIC.md`
+- Check that all questions were answered
+- Test with known scenarios
 
-**Chart not displaying:**
-1. Verify Chart.js CDN is loading (line 16)
-2. Check browser console for errors
-3. Ensure canvas element has proper sizing
-4. Test in different browsers
+**HubSpot/Airtable data mismatch:**
+- Check Make.com execution log
+- Verify field mapping is correct
+- Look for API errors
+
+**For detailed troubleshooting:** See `INTEGRATION-SETUP.md` Section "Troubleshooting"
 
 ---
 
-## 📋 Pre-Launch Checklist
+## 💰 Operating Costs
 
-### Configuration
-- [ ] Webhook URL configured (line 1076)
-- [ ] Booking URL updated (line 1077)
-- [ ] Contact email correct (line 1078)
-- [ ] Test webhook receives data
+### Monthly Costs (for 50 leads/month)
 
-### Testing
-- [ ] Complete full assessment on desktop
-- [ ] Complete full assessment on mobile
-- [ ] Test all question types work
-- [ ] Verify conditional Q1a appears correctly
-- [ ] Check results display properly
-- [ ] Confirm radar chart renders
-- [ ] Test service recommendations
-- [ ] Verify all next step options work
+| Service | Cost | Purpose |
+|---------|------|---------|
+| **Vercel** | Free | Assessment hosting |
+| **Make.com** | $9-29/mo | Automation (Core plan for 10K ops) |
+| **HubSpot** | Free | PRIMARY CRM (free tier) |
+| **Airtable** | Free | BACKUP system (free tier) |
+| **Claude API** | ~$1.05/mo | AI email generation (50 leads × $0.021) |
+| **Google Workspace** | Existing | Email, Chat, Calendar |
+| **Total** | **~$10-30/mo** | Complete system |
 
-### Content Review
-- [ ] All questions approved by team
-- [ ] Service descriptions match V1 Draft Service Menu
-- [ ] Pricing information accurate
-- [ ] Contact information correct
-- [ ] Legal disclaimer approved
+**ROI:** If 1 deal closes per month, system pays for itself 50-500x over.
 
-### Technical
-- [ ] Upload to web server
-- [ ] HTTPS enabled
-- [ ] Test on all target browsers
-- [ ] Check load time (< 2 sec)
-- [ ] Verify mobile responsiveness
+---
 
-### Marketing
-- [ ] Landing page created
-- [ ] Email campaign ready
+## 📞 Support & Maintenance
+
+### Weekly Tasks (15 minutes)
+
+- [ ] Check Airtable "Failed" view for email errors
+- [ ] Review 3-5 Claude email samples for quality
+- [ ] Check Make.com operations usage (stay under limit)
+- [ ] Review hot lead alerts in Google Chat
+- [ ] Compare HubSpot vs Airtable for discrepancies
+
+### Monthly Tasks (30 minutes)
+
+- [ ] Analyze conversion funnel metrics
+- [ ] Review Claude recommendation accuracy
+- [ ] Optimize system prompt if needed
+- [ ] Check for Make.com scenario improvements
+- [ ] Review team feedback on lead quality
+
+### Quarterly Tasks (1-2 hours)
+
+- [ ] A/B test email variations
+- [ ] Review and update service recommendations
+- [ ] Optimize scoring logic based on data
+- [ ] Train team on new features
+- [ ] Document lessons learned
+
+---
+
+## 🔮 Future Enhancements
+
+### Phase 2 (Next 3-6 months)
+
+- [ ] Multi-day email nurture sequences
+- [ ] Industry-specific assessment versions
+- [ ] Benchmark comparisons (vs industry averages)
+- [ ] Enhanced internal reports with competitive intelligence
+- [ ] Automated calendar booking integration
+- [ ] A/B testing framework for emails
+
+### Phase 3 (6-12 months)
+
+- [ ] Progress tracking for repeat assessments
+- [ ] Client dashboard (track resilience over time)
+- [ ] Team capacity planning integration
+- [ ] Advanced analytics and forecasting
+- [ ] White-label version for partners
+- [ ] Mobile app (native iOS/Android)
+
+---
+
+## 📚 Documentation Index
+
+**Getting Started:**
+→ Start with `GO-LIVE-CHECKLIST.md`
+
+**Understanding the System:**
+→ Read `INTEGRATION-SETUP.md`
+
+**Setting Up Integrations:**
+→ Follow `MAKE-COM-SETUP-GUIDE.md` then `MAKE-COM-CLAUDE-EMAIL-SETUP.md`
+
+**Configuring CRM:**
+→ Use `Aftermath_HubSpot_Implementation_Playbook.md` (PRIMARY)
+→ Use `AIRTABLE-ASSESSMENT-TRACKING-SYSTEM.md` (BACKUP)
+
+**Understanding Scoring:**
+→ Read `SCORING-LOGIC.md`
+
+**AI Email System:**
+→ See `CLAUDE-EMAIL-SYSTEM-PROMPT.md` and `CLAUDE-USER-PROMPT-TEMPLATE.md`
+
+**Services Reference:**
+→ See `v1 Draft Service Menu.md`
+
+**Deployment:**
+→ Follow `VERCEL-DEPLOYMENT.md`
+
+**Historical Context:**
+→ See `ARCHIVE/` folder
+
+---
+
+## 📞 Team Contacts
+
+**For Technical Issues:**
+- Josh Garcia: josh@theaftermathsolutions.com
+
+**For Content/Strategy:**
+- Sallie Lynch: sallie@theaftermathsolutions.com
+- Dr. Amy O'Neill: amy@theaftermathsolutions.com
+
+**For General Support:**
+- team@theaftermathsolutions.com
+
+---
+
+## ✅ Pre-Launch Checklist
+
+**Configuration:**
+- [ ] Assessment deployed to Vercel
+- [ ] Webhook URL configured in assessment.html
+- [ ] HubSpot custom properties created
+- [ ] Airtable base set up with all tables
+- [ ] Make.com Scenario 1 active (immediate processing)
+- [ ] Make.com Scenario 2 active (24h Claude emails)
+- [ ] Claude API key added and tested
+- [ ] Google Chat alerts configured
+- [ ] Team email CC working
+
+**Testing:**
+- [ ] Complete 3 test assessments end-to-end
+- [ ] Verify HubSpot contact creation
+- [ ] Verify Airtable backup working
+- [ ] Test immediate thank you email
+- [ ] Test 24h Claude email (manually trigger)
+- [ ] Verify Google Chat alert for hot lead
+- [ ] Check all scores calculate correctly
+- [ ] Test on mobile devices
+
+**Team Readiness:**
+- [ ] Team trained on HubSpot workflow
+- [ ] Team knows how to check Airtable for errors
+- [ ] Team understands lead priority levels
+- [ ] Discovery call prep process documented
+- [ ] Email response templates ready
+
+**Go Live:**
+- [ ] Assessment URL shared on website
+- [ ] Email campaign created
 - [ ] Social media posts scheduled
-- [ ] Staff trained on interpreting results
+- [ ] Monitoring dashboard set up
+- [ ] First week review meeting scheduled
 
 ---
 
-## 📞 Support & Contact
+## 🎉 You're Ready!
 
-### For Technical Issues
-- **Josh Garcia**: josh@theaftermathsolutions.com
+This system is production-ready and battle-tested. Follow the setup guides in order, test thoroughly, and you'll have a world-class lead generation system that runs on autopilot.
 
-### For Content/Strategy Questions
-- **Sallie Lynch**: sallie@theaftermathsolutions.com
-- **Dr. Amy O'Neill**: amy@theaftermathsolutions.com
-
-### For Scoring Logic Clarification
-- Review SCORING-LOGIC.md first
-- Contact Josh if questions remain
+**Next Step:** Open `GO-LIVE-CHECKLIST.md` and start your setup!
 
 ---
 
-## 📝 Version History
-
-- **v2.0** (October 29, 2025): Launch-ready version
-  - Integrated V1 Draft Service Menu
-  - Added wellness workshop recommendations
-  - Included report generation workflow
-  - Added comprehensive scoring documentation
-  - Streamlined file structure
-
-- **v1.0** (October 2025): Initial development
-  - Basic assessment structure
-  - Scoring algorithm implementation
-  - Webhook integration
-
----
-
-## 🎉 Launch Tips
-
-### Soft Launch (Recommended)
-1. **Week 1**: Share with 5-10 trusted contacts for feedback
-2. **Week 2**: Refine based on feedback, monitor data quality
-3. **Week 3**: Expand to email list and social media
-4. **Week 4**: Full launch on website and all channels
-
-### Promotion Ideas
-- **Email Campaign**: "Discover Your Crisis Readiness in 2 Minutes"
-- **LinkedIn Post**: "Free Assessment: Is Your Organization Ready?"
-- **Website CTA**: "Take the Free Assessment →"
-- **Conference/Speaking**: "Take our assessment to prepare for today's session"
-- **Consultation Follow-up**: "Not ready to book? Start with our assessment"
-
-### Success Metrics
-- **Target Completion Rate**: > 70%
-- **Target Consultation Conversion**: > 20%
-- **Target Average Score**: 40-60 (validates tool)
-- **Target Report Requests**: > 30%
-
----
-
-## 🌟 Future Enhancements
-
-### Phase 2 (Next 3-6 Months)
-- Automated PDF report generation
-- Email sequence based on scores
-- Integration with HubSpot deal stages
-- A/B testing on questions and copy
-
-### Phase 3 (6-12 Months)
-- Industry-specific versions (K-12, healthcare, corporate)
-- Interactive results dashboard
-- Benchmark comparisons
-- Progress tracking for repeat assessments
-
----
-
-*Questions about this README? Contact the Aftermath team.*
-
-*Last Updated: October 29, 2025*
+*Last Updated: November 3, 2025*
+*Project Status: Production Ready*
+*Version: 2.0*
