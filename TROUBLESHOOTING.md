@@ -144,25 +144,78 @@ Error details: {error: "Validation failed", details: ["Email is required"]}
 
 ## 🔧 Verifying Make.com Integration
 
-**After successful submission (console shows ✅):**
+### **Quick Test: Is Make.com Working?**
+
+**Visit this diagnostic endpoint:**
+```
+https://assessment.aftermathsolutions.com/api/test-make-webhook
+```
+
+**This will:**
+- Send test data directly to Make.com
+- Show you the exact error Make.com returns
+- Give you specific fix instructions
+
+---
+
+### **Common Error: 400 Bad Request from Make.com**
+
+**Vercel logs show:**
+```
+Webhook error: 400 Bad Request
+Submission error: Error: Webhook returned 400
+```
+
+**This means:** Make.com is receiving data but rejecting it.
+
+**MOST COMMON CAUSE:** Scenario is OFF
+
+**Fix #1: Turn Scenario ON**
+1. Go to: https://www.make.com/
+2. Find your "Aftermath Assessment" scenario
+3. Look at toggle switch in **top right corner**
+4. If it's OFF (gray/red), click it to turn it **ON** (green/blue)
+5. Test submission again
+
+**Fix #2: Disable JSON Validation in Webhook**
+
+If scenario IS on and still getting 400:
+
+1. Go to Make.com → Your scenario
+2. Click the **Webhook module** (first bubble)
+3. Click **"Show advanced settings"**
+4. Find **"Data structure"**:
+   - If set to something specific → Change to **"Not selected"**
+   - Or click **"Auto-detect"**
+5. Find **"Validate data structure"**:
+   - If enabled → **Disable it**
+6. Click **"OK"**
+7. Click **"Save"** (bottom right)
+8. Test submission again
+
+**Fix #3: Remove Filters That Block Data**
+
+1. Check if there's a **Router** or **Filter** after webhook
+2. Click the filter icon (funnel) between modules
+3. Temporarily set filter to: **"All"** (to let all data through)
+4. Test submission
+5. If it works, adjust your filter conditions
+
+---
+
+### **After successful submission (console shows ✅):**
 
 1. Go to: https://www.make.com/
 2. Click your scenario
-3. Click **History** tab
+3. Click **History** tab (left sidebar)
 4. You should see a new execution within 1-2 seconds
 5. Click the execution to see the data received
 
 **If Make.com shows NO execution:**
 
-1. Check webhook URL is correct: `https://hook.us2.make.com/y7n8tnm51v3hesxlxnn907vhur4iddp9`
-2. Verify scenario is **ON** (toggle in top right)
-3. Test webhook directly:
-   ```bash
-   curl -X POST https://hook.us2.make.com/y7n8tnm51v3hesxlxnn907vhur4iddp9 \
-     -H "Content-Type: application/json" \
-     -d '{"test": "data", "email": "test@example.com"}'
-   ```
-4. Check Make.com execution history after curl command
+1. Scenario is probably **OFF** → Turn it ON
+2. Check webhook URL is correct: `https://hook.us2.make.com/y7n8tnm51v3hesxlxnn907vhur4iddp9`
+3. Test webhook with diagnostic: Visit `/api/test-make-webhook`
 
 **If Make.com shows execution with ERROR:**
 
@@ -171,6 +224,7 @@ Error details: {error: "Validation failed", details: ["Email is required"]}
   - HubSpot authentication expired → Reconnect HubSpot
   - Airtable permissions → Verify Airtable connection
   - Missing field mapping → Check MAKE-COM-SETUP-GUIDE.md
+  - Required field missing → Adjust module configuration
 
 ---
 
