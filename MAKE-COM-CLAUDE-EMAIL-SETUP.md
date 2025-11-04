@@ -1,5 +1,5 @@
 # Make.com Setup Guide: Claude AI Email System
-## Complete Two-Scenario Approach
+## Complete Two-Scenario Approach with Airtable
 
 **Purpose:** Automated email system that sends personalized recommendations 24 hours after assessment completion
 
@@ -21,20 +21,20 @@ Webhook Receives Data
     ↓
 Spam Filter (reCAPTCHA)
     ↓
-Create HubSpot Contact
+Create HubSpot Contact (PRIMARY CRM)
     ↓
 Create Airtable Backup
     ↓
 Send Immediate Thank You Email
     ↓
-Save to Google Sheets Queue (for 24h follow-up)
+Create Record in Airtable Email Queue (for 24h follow-up)
 ```
 
 **SCENARIO 2: Scheduled Follow-Up (Runs daily at 8am ET)**
 ```
 Schedule Trigger (8am ET daily)
     ↓
-Read Google Sheets Queue
+Read Airtable Email Queue
     ↓
 Filter: Submissions from exactly 24h ago
     ↓
@@ -48,10 +48,49 @@ For Each Lead:
       ↓
    Update HubSpot with Claude Analysis
       ↓
-   Update Airtable
+   Update Airtable Assessment Record
       ↓
-   Mark as Processed in Queue
+   Mark as Processed in Email Queue
 ```
+
+---
+
+## 📊 AIRTABLE SETUP
+
+### Prerequisites:
+
+**Add Email Queue Table to Your Airtable Base:**
+
+1. Go to your Airtable base: "Lead Pipeline Dashboard" (appt66MN9uPoEOriV)
+2. Add a new table: **"📧 Email Follow-Up Queue"**
+3. Add these fields:
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| Assessment ID | Text | Unique identifier (primary field) |
+| Submission Timestamp | Date/Time | When assessment was submitted |
+| Contact Name | Text | Full name |
+| Contact Email | Email | Email address |
+| Organization | Text | Organization name |
+| Assessment Data | Long Text | Full JSON data from assessment |
+| Processed | Checkbox | Whether email has been sent |
+| Email Sent Date | Date/Time | When personalized email was sent |
+| Claude Analysis | Long Text | JSON response from Claude |
+| Status | Single Select | New / Queued / Sent / Failed |
+| Error Message | Long Text | If email failed, error details |
+| Assessment Record Link | Link to Assessment Raw Data | Links to main assessment record |
+
+**Status Options:**
+- 🟡 New
+- 🟠 Queued (ready to send)
+- 🟢 Sent
+- 🔴 Failed
+
+4. Create these views:
+   - **Ready to Send** - Filter: Status = "Queued", Processed = false
+   - **Sent Today** - Filter: Email Sent Date = Today
+   - **Failed** - Filter: Status = "Failed"
+   - **All Pending** - Filter: Processed = false
 
 ---
 
@@ -66,17 +105,9 @@ For Each Lead:
    - Create new key, copy it
    - Store securely (you'll need this for Scenario 2)
 
-2. **Create Google Sheet for Queue:**
-   - Create new Google Sheet: "Assessment Follow-Up Queue"
-   - Add these columns:
-     - A: `Submission Timestamp`
-     - B: `Name`
-     - C: `Email`
-     - D: `Organization`
-     - E: `Assessment Data (JSON)`
-     - F: `Processed`
-     - G: `Email Sent`
-     - H: `Assessment ID`
+2. **Airtable Email Queue Table:**
+   - Verify the table was created above
+   - Table ID: You'll need this for Make.com (find it in the table URL)
 
 ### Scenario 1 Setup:
 
@@ -84,7 +115,7 @@ For Each Lead:
 
 1. Go to Make.com
 2. Click "Create a new scenario"
-3. Name it: "Assessment → Immediate Processing + Queue"
+3. Name it: "Assessment → Immediate Processing + Email Queue"
 
 ---
 
@@ -114,7 +145,7 @@ For Each Lead:
 
 ---
 
-**Step 4: Create HubSpot Contact**
+**Step 4: Create HubSpot Contact (PRIMARY CRM)**
 
 **Follow Route 1:**
 
@@ -123,8 +154,8 @@ For Each Lead:
 3. Connection: Connect your HubSpot account
 4. **Map fields:**
    - Email: `{{1.email}}`
-   - First Name: `{{1.name}}` (split first word)
-   - Last Name: `{{1.name}}` (split last word)
+   - First Name: `{{first(split(1.name; " "))}}`
+   - Last Name: `{{last(split(1.name; " "))}}`
    - Company: `{{1.organization}}`
    - Job Title: `{{1.role}}`
 
@@ -146,22 +177,23 @@ For Each Lead:
 
 ---
 
-**Step 5: Create Airtable Record (Backup)**
+**Step 5: Create Airtable Backup Record**
 
 1. Click "+" after HubSpot module
 2. Add: **Airtable → Create a Record**
 3. Connection: Connect Airtable
 4. Base: "Lead Pipeline Dashboard" (appt66MN9uPoEOriV)
-5. Table: "📊 Assessment Raw Data"
+5. Table: "📊 Assessment Raw Data" (tblMzZTZM7puKj9L0)
 
-**Map fields** (see AIRTABLE-ASSESSMENT-TRACKING-SYSTEM.md for complete list):
+**Map fields** (see AIRTABLE-ASSESSMENT-TRACKING-SYSTEM.md for complete mapping):
 - Assessment ID: `{{1.assessment_id}}`
 - Submission Date: `{{now}}`
 - Name: `{{1.name}}`
 - Email: `{{1.email}}`
 - Organization: `{{1.organization}}`
-- (... map all other fields)
+- All scores and preferences...
 - HubSpot Contact ID: `{{2.id}}` (from HubSpot module)
+- HubSpot Link: `https://app.hubspot.com/contacts/YOUR_PORTAL_ID/contact/{{2.id}}`
 - Status: `New`
 
 ---
@@ -185,41 +217,43 @@ Thank you for completing the Organizational Resilience Equation Calculator for {
 
 Your assessment has been received, and our team is reviewing your results. You'll receive a detailed analysis with personalized recommendations within the next 24-48 hours.
 
-In the meantime, if you have any immediate questions, feel free to reply to this email or call us at [YOUR PHONE NUMBER].
+In the meantime, if you have any immediate questions, feel free to reply to this email.
 
 Best regards,
 
 The Aftermath Solutions Team
 Solving for what comes after
 
+team@theaftermathsolutions.com
 www.theaftermathsolutions.com
 ```
 
 ---
 
-**Step 7: Save to Google Sheets Queue**
+**Step 7: Create Record in Airtable Email Queue**
 
 1. Click "+" after Email module
-2. Add: **Google Sheets → Add a Row**
-3. Connection: Connect Google account
-4. Spreadsheet: "Assessment Follow-Up Queue"
-5. Sheet: "Sheet1"
+2. Add: **Airtable → Create a Record**
+3. Connection: Same Airtable connection
+4. Base: "Lead Pipeline Dashboard"
+5. Table: "📧 Email Follow-Up Queue"
 
-**Map columns:**
-- A (Submission Timestamp): `{{now}}`
-- B (Name): `{{1.name}}`
-- C (Email): `{{1.email}}`
-- D (Organization): `{{1.organization}}`
-- E (Assessment Data JSON): `{{toString(1)}}` ← This stores ALL assessment data as JSON
-- F (Processed): `false`
-- G (Email Sent): `false`
-- H (Assessment ID): `{{1.assessment_id}}`
+**Map fields:**
+- Assessment ID: `{{1.assessment_id}}`
+- Submission Timestamp: `{{now}}`
+- Contact Name: `{{1.name}}`
+- Contact Email: `{{1.email}}`
+- Organization: `{{1.organization}}`
+- Assessment Data: `{{toString(1)}}` ← This stores ALL assessment data as JSON
+- Processed: `false` (uncheck the box)
+- Status: `Queued`
+- Assessment Record Link: `{{3.id}}` (links to Assessment Raw Data record created in Step 5)
 
 ---
 
 **Step 8: Add Google Chat Notification (Hot Leads Only)**
 
-**After Google Sheets, add another Router:**
+**After Airtable Email Queue, add another Router:**
 
 1. Add: **Flow Control → Router**
 2. Route 1 Label: "Hot Lead Alert"
@@ -244,6 +278,7 @@ Wants Consultation: {{1.wants_consultation}}
 Primary Gaps: {{join(1.top_gaps; ", ")}}
 
 HubSpot: https://app.hubspot.com/contacts/YOUR_PORTAL_ID/contact/{{2.id}}
+Airtable: [View in Airtable Base]
 
 ⏰ Follow-up email will send automatically in 24 hours at 8am ET
 ```
@@ -255,10 +290,10 @@ HubSpot: https://app.hubspot.com/contacts/YOUR_PORTAL_ID/contact/{{2.id}}
 1. Click "Run once"
 2. Submit a test assessment from your form
 3. Verify:
-   - ✅ HubSpot contact created
-   - ✅ Airtable record created
+   - ✅ HubSpot contact created (PRIMARY)
+   - ✅ Airtable Assessment Raw Data record created (BACKUP)
    - ✅ Thank you email sent
-   - ✅ Google Sheets queue has new row
+   - ✅ Airtable Email Queue has new record with Status = "Queued"
    - ✅ (If hot lead) Google Chat notification sent
 
 4. Save and Activate the scenario
@@ -282,40 +317,48 @@ HubSpot: https://app.hubspot.com/contacts/YOUR_PORTAL_ID/contact/{{2.id}}
 2. Choose: **Every Day**
 3. Time: `08:00` (8:00 AM)
 4. Time Zone: `America/New_York` (ET)
-5. Advanced: Check "Only on weekdays" (optional)
+5. Advanced: Check "Only on weekdays" (optional - if you don't want weekend sends)
 
 ---
 
-**Step 3: Read Google Sheets Queue**
+**Step 3: Search Airtable Email Queue**
 
 1. Click "+"
-2. Add: **Google Sheets → Search Rows**
-3. Spreadsheet: "Assessment Follow-Up Queue"
-4. Sheet: "Sheet1"
+2. Add: **Airtable → Search Records**
+3. Connection: Connect Airtable
+4. Base: "Lead Pipeline Dashboard"
+5. Table: "📧 Email Follow-Up Queue"
 
-**Filter:**
-- Column: `F` (Processed)
-- Operator: `Equal to`
-- Value: `false`
+**Formula/Filter:**
+```
+AND(
+  {Processed} = FALSE(),
+  {Status} = 'Queued',
+  IS_AFTER(
+    {Submission Timestamp},
+    DATEADD(NOW(), -25, 'hours')
+  ),
+  IS_BEFORE(
+    {Submission Timestamp},
+    DATEADD(NOW(), -23, 'hours')
+  )
+)
+```
 
-5. Check "Return all results"
+This finds records submitted 23-25 hours ago (24h ±1 hour tolerance).
+
+6. Check "Return all results"
+7. Limit: 50 (process max 50 emails per day)
 
 ---
 
-**Step 4: Filter for 24 Hours Ago**
+**Step 4: Add Iterator for Each Record**
 
 1. Click "+"
 2. Add: **Tools → Iterator**
-3. Array: `{{array from Google Sheets}}`
+3. Array: `{{array(2.records)}}` (the records from Airtable search)
 
-Then add filter:
-
-4. After Iterator, add **Flow Control → Filter**
-5. Label: "Submitted 24h ago"
-6. Condition:
-   - `Submission Timestamp` Date: Equal to
-   - `{{addHours(now; -24)}}` (24 hours ago)
-   - Tolerance: ±1 hour
+This will process each queued email one at a time.
 
 ---
 
@@ -323,9 +366,9 @@ Then add filter:
 
 1. Click "+"
 2. Add: **Tools → Parse JSON**
-3. JSON String: `{{5.E}}` (the Assessment Data column)
+3. JSON String: `{{3.fields['Assessment Data']}}` (the stored assessment data)
 
-This will expand all the assessment fields for use in the next steps.
+This expands all assessment fields for use in Claude prompt.
 
 ---
 
@@ -345,13 +388,13 @@ anthropic-version: 2023-06-01
 content-type: application/json
 ```
 
-**Body (JSON format):**
+**Body (Raw JSON):**
 
 ```json
 {
   "model": "claude-3-5-sonnet-20241022",
   "max_tokens": 4096,
-  "system": "PASTE ENTIRE SYSTEM PROMPT FROM CLAUDE-EMAIL-SYSTEM-PROMPT.MD HERE",
+  "system": "PASTE ENTIRE SYSTEM PROMPT FROM CLAUDE-EMAIL-SYSTEM-PROMPT.MD HERE (escape quotes as needed)",
   "messages": [
     {
       "role": "user",
@@ -361,11 +404,19 @@ content-type: application/json
 }
 ```
 
+**Variable Mapping for User Prompt:**
+Replace these in the user prompt template:
+- `{{name}}` → `{{4.name}}`
+- `{{email}}` → `{{4.email}}`
+- `{{organization}}` → `{{4.organization}}`
+- `{{overall_score}}` → `{{4.overall_score}}`
+- (Map all other assessment fields from the parsed JSON)
+
 **Important:**
-- Replace `YOUR_ANTHROPIC_API_KEY` with your actual API key
-- Copy the entire system prompt from `CLAUDE-EMAIL-SYSTEM-PROMPT.md`
+- Get your Anthropic API key from: https://console.anthropic.com/
+- Copy the ENTIRE system prompt from `CLAUDE-EMAIL-SYSTEM-PROMPT.md`
 - Copy the user prompt template from `CLAUDE-USER-PROMPT-TEMPLATE.md`
-- Map variables using the parsed JSON data: `{{6.name}}`, `{{6.email}}`, etc.
+- Escape any double quotes in the prompts (use `\"` for literal quotes)
 
 ---
 
@@ -373,9 +424,15 @@ content-type: application/json
 
 1. Click "+"
 2. Add: **Tools → Parse JSON**
-3. JSON String: `{{7.data.content[0].text}}`
+3. JSON String: `{{5.data.content[0].text}}`
 
-This extracts Claude's analysis from the API response.
+This extracts Claude's analysis JSON from the API response.
+
+**Expected fields:**
+- lead_score, lead_priority, gap_category
+- recommended_tier, recommended_service
+- email_subject, email_body
+- key_talking_points, hubspot_notes
 
 ---
 
@@ -385,16 +442,16 @@ This extracts Claude's analysis from the API response.
 2. Add: **Email → Send an Email**
 
 **Configuration:**
-- To: `{{6.email}}` (recipient)
-- CC: `team@theaftermathsolutions.com` (your team)
+- To: `{{4.email}}` (recipient from parsed assessment data)
+- CC: `team@theaftermathsolutions.com` (your team gets a copy)
 - From: `team@theaftermathsolutions.com`
 - From Name: `Aftermath Solutions`
-- Subject: `{{8.email_subject}}` (from Claude's response)
+- Subject: `{{6.email_subject}}` (from Claude's response)
 
 **Email Body:**
 
 ```
-{{8.email_body}}
+{{6.email_body}}
 
 ---
 
@@ -416,92 +473,107 @@ www.theaftermathsolutions.com
 
 1. Click "+"
 2. Add: **HubSpot → Update a Contact**
-3. Contact: Search by `{{6.email}}`
+3. Search Contact by: `{{4.email}}`
 
-**Update fields:**
-- `lead_priority`: `{{8.lead_priority}}`
-- `gap_category`: `{{8.gap_category}}`
-- `recommended_tier`: `{{8.recommended_tier}}`
-- `recommended_service`: `{{8.recommended_service}}`
-- `month_six_client`: `{{8.month_six_client}}`
-- `discovery_call_urgency`: `{{8.discovery_call_urgency}}`
+**Update these custom properties:**
+- `lead_priority`: `{{6.lead_priority}}`
+- `gap_category`: `{{6.gap_category}}`
+- `recommended_tier`: `{{6.recommended_tier}}`
+- `recommended_service`: `{{6.recommended_service}}`
+- `month_six_client`: `{{6.month_six_client}}`
+- `discovery_call_urgency`: `{{6.discovery_call_urgency}}`
 
-**Add Note:**
+**Add Note to HubSpot:**
 ```
 CLAUDE AI ANALYSIS ({{formatDate(now; "YYYY-MM-DD")}})
 
-Lead Score: {{8.lead_score}}
-Priority: {{8.lead_priority}}
-Month 6 Client: {{8.month_six_client}}
+Lead Score: {{6.lead_score}}
+Priority: {{6.lead_priority}}
+Month 6 Client: {{6.month_six_client}}
 
-Recommendation: {{8.recommended_service}} ({{8.recommended_tier}})
-Rationale: {{8.recommendation_rationale}}
+Recommendation: {{6.recommended_service}} ({{6.recommended_tier}})
+Rationale: {{6.recommendation_rationale}}
 
 Key Talking Points:
-{{#each 8.key_talking_points}}
-- {{this}}
-{{/each}}
+{{join(6.key_talking_points; "\n- ")}}
 
 Internal Notes:
-{{8.hubspot_notes}}
+{{6.hubspot_notes}}
 
 Personalized email sent: {{formatDate(now; "MMM D, YYYY h:mm A")}}
 ```
 
 ---
 
-**Step 10: Update Airtable Record**
+**Step 10: Update Airtable Assessment Record**
 
 1. Click "+"
 2. Add: **Airtable → Update a Record**
 3. Base: "Lead Pipeline Dashboard"
 4. Table: "📊 Assessment Raw Data"
-5. Search by: `Assessment ID` = `{{6.assessment_id}}`
+5. Record ID: `{{3.fields['Assessment Record Link'][0]}}` (linked from queue table)
 
 **Update fields:**
 - Status: `Contacted`
-- Notes: `Claude analysis sent on {{formatDate(now; "MMM D, YYYY")}}. Recommended: {{8.recommended_service}}`
+- Notes: `Claude AI analysis sent on {{formatDate(now; "MMM D, YYYY")}}. Recommended: {{6.recommended_service}} ({{6.recommended_tier}}). Priority: {{6.lead_priority}}.`
 
 ---
 
-**Step 11: Mark as Processed in Queue**
+**Step 11: Update Email Queue Record (Mark as Processed)**
 
 1. Click "+"
-2. Add: **Google Sheets → Update a Row**
-3. Spreadsheet: "Assessment Follow-Up Queue"
-4. Sheet: "Sheet1"
-5. Row Number: `{{5.__IMTINDEX__}}` (the iterator index)
+2. Add: **Airtable → Update a Record**
+3. Base: "Lead Pipeline Dashboard"
+4. Table: "📧 Email Follow-Up Queue"
+5. Record ID: `{{3.id}}` (the queue record being processed)
 
-**Update:**
-- F (Processed): `true`
-- G (Email Sent): `true`
+**Update fields:**
+- Processed: `true` (check the box)
+- Email Sent Date: `{{now}}`
+- Claude Analysis: `{{toString(6)}}` (save Claude's full response)
+- Status: `Sent`
 
 ---
 
 **Step 12: Add Error Handling**
 
-**After Claude API call, add error handler:**
+**After Claude API call (Step 6), add error handler:**
 
 1. Right-click the Claude API module
-2. Add "Error Handler"
-3. Add: **Email → Send an Email**
-   - To: `team@theaftermathsolutions.com`
-   - Subject: `🚨 Claude API Error for {{6.name}}`
-   - Body:
-   ```
-   Claude API call failed for:
+2. Click "Add error handler"
+3. Add route
+4. Add: **Email → Send an Email**
 
-   Name: {{6.name}}
-   Email: {{6.email}}
-   Organization: {{6.organization}}
-   Assessment ID: {{6.assessment_id}}
+**Error Alert Email:**
+- To: `team@theaftermathsolutions.com`
+- Subject: `🚨 Claude API Error for {{4.name}}`
+- Body:
+```
+Claude API call failed for assessment follow-up:
 
-   Error: {{7.message}}
+Name: {{4.name}}
+Email: {{4.email}}
+Organization: {{4.organization}}
+Assessment ID: {{4.assessment_id}}
+Submitted: {{formatDate(3.fields['Submission Timestamp']; "MMM D, YYYY h:mm A")}}
 
-   Please manually send follow-up email.
+Error: {{5.error.message}}
 
-   HubSpot: https://app.hubspot.com/contacts/YOUR_PORTAL_ID/contact/[SEARCH BY EMAIL]
-   ```
+Action Required: Manually send follow-up email to this lead.
+
+HubSpot: https://app.hubspot.com/contacts/YOUR_PORTAL_ID/contact/[SEARCH {{4.email}}]
+Airtable Queue Record: https://airtable.com/[YOUR_BASE_ID]/[TABLE_ID]/{{3.id}}
+
+Assessment Data:
+{{toString(4)}}
+```
+
+5. After error email, add: **Airtable → Update a Record**
+   - Table: Email Follow-Up Queue
+   - Record ID: `{{3.id}}`
+   - Status: `Failed`
+   - Error Message: `{{5.error.message}}`
+   - Processed: `false` (leave unprocessed for retry)
 
 ---
 
@@ -509,22 +581,26 @@ Personalized email sent: {{formatDate(now; "MMM D, YYYY h:mm A")}}
 
 **Manual Test:**
 
-1. Add a test row to Google Sheets queue with timestamp from 24 hours ago
-2. Use real assessment data
-3. Click "Run once"
-4. Verify:
+1. Go to your Airtable "Email Follow-Up Queue" table
+2. Find a test record or create one manually
+3. Set the "Submission Timestamp" to exactly 24 hours ago
+4. Set Status to "Queued" and Processed to false
+5. In Make.com, click "Run once"
+6. Verify:
    - ✅ Claude API returns valid JSON
    - ✅ Email sent with personalized content
-   - ✅ HubSpot updated with Claude analysis
-   - ✅ Airtable updated
-   - ✅ Queue marked as processed
+   - ✅ Team CC'd on email
+   - ✅ HubSpot contact updated with Claude analysis
+   - ✅ Airtable Assessment Raw Data record updated
+   - ✅ Email Queue record marked as Processed = true, Status = "Sent"
 
-**Important:** Check the email for:
-- No trauma-insensitive language
+**Quality Check the Email:**
+- No trauma-insensitive language (no "triggered", "ignite", "aim")
 - Organization name mentioned
-- Specific scores referenced
+- Specific assessment scores referenced
 - Clear service recommendation
-- Warm call to action
+- Warm, professional tone
+- Call to action present
 
 ---
 
@@ -532,11 +608,33 @@ Personalized email sent: {{formatDate(now; "MMM D, YYYY h:mm A")}}
 
 1. Save the scenario
 2. Turn it ON
-3. Set schedule to run daily at 8am ET
+3. Verify schedule is set to run daily at 8am ET
 
 ---
 
 ## ⚙️ CONFIGURATION & OPTIMIZATION
+
+### Airtable Views for Monitoring:
+
+**Create these views in "Email Follow-Up Queue" table:**
+
+1. **📋 Ready to Send** - Shows queued emails for today
+   - Filter: Status = "Queued", Processed = false
+   - Sort: Submission Timestamp (oldest first)
+
+2. **✅ Sent Today** - Shows emails sent today
+   - Filter: Email Sent Date = Today, Status = "Sent"
+   - Sort: Email Sent Date (newest first)
+
+3. **❌ Failed** - Shows failed emails needing attention
+   - Filter: Status = "Failed"
+   - Sort: Submission Timestamp (oldest first)
+
+4. **📊 All Pending** - Overview of unprocessed
+   - Filter: Processed = false
+   - Group by: Status
+
+---
 
 ### Cost Optimization:
 
@@ -546,25 +644,35 @@ Personalized email sent: {{formatDate(now; "MMM D, YYYY h:mm A")}}
 - Output: ~1,000 tokens per response (~$0.015)
 - **Total per email: ~$0.021**
 - **Monthly (30 leads): ~$0.63**
+- **Monthly (100 leads): ~$2.10**
 
 **Make.com Operations:**
 - Scenario 1: ~8 operations per submission
-- Scenario 2: ~12 operations per email sent
-- **Total per lead: ~20 operations**
-- **Free plan: 1,000 operations/month = ~50 leads/month**
+- Scenario 2: ~15 operations per email sent
+- **Total per lead: ~23 operations**
+- **Free plan: 1,000 operations/month = ~43 leads/month**
+- **Core plan: 10,000 operations/month = ~430 leads/month**
 
-### Monitoring:
+---
 
-**Daily Checks:**
-1. Check Google Sheets queue for stuck records
-2. Review Scenario 2 execution log for errors
-3. Check team inbox for Claude error alerts
+### Monitoring Dashboard:
 
-**Weekly Checks:**
+**Daily Checks (2 minutes):**
+1. Check Airtable "Failed" view for errors
+2. Review team inbox for error alerts
+3. Verify Scenario 2 ran at 8am (check execution log)
+
+**Weekly Checks (10 minutes):**
 1. Review email open rates
-2. Check discovery call booking rate
-3. Review Claude's recommendations for quality
-4. Adjust system prompt if needed
+2. Check discovery call booking rate from emails
+3. Review 3-5 Claude email samples for quality
+4. Check Make.com operations usage
+
+**Monthly Review (30 minutes):**
+1. Analyze email performance metrics
+2. Review Claude recommendation accuracy
+3. Optimize system prompt if needed
+4. Calculate ROI (bookings vs. cost)
 
 ---
 
@@ -573,68 +681,73 @@ Personalized email sent: {{formatDate(now; "MMM D, YYYY h:mm A")}}
 ### Before Going Live:
 
 **Test 1: High-Priority Lead**
-- Create test with score 80+, wants_consultation = true
-- Verify immediate thank you
-- Wait 24 hours or manually trigger
-- Verify Claude email quality and recommendations
+- Overall score: 80+
+- wants_consultation: true
+- Recent crisis experience
+- **Verify:** TIER 2/3 recommendation, urgent tone, discovery call CTA
 
 **Test 2: Medium-Priority Lead**
-- Create test with score 55, wants_training = true
-- Verify appropriate tier recommendation
-- Check email tone and urgency
+- Overall score: 55
+- wants_training: true
+- No recent crisis
+- **Verify:** TIER 1/2 recommendation, educational tone
 
 **Test 3: Low-Priority Lead**
-- Create test with score 35, newsletter only
-- Verify TIER 1 recommendation
-- Check email isn't too sales-y
+- Overall score: 35
+- newsletter only
+- **Verify:** TIER 1 recommendation, gentle nurture tone
 
 **Test 4: Error Handling**
-- Create test with invalid API key
-- Verify error alert sent to team
-- Check queue doesn't get stuck
+- Invalid API key
+- **Verify:** Error alert sent, record marked as failed, not marked processed
+
+**Test 5: Timing**
+- Create record with timestamp 24h ago
+- **Verify:** Picked up by Scenario 2 filter
 
 ---
 
 ## 🚀 GO LIVE CHECKLIST
 
+- [ ] Airtable "Email Follow-Up Queue" table created
+- [ ] Email Queue fields configured correctly
 - [ ] Scenario 1 tested with 3 real assessments
 - [ ] Scenario 2 tested with manual trigger
-- [ ] Claude system prompt uploaded
-- [ ] Claude user prompt template configured
+- [ ] Claude system prompt pasted correctly (no syntax errors)
+- [ ] Claude user prompt template configured with variable mapping
 - [ ] Anthropic API key added and validated
-- [ ] Google Sheets queue created and accessible
-- [ ] HubSpot custom properties created
-- [ ] Airtable base connected
-- [ ] Email templates reviewed (no typos)
+- [ ] HubSpot custom properties created for Claude fields
+- [ ] Email templates reviewed (no typos, trauma-informed language)
 - [ ] Team email CC working
-- [ ] Error alerts going to team
-- [ ] Schedule set to 8am ET daily
+- [ ] Error alerts going to team email
+- [ ] Schedule set to 8am ET daily (America/New_York timezone)
 - [ ] Both scenarios activated
-- [ ] Team trained on monitoring process
+- [ ] Airtable views created for monitoring
+- [ ] Team trained on checking Airtable "Failed" view daily
 
 ---
 
 ## 📊 SUCCESS METRICS
 
-Track these weekly:
+Track these in Airtable or HubSpot:
 
 **Email Performance:**
 - Open rate (target: >40%)
 - Click rate (target: >15%)
 - Reply rate (target: >5%)
-- Discovery call booking rate (target: >10%)
+- Discovery call booking rate (target: >10% of hot leads)
 
 **Claude Quality:**
-- Recommendation accuracy (manual review)
+- Recommendation accuracy (manual spot checks)
 - Email tone appropriateness
-- Trauma-informed language compliance
-- Response time consistency
+- Trauma-informed language compliance (0 violations)
+- Response time consistency (99% sent within 1 hour of 8am)
 
 **System Health:**
 - Error rate (target: <2%)
-- Queue processing time
-- API response time
-- Operations usage vs. limit
+- Processing success rate (target: >98%)
+- API response time (target: <10 seconds)
+- Make.com operations usage vs. limit
 
 ---
 
@@ -642,60 +755,115 @@ Track these weekly:
 
 ### Issue: Claude returns invalid JSON
 
+**Check:**
+1. System prompt pasted correctly (no cut-off text)
+2. No unescaped quotes in prompts
+3. Variable mapping correct
+
 **Solution:**
-1. Check system prompt is pasted correctly
-2. Verify no extra characters or markdown
-3. Add JSON validation before parsing
-4. Use error handler to catch and alert
+1. Review Make.com execution log
+2. Copy Claude's raw response
+3. Validate JSON at jsonlint.com
+4. Adjust system prompt to ensure JSON-only output
 
 ---
 
 ### Issue: Emails not sending at 8am
 
+**Check:**
+1. Scenario 2 is activated (green toggle)
+2. Schedule timezone is "America/New_York"
+3. Airtable has records with Status = "Queued" and Processed = false
+4. 24-hour filter formula is correct
+
 **Solution:**
-1. Check scenario is activated
-2. Verify schedule timezone is America/New_York
-3. Check Google Sheets queue has unprocessed records
-4. Verify 24-hour filter logic
+1. Check Make.com execution history
+2. Manually run Scenario 2 to test
+3. Verify Airtable search returns records
 
 ---
 
 ### Issue: Claude recommendations seem off
 
+**Check:**
+1. Assessment data being passed correctly
+2. System prompt has latest service tiers
+3. Lead scoring logic aligns with business goals
+
 **Solution:**
-1. Review test cases with team
-2. Adjust system prompt criteria
-3. Add more examples in prompt
-4. Consider A/B testing prompt variations
+1. Review 10 sample outputs manually
+2. Gather feedback from sales team
+3. Adjust system prompt criteria
+4. Add more examples to prompt
+5. Consider A/B testing prompt variations
+
+---
+
+### Issue: Duplicate emails being sent
+
+**Check:**
+1. Email Queue record marked as Processed after sending
+2. No duplicate records in queue with same Assessment ID
+3. Filter formula excludes already-processed records
+
+**Solution:**
+1. Add unique constraint check on Assessment ID
+2. Ensure queue update happens after email send
+3. Add safety filter: Processed = false AND Status = "Queued"
 
 ---
 
 ## 📝 NEXT STEPS
 
-After system is stable (1-2 weeks):
+After system is stable (2-4 weeks):
 
-1. **A/B Test Email Variations:**
-   - Test subject lines
-   - Test different CTAs
-   - Test email length
+1. **Optimize Email Timing:**
+   - A/B test send times (8am vs 10am vs 2pm)
+   - Track open rates by time
 
 2. **Add Follow-Up Sequences:**
-   - Day 3: If no response
-   - Day 7: If no discovery call booked
-   - Day 14: Last chance offer
+   - Day 3: If no response, send reminder
+   - Day 7: If no discovery call booked, send case study
+   - Day 14: Final outreach with alternative resources
 
-3. **Enhance with MCP:**
-   - Connect to Aftermath Growth Engine MCP
-   - Enhance recommendations with company research
-   - Auto-create calendar invites
+3. **Enhance Claude Analysis:**
+   - Add competitive intelligence research
+   - Include recent company news
+   - Personalize based on industry trends
+
+4. **Build Analytics Dashboard:**
+   - Airtable Interface Designer
+   - Track conversion funnel: Assessment → Email → Call → Deal
+   - Monthly reporting automation
 
 ---
 
-**You're all set!** 🎉
+## 📚 RELATED DOCUMENTATION
 
-This system will automatically send personalized, trauma-informed recommendations 24 hours after each assessment, CC'ing your team for visibility.
+- **CLAUDE-EMAIL-SYSTEM-PROMPT.md** - Complete system prompt for Claude
+- **CLAUDE-USER-PROMPT-TEMPLATE.md** - User prompt template with variables
+- **AIRTABLE-ASSESSMENT-TRACKING-SYSTEM.md** - Full Airtable base documentation
+- **GO-LIVE-CHECKLIST.md** - Complete launch checklist
+- **MAKE-COM-SETUP-GUIDE.md** - Basic Make.com setup (Scenario 1 base)
 
-**Estimated setup time:** 2-3 hours
+---
+
+## ✅ SUMMARY
+
+**You now have:**
+- ✅ Immediate thank you emails (< 1 minute after submission)
+- ✅ Personalized analysis emails (24 hours later at 8am ET)
+- ✅ Claude AI generating trauma-informed recommendations
+- ✅ Team CC'd on all personalized emails
+- ✅ HubSpot updated with Claude's analysis (PRIMARY CRM)
+- ✅ Airtable serving as backup and email queue
+- ✅ Error handling and monitoring
+- ✅ Cost-effective ($0.02 per email)
+
+**Total setup time:** 2-3 hours
 **Maintenance:** 15 minutes/week
+**Cost:** ~$0.63/month for 30 leads
 
-Questions? Check the troubleshooting section or reach out to the team.
+**Ready to launch!** 🚀
+
+Questions? Check troubleshooting section or review the related documentation files.
