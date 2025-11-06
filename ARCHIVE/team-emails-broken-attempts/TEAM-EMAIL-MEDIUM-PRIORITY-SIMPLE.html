@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>MEDIUM Priority Assessment</title>
+</head>
+<body style="font-family: Arial, sans-serif; max-width: 650px; margin: 0 auto; padding: 20px; background: #f5f5f5;">
+
+<!-- PRIORITY ALERT -->
+<div style="background: linear-gradient(135deg, #fd7e14, #e8590c); color: white; padding: 30px; text-align: center; border-radius: 8px; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <div style="font-size: 28px; font-weight: bold; margin-bottom: 8px;">⚡ QUALIFIED LEAD</div>
+    <div style="font-size: 18px; opacity: 0.95;">Strong Scores • Response Time: 48 Hours</div>
+</div>
+
+<!-- WHO IS THIS? -->
+<div style="background: white; padding: 25px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+    <h2 style="margin: 0 0 20px 0; font-size: 22px; color: #212529; border-bottom: 2px solid #e9ecef; padding-bottom: 12px;">{{3.name}}</h2>
+
+    <table style="width: 100%; font-size: 16px; line-height: 1.8;">
+        <tr>
+            <td style="color: #6c757d; width: 140px;">Organization:</td>
+            <td style="font-weight: 600; color: #212529;">{{3.organization}}</td>
+        </tr>
+        <tr>
+            <td style="color: #6c757d;">Role:</td>
+            <td style="color: #212529;">{{3.role}}</td>
+        </tr>
+        <tr>
+            <td style="color: #6c757d;">Industry:</td>
+            <td style="color: #212529;">{{3.org_info}}</td>
+        </tr>
+        <tr>
+            <td style="color: #6c757d;">Email:</td>
+            <td style="color: #007bff;"><a href="mailto:{{3.email}}" style="color: #007bff; text-decoration: none;">{{3.email}}</a></td>
+        </tr>
+    </table>
+</div>
+
+<!-- WHY IT MATTERS -->
+<div style="background: #fff3cd; padding: 25px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid #ffc107;">
+    <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #856404;">Why This Is Qualified</h3>
+    <div style="display: flex; align-items: center; margin-bottom: 12px;">
+        <div style="font-size: 48px; font-weight: bold; color: #212529; margin-right: 20px;">{{3.overall_score}}</div>
+        <div>
+            <div style="font-size: 14px; color: #6c757d; text-transform: uppercase; letter-spacing: 1px;">Overall Score</div>
+            <div style="font-size: 16px; color: #212529; margin-top: 4px;">✓ Strong resilience awareness</div>
+            <div style="font-size: 16px; color: #212529;">✓ Open to training/resources</div>
+        </div>
+    </div>
+    <div style="background: white; padding: 12px; border-radius: 4px; margin-top: 15px;">
+        <strong style="color: #495057;">Recommended:</strong> <span style="color: #212529; font-weight: 600;">{{3.recommended_tier}}</span> - {{3.recommended_service}}
+    </div>
+</div>
+
+<!-- WHAT TO DO NOW -->
+<div style="background: white; padding: 25px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+    <h3 style="margin: 0 0 20px 0; font-size: 18px; color: #212529; border-bottom: 2px solid #e9ecef; padding-bottom: 10px;">Your Action Plan</h3>
+
+    <div style="margin-bottom: 18px; padding-left: 35px; position: relative;">
+        <div style="position: absolute; left: 0; top: 0; background: #fd7e14; color: white; width: 26px; height: 26px; border-radius: 50%; text-align: center; line-height: 26px; font-weight: bold; font-size: 14px;">1</div>
+        <div style="font-weight: 600; font-size: 16px; color: #212529; margin-bottom: 4px;">Claim the deal in HubSpot</div>
+        <div style="color: #6c757d; font-size: 14px;">Within 4 hours - Reply-all to let team know you're handling it</div>
+    </div>
+
+    <div style="margin-bottom: 18px; padding-left: 35px; position: relative;">
+        <div style="position: absolute; left: 0; top: 0; background: #fd7e14; color: white; width: 26px; height: 26px; border-radius: 50%; text-align: center; line-height: 26px; font-weight: bold; font-size: 14px;">2</div>
+        <div style="font-weight: 600; font-size: 16px; color: #212529; margin-bottom: 4px;">Research the organization</div>
+        <div style="color: #6c757d; font-size: 14px;">Within 24 hours - Check their website, recent news, sector challenges</div>
+    </div>
+
+    <div style="margin-bottom: 18px; padding-left: 35px; position: relative;">
+        <div style="position: absolute; left: 0; top: 0; background: #ffc107; color: #212529; width: 26px; height: 26px; border-radius: 50%; text-align: center; line-height: 26px; font-weight: bold; font-size: 14px;">3</div>
+        <div style="font-weight: 600; font-size: 16px; color: #212529; margin-bottom: 4px;">Send personalized email</div>
+        <div style="color: #6c757d; font-size: 14px;">Within 48 hours - Reference their scores, explain gaps, offer free consultation</div>
+    </div>
+
+    <div style="padding-left: 35px; position: relative;">
+        <div style="position: absolute; left: 0; top: 0; background: #28a745; color: white; width: 26px; height: 26px; border-radius: 50%; text-align: center; line-height: 26px; font-weight: bold; font-size: 14px;">4</div>
+        <div style="font-weight: 600; font-size: 16px; color: #212529; margin-bottom: 4px;">Follow up if no response</div>
+        <div style="color: #6c757d; font-size: 14px;">After 3 days - Send case study relevant to their sector ({{3.org_info}})</div>
+    </div>
+</div>
+
+<!-- QUICK LINKS -->
+<div style="text-align: center; margin-bottom: 20px;">
+    <a href="https://app.hubspot.com/contacts/243765901/deal/{{27.id}}" style="display: inline-block; background: #007bff; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 15px; margin: 6px;">📊 View Deal in HubSpot</a>
+    <a href="https://app.hubspot.com/contacts/243765901/contact/{{17.id}}" style="display: inline-block; background: #28a745; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 15px; margin: 6px;">👤 View Contact</a>
+</div>
+
+<!-- EMAIL TALKING POINTS -->
+<div style="background: #e7f3ff; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 3px solid #007bff;">
+    <div style="font-weight: 600; font-size: 15px; color: #495057; margin-bottom: 12px;">When You Email Them, Mention:</div>
+    <ul style="margin: 0; padding-left: 20px; color: #212529; line-height: 1.8; font-size: 14px;">
+        <li>Their overall score of {{3.overall_score}} shows strong awareness</li>
+        <li>Specific gap area: <strong>{{3.assessment_top_gap}}</strong></li>
+        <li>How {{3.recommended_service}} addresses their needs</li>
+        <li>Include meeting link for free 30-minute consultation</li>
+    </ul>
+</div>
+
+<!-- MEETING LINK TO SEND -->
+<div style="background: #fff3e0; padding: 20px; border-radius: 8px; margin-bottom: 20px; text-align: center; border: 2px dashed #fd7e14;">
+    <div style="font-size: 14px; color: #495057; margin-bottom: 8px; font-weight: 600;">SEND THIS LINK TO {{3.name}}:</div>
+    <div style="font-size: 15px; color: #fd7e14; font-family: monospace; word-break: break-all;">https://meetings-na2.hubspot.com/josh-garcia/aftermath-solutions</div>
+</div>
+
+<!-- ASSESSMENT SNAPSHOT (Collapsible) -->
+<details style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+    <summary style="font-weight: 600; font-size: 16px; color: #495057; cursor: pointer; user-select: none;">📋 Full Assessment Details (click to expand)</summary>
+    <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e9ecef;">
+        <table style="width: 100%; font-size: 14px; line-height: 1.8;">
+            <tr><td style="color: #6c757d; width: 180px;">Preparedness:</td><td style="color: #212529; font-weight: 600;">{{3.preparedness_score}}/100</td></tr>
+            <tr><td style="color: #6c757d;">Communication:</td><td style="color: #212529; font-weight: 600;">{{3.response_score}}/100</td></tr>
+            <tr><td style="color: #6c757d;">Capacity:</td><td style="color: #212529; font-weight: 600;">{{3.support_score}}/100</td></tr>
+            <tr><td style="color: #6c757d;">Resilience:</td><td style="color: #212529; font-weight: 600;">{{3.recovery_score}}/100</td></tr>
+            <tr><td style="color: #6c757d;">Top Gap Identified:</td><td style="color: #212529; font-weight: 600;">{{3.assessment_top_gap}}</td></tr>
+            <tr><td style="color: #6c757d;">Gap Category:</td><td style="color: #212529; font-weight: 600;">{{3.gap_category}}</td></tr>
+        </table>
+    </div>
+</details>
+
+<!-- FOOTER -->
+<div style="background: white; padding: 20px; border-radius: 8px; text-align: center; font-size: 13px; color: #6c757d;">
+    <div style="margin-bottom: 8px;">Assessment ID: {{3.assessment_id}}</div>
+    <div style="margin-bottom: 15px;">Submitted: {{3.assessment_completed}}</div>
+    <div style="font-style: italic; color: #adb5bd;">Automated from assessment submission • All team members receive this notification</div>
+</div>
+
+</body>
+</html>

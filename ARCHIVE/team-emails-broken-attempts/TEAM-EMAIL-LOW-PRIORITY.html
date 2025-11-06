@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>LOW Priority Assessment - Nurture</title>
+</head>
+<body style="font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto; padding: 20px; background: #f5f5f5;">
+
+<!-- Priority Badge -->
+<div style="background: #2196F3; color: white; padding: 15px; text-align: center; border-radius: 8px; margin-bottom: 20px;">
+    <h2 style="margin: 0; font-size: 20px;">NEW ASSESSMENT - Nurture Track</h2>
+    <p style="margin: 5px 0 0 0; font-size: 14px;">Lead Score: {{3.lead_score}} | Long-term Cultivation</p>
+</div>
+
+<!-- Contact Summary -->
+<div style="background: #ffffff; padding: 20px; border-left: 4px solid #49AA91; margin-bottom: 20px; border-radius: 5px;">
+    <h3 style="margin-top: 0; color: #2E476C;">Contact Information</h3>
+    <table style="width: 100%; font-size: 15px;">
+        <tr><td style="padding: 5px 0; width: 30%;"><strong>Name:</strong></td><td>{{3.name}}</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Email:</strong></td><td>{{3.email}}</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Organization:</strong></td><td>{{3.organization}}</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Industry:</strong></td><td>{{3.org_info}}</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Role:</strong></td><td>{{3.role}}</td></tr>
+    </table>
+</div>
+
+<!-- Assessment Results -->
+<div style="background: #e3f2fd; padding: 20px; border-left: 4px solid #2196F3; margin-bottom: 20px; border-radius: 5px;">
+    <h3 style="margin-top: 0; color: #2E476C;">Assessment Results</h3>
+    <table style="width: 100%; font-size: 15px;">
+        <tr><td colspan="2" style="padding: 10px 0;"><strong>Overall Resilience: {{3.overall_score}}/100</strong></td></tr>
+        <tr><td style="padding: 8px 0; width: 50%;"><strong>Preparedness:</strong></td><td style="padding: 8px 0;">{{3.preparedness_score}}/100</td></tr>
+        <tr><td style="padding: 8px 0;"><strong>Communication:</strong></td><td style="padding: 8px 0;">{{3.response_score}}/100</td></tr>
+        <tr><td style="padding: 8px 0;"><strong>Capacity:</strong></td><td style="padding: 8px 0;">{{3.support_score}}/100</td></tr>
+        <tr><td style="padding: 8px 0;"><strong>Resilience:</strong></td><td style="padding: 8px 0;">{{3.recovery_score}}/100</td></tr>
+        <tr><td colspan="2" style="padding-top: 15px; border-top: 1px solid #ddd;">
+            <p style="margin: 10px 0 5px 0;">
+                <strong>Gap Level:</strong> {{3.gap_category}}<br>
+                <strong>Top Gap:</strong> {{3.assessment_top_gap}}<br>
+                <strong>Recommended Tier:</strong> {{3.recommended_tier}}
+            </p>
+        </td></tr>
+    </table>
+</div>
+
+<!-- Deal Information -->
+<div style="background: #f3e5f5; padding: 20px; border-left: 4px solid #9C27B0; margin-bottom: 20px; border-radius: 5px;">
+    <h3 style="margin-top: 0; color: #2E476C;">HubSpot Deal Created</h3>
+    <table style="width: 100%; font-size: 15px;">
+        <tr><td style="padding: 5px 0; width: 30%;"><strong>Deal Name:</strong></td><td>{{3.organization}} - {{3.recommended_tier}}</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Pipeline:</strong></td><td>Nurture</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Stage:</strong></td><td>Assessment Completed - Nurture</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Priority:</strong></td><td>Low</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Owner:</strong></td><td>Unassigned</td></tr>
+    </table>
+    <p style="margin: 15px 0 5px 0; text-align: center;">
+        <a href="https://app.hubspot.com/contacts/243765901/deal/{{31.id}}" style="background: #2196F3; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">View Deal</a>
+        <a href="https://app.hubspot.com/contacts/243765901/contact/{{17.id}}" style="background: #49AA91; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-left: 10px;">View Contact</a>
+    </p>
+</div>
+
+<!-- Nurture Strategy -->
+<div style="background: #ffffff; padding: 20px; border: 2px solid #2196F3; border-radius: 8px; margin-bottom: 20px;">
+    <h3 style="margin-top: 0; color: #2E476C;">90-Day Nurture Strategy</h3>
+    <h4 style="color: #2196F3;">Automated Timeline</h4>
+    <table style="width: 100%; font-size: 14px;">
+        <tr><td style="padding: 8px; width: 15%;"><strong>Day 0</strong></td><td style="padding: 8px;">Thank you email sent</td></tr>
+        <tr><td style="padding: 8px;"><strong>Day 1</strong></td><td style="padding: 8px;">Claude AI personalized follow-up</td></tr>
+        <tr><td style="padding: 8px;"><strong>Day 7</strong></td><td style="padding: 8px;">Mailchimp: Educational content</td></tr>
+        <tr><td style="padding: 8px;"><strong>Day 14</strong></td><td style="padding: 8px;">Mailchimp: Case study</td></tr>
+        <tr><td style="padding: 8px;"><strong>Day 30</strong></td><td style="padding: 8px;">Manual check-in (create task)</td></tr>
+        <tr><td style="padding: 8px;"><strong>Day 60</strong></td><td style="padding: 8px;">Webinar invite</td></tr>
+        <tr><td style="padding: 8px;"><strong>Day 90</strong></td><td style="padding: 8px;">Final personal outreach</td></tr>
+    </table>
+    <h4 style="color: #2196F3; margin-top: 15px;">Re-Qualification Signals</h4>
+    <p style="font-size: 14px;">Watch for these signals to move to Active Sales:</p>
+    <ul>
+        <li>Responds positively to any email</li>
+        <li>Opens/clicks multiple emails (high engagement)</li>
+        <li>Visits website or books meeting</li>
+        <li>Mentions budget approval or triggering event</li>
+        <li>Asks questions about services</li>
+    </ul>
+</div>
+
+<!-- Next Steps -->
+<div style="background: #e3f2fd; padding: 20px; border-left: 4px solid #2196F3; margin-bottom: 20px; border-radius: 5px;">
+    <h3 style="margin-top: 0; color: #2E476C;">Immediate Next Steps</h3>
+    <table style="width: 100%; font-size: 15px;">
+        <tr><td style="padding: 8px;">Verify Mailchimp nurture sequence active</td><td style="padding: 8px; color: #2196F3;"><strong>Within 24h</strong></td></tr>
+        <tr><td style="padding: 8px;">Add to appropriate Mailchimp segment</td><td style="padding: 8px; color: #2196F3;"><strong>Within 24h</strong></td></tr>
+        <tr><td style="padding: 8px;">Create 30-day follow-up task</td><td style="padding: 8px; color: #2196F3;"><strong>Within 72h</strong></td></tr>
+        <tr><td style="padding: 8px;">Create 90-day outreach task</td><td style="padding: 8px; color: #2196F3;"><strong>Within 72h</strong></td></tr>
+        <tr><td style="padding: 8px;">Monitor email engagement</td><td style="padding: 8px; color: #4CAF50;"><strong>Ongoing</strong></td></tr>
+    </table>
+</div>
+
+<!-- Contact Links -->
+<div style="text-align: center; margin: 30px 0;">
+    <p><strong>Contact Email:</strong> {{3.email}}</p>
+    <p><strong>Meetings Link:</strong> https://meetings-na2.hubspot.com/josh-garcia/aftermath-solutions</p>
+</div>
+
+<!-- Footer -->
+<div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #ddd; font-size: 13px; color: #666;">
+    <p><strong>Assessment ID:</strong> {{3.assessment_id}}</p>
+    <p><strong>Submitted:</strong> {{3.assessment_completed}}</p>
+    <p><strong>Strategy:</strong> Long-term nurture (90-day sequence)</p>
+    <p style="font-style: italic;">This lead was automatically created from assessment submission.</p>
+</div>
+
+</body>
+</html>

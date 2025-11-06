@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>MEDIUM Priority Assessment</title>
+</head>
+<body style="font-family: Arial, sans-serif; max-width: 700px; margin-left: auto; margin-right: auto; padding: 20px; background: #f8f9fa; color: #212529;">
+
+<!-- Priority Badge -->
+<div style="background: #fd7e14; color: white; padding: 28px; text-align: center; border-radius: 8px; margin-bottom: 32px;">
+    <h2 style="margin-top: 0; margin-bottom: 12px; font-size: 22px; font-weight: 600;">QUALIFIED LEAD - Review Reach Out</h2>
+    <p style="margin: 0; font-size: 15px;">Lead Score: {{3.lead_score}} | Response Required: 48 Hours</p>
+</div>
+
+<!-- Contact Summary -->
+<div style="background: white; padding: 32px; border-left: 5px solid #28a745; margin-bottom: 32px; border-radius: 6px;">
+    <h3 style="margin-top: 0; margin-bottom: 24px; color: #343a40; font-size: 18px; font-weight: 600; border-bottom: 2px solid #e9ecef; padding-bottom: 12px;">Contact Information</h3>
+    <table style="width: 100%; font-size: 15px;">
+        <tr><td style="padding-top: 12px; padding-bottom: 12px; width: 35%; color: #6c757d; font-weight: 500;">Name:</td><td style="padding-top: 12px; padding-bottom: 12px; color: #212529; font-weight: 500;">{{3.name}}</td></tr>
+        <tr><td style="padding-top: 12px; padding-bottom: 12px; color: #6c757d; font-weight: 500;">Email:</td><td style="padding-top: 12px; padding-bottom: 12px; color: #212529;">{{3.email}}</td></tr>
+        <tr><td style="padding-top: 12px; padding-bottom: 12px; color: #6c757d; font-weight: 500;">Organization:</td><td style="padding-top: 12px; padding-bottom: 12px; color: #212529; font-weight: 500;">{{3.organization}}</td></tr>
+        <tr><td style="padding-top: 12px; padding-bottom: 12px; color: #6c757d; font-weight: 500;">Industry:</td><td style="padding-top: 12px; padding-bottom: 12px; color: #212529;">{{3.org_info}}</td></tr>
+        <tr><td style="padding-top: 12px; padding-bottom: 12px; color: #6c757d; font-weight: 500;">Role:</td><td style="padding-top: 12px; padding-bottom: 12px; color: #212529;">{{3.role}}</td></tr>
+    </table>
+</div>
+
+<!-- Assessment Results -->
+<div style="background: #fff3cd; padding: 32px; border-left: 5px solid #ffc107; margin-bottom: 32px; border-radius: 6px;">
+    <h3 style="margin-top: 0; margin-bottom: 24px; color: #343a40; font-size: 18px; font-weight: 600; border-bottom: 2px solid #ffe69c; padding-bottom: 12px;">Assessment Results</h3>
+
+    <div style="background: white; padding: 24px; border-radius: 4px; margin-bottom: 24px; text-align: center; border: 2px solid #ffe69c;">
+        <p style="margin-top: 0; margin-bottom: 8px; font-size: 13px; color: #6c757d; text-transform: uppercase; font-weight: 600;">Overall Resilience Score</p>
+        <p style="margin: 0; font-size: 32px; font-weight: 700; color: #212529;">{{3.overall_score}}<span style="font-size: 18px; color: #6c757d;">/100</span></p>
+    </div>
+
+    <table style="width: 100%; font-size: 15px; border-collapse: collapse;">
+        <tr style="background: white;"><td style="padding: 16px; width: 50%; font-weight: 500;">Preparedness:</td><td style="padding: 16px; font-weight: 600; text-align: right;">{{3.preparedness_score}}/100</td></tr>
+        <tr style="height: 8px;"></tr>
+        <tr style="background: white;"><td style="padding: 16px; font-weight: 500;">Communication:</td><td style="padding: 16px; font-weight: 600; text-align: right;">{{3.response_score}}/100</td></tr>
+        <tr style="height: 8px;"></tr>
+        <tr style="background: white;"><td style="padding: 16px; font-weight: 500;">Capacity:</td><td style="padding: 16px; font-weight: 600; text-align: right;">{{3.support_score}}/100</td></tr>
+        <tr style="height: 8px;"></tr>
+        <tr style="background: white;"><td style="padding: 16px; font-weight: 500;">Resilience:</td><td style="padding: 16px; font-weight: 600; text-align: right;">{{3.recovery_score}}/100</td></tr>
+    </table>
+
+    <div style="background: white; padding: 20px; border-radius: 4px; margin-top: 20px; border-left: 3px solid #28a745;">
+        <p style="margin-top: 0; margin-bottom: 12px; font-size: 15px;"><strong style="color: #495057;">Gap Level:</strong> <span style="color: #212529;">{{3.gap_category}}</span></p>
+        <p style="margin-top: 0; margin-bottom: 12px; font-size: 15px;"><strong style="color: #495057;">Top Gap:</strong> <span style="color: #212529;">{{3.assessment_top_gap}}</span></p>
+        <p style="margin: 0; font-size: 15px;"><strong style="color: #495057;">Recommended Tier:</strong> <span style="color: #212529; font-weight: 600;">{{3.recommended_tier}}</span></p>
+    </div>
+</div>
+
+<!-- Deal Information -->
+<div style="background: #e7f3ff; padding: 32px; border-left: 5px solid #007bff; margin-bottom: 32px; border-radius: 6px;">
+    <h3 style="margin-top: 0; margin-bottom: 24px; color: #343a40; font-size: 18px; font-weight: 600; border-bottom: 2px solid #b3d9ff; padding-bottom: 12px;">HubSpot Deal Created</h3>
+    <table style="width: 100%; font-size: 15px;">
+        <tr><td style="padding-top: 12px; padding-bottom: 12px; width: 35%; color: #495057; font-weight: 500;">Deal Name:</td><td style="padding-top: 12px; padding-bottom: 12px; color: #212529; font-weight: 600;">{{3.organization}} - {{3.recommended_tier}}</td></tr>
+        <tr><td style="padding-top: 12px; padding-bottom: 12px; color: #495057; font-weight: 500;">Pipeline:</td><td style="padding-top: 12px; padding-bottom: 12px; color: #212529;">Active Sales</td></tr>
+        <tr><td style="padding-top: 12px; padding-bottom: 12px; color: #495057; font-weight: 500;">Stage:</td><td style="padding-top: 12px; padding-bottom: 12px; color: #212529;">Assessment Completed</td></tr>
+        <tr><td style="padding-top: 12px; padding-bottom: 12px; color: #495057; font-weight: 500;">Priority:</td><td style="padding-top: 12px; padding-bottom: 12px;"><span style="background: #fd7e14; color: white; padding: 6px; border-radius: 12px; font-size: 13px; font-weight: 600;">MEDIUM</span></td></tr>
+        <tr><td style="padding-top: 12px; padding-bottom: 12px; color: #495057; font-weight: 500;">Owner:</td><td style="padding-top: 12px; padding-bottom: 12px; color: #6c757d; font-style: italic;">Unassigned (Claim in HubSpot)</td></tr>
+    </table>
+    <p style="margin-top: 28px; margin-bottom: 0; text-align: center;">
+        <a href="https://app.hubspot.com/contacts/243765901/deal/{{27.id}}" style="display: inline-block; background: #007bff; color: white; padding: 12px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px; margin: 4px;">View Deal in HubSpot</a>
+        <a href="https://app.hubspot.com/contacts/243765901/contact/{{17.id}}" style="display: inline-block; background: #28a745; color: white; padding: 12px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px; margin: 4px;">View Contact</a>
+    </p>
+</div>
+
+<!-- Outreach Guidance -->
+<div style="background: white; padding: 32px; border: 2px solid #fd7e14; border-radius: 6px; margin-bottom: 32px;">
+    <h3 style="margin-top: 0; margin-bottom: 28px; color: #343a40; font-size: 18px; font-weight: 600; border-bottom: 2px solid #e9ecef; padding-bottom: 12px;">Outreach Guidance</h3>
+
+    <div style="background: #fff3e0; padding: 20px; border-radius: 4px; margin-bottom: 24px; border-left: 3px solid #fd7e14;">
+        <h4 style="margin-top: 0; margin-bottom: 16px; color: #fd7e14; font-size: 15px; font-weight: 600;">Focus Areas</h4>
+        <p style="margin-top: 0; margin-bottom: 10px;"><strong>Top Gap:</strong> {{3.assessment_top_gap}}</p>
+        <p style="margin-top: 0; margin-bottom: 10px;"><strong>Sector:</strong> {{3.org_info}}</p>
+        <p style="margin: 0;"><strong>Service:</strong> {{3.recommended_service}}</p>
+    </div>
+
+    <div style="background: #f8f9fa; padding: 20px; border-radius: 4px; margin-bottom: 24px;">
+        <h4 style="margin-top: 0; margin-bottom: 16px; color: #fd7e14; font-size: 15px; font-weight: 600;">Recommended Approach</h4>
+        <p style="margin-top: 0; margin-bottom: 10px;"><strong>Within 4 hours:</strong> Claim deal send personalized email</p>
+        <p style="margin-top: 0; margin-bottom: 10px;"><strong>Email tone:</strong> Educational focus on assessment insights</p>
+        <p style="margin-top: 0; margin-bottom: 10px;"><strong>CTA:</strong> Offer free consultation to discuss results</p>
+        <p style="margin: 0;"><strong>Follow up:</strong> If no response in 3 days send second touch</p>
+    </div>
+
+    <div style="background: #fff3e0; padding: 20px; border-radius: 4px; border-left: 3px solid #fd7e14;">
+        <h4 style="margin-top: 0; margin-bottom: 16px; color: #fd7e14; font-size: 15px; font-weight: 600;">Email Talking Points</h4>
+        <p style="margin-top: 0; margin-bottom: 10px;">Reference their specific assessment scores</p>
+        <p style="margin-top: 0; margin-bottom: 10px;">Explain what results mean for their organization</p>
+        <p style="margin-top: 0; margin-bottom: 10px;">Share relevant case study for their sector</p>
+        <p style="margin-top: 0; margin-bottom: 10px;">Offer consultation resources</p>
+        <p style="margin: 0;">Include meetings link for easy scheduling</p>
+    </div>
+</div>
+
+<!-- Next Steps -->
+<div style="background: #fff3e0; padding: 32px; border-left: 5px solid #fd7e14; margin-bottom: 32px; border-radius: 6px;">
+    <h3 style="margin-top: 0; margin-bottom: 24px; color: #343a40; font-size: 18px; font-weight: 600; border-bottom: 2px solid #ffe0b2; padding-bottom: 12px;">Immediate Next Steps</h3>
+    <table style="width: 100%; font-size: 15px; border-collapse: collapse;">
+        <tr style="background: white;"><td style="padding: 20px; font-weight: 500;">Claim deal in HubSpot</td><td style="padding: 20px; text-align: right;"><span style="background: #fd7e14; color: white; padding: 6px; border-radius: 12px; font-size: 12px; font-weight: 600;">Within 2 hours</span></td></tr>
+        <tr style="height: 12px;"></tr>
+        <tr style="background: white;"><td style="padding: 20px; font-weight: 500;">Reply all to coordinate</td><td style="padding: 20px; text-align: right;"><span style="background: #fd7e14; color: white; padding: 6px; border-radius: 12px; font-size: 12px; font-weight: 600;">Within 2 hours</span></td></tr>
+        <tr style="height: 12px;"></tr>
+        <tr style="background: white;"><td style="padding: 20px; font-weight: 500;">Send personalized email</td><td style="padding: 20px; text-align: right;"><span style="background: #fd7e14; color: white; padding: 6px; border-radius: 12px; font-size: 12px; font-weight: 600;">Within 4 hours</span></td></tr>
+        <tr style="height: 12px;"></tr>
+        <tr style="background: white;"><td style="padding: 20px; font-weight: 500;">Research organization</td><td style="padding: 20px; text-align: right;"><span style="background: #28a745; color: white; padding: 6px; border-radius: 12px; font-size: 12px; font-weight: 600;">Before email</span></td></tr>
+        <tr style="height: 12px;"></tr>
+        <tr style="background: white;"><td style="padding: 20px; font-weight: 500;">Prepare tier materials</td><td style="padding: 20px; text-align: right;"><span style="background: #28a745; color: white; padding: 6px; border-radius: 12px; font-size: 12px; font-weight: 600;">Within 24 hours</span></td></tr>
+    </table>
+</div>
+
+<!-- Contact Links -->
+<div style="background: white; padding: 28px; border-radius: 6px; text-align: center; margin-bottom: 32px;">
+    <p style="margin-top: 0; margin-bottom: 12px; font-size: 14px; color: #6c757d;">Contact Email</p>
+    <p style="margin-top: 0; margin-bottom: 24px; font-size: 16px; font-weight: 600; color: #007bff;">{{3.email}}</p>
+    <p style="margin-top: 0; margin-bottom: 12px; font-size: 14px; color: #6c757d;">Meetings Link</p>
+    <p style="margin: 0; font-size: 13px; color: #28a745; word-break: break-all;">https://meetings-na2.hubspot.com/josh-garcia/aftermath-solutions</p>
+</div>
+
+<!-- Footer -->
+<div style="background: white; padding: 28px; border-top: 3px solid #e9ecef; border-radius: 6px; font-size: 13px; color: #6c757d;">
+    <p style="margin-top: 0; margin-bottom: 12px;"><strong style="color: #495057;">Assessment ID:</strong> {{3.assessment_id}}</p>
+    <p style="margin-top: 0; margin-bottom: 16px;"><strong style="color: #495057;">Submitted:</strong> {{3.assessment_completed}}</p>
+    <p style="margin: 0; font-style: italic; font-size: 12px;">This lead was automatically created from assessment submission. All team members receive this notification.</p>
+</div>
+
+</body>
+</html>

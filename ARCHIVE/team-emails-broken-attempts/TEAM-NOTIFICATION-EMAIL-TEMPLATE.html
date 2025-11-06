@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>New Assessment - Team Notification</title>
+</head>
+<body style="font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto; padding: 20px; background: #f5f5f5;">
+
+<!-- Use Make.com conditional: {{if(3.lead_score >= 80; "HIGH"; if(3.lead_score >= 70; "MEDIUM"; "LOW"))}} -->
+<!-- This template shows HIGH priority. Adjust colors for MEDIUM (orange) and LOW (blue) -->
+
+<!-- Priority Badge -->
+<div style="background: #D32F2F; color: white; padding: 15px; text-align: center; border-radius: 8px; margin-bottom: 20px;">
+    <h2 style="margin: 0; font-size: 20px;">🚨 HOT LEAD - Consultation Requested</h2>
+    <p style="margin: 5px 0 0 0; font-size: 14px;">Lead Score: {{3.lead_score}} (A+ Tier) | Response Required: 24 Hours</p>
+</div>
+
+<!-- Contact Summary -->
+<div style="background: #ffffff; padding: 20px; border-left: 4px solid #49AA91; margin-bottom: 20px; border-radius: 5px;">
+    <h3 style="margin-top: 0; color: #2E476C;">Contact Information</h3>
+    <table style="width: 100%; font-size: 15px;">
+        <tr><td style="padding: 5px 0; width: 30%;"><strong>Name:</strong></td><td>{{3.name}}</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Email:</strong></td><td><a href="mailto:{{3.email}}" style="color: #49AA91;">{{3.email}}</a></td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Organization:</strong></td><td>{{3.organization}}</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Industry:</strong></td><td>{{3.org_info}}</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Role:</strong></td><td>{{3.role}}</td></tr>
+    </table>
+</div>
+
+<!-- Assessment Results -->
+<div style="background: #fff3cd; padding: 20px; border-left: 4px solid #ffc107; margin-bottom: 20px; border-radius: 5px;">
+    <h3 style="margin-top: 0; color: #2E476C;">Assessment Results</h3>
+    <p style="margin: 5px 0; font-size: 16px;"><strong>Overall Resilience:</strong> {{3.overall_score}}/100</p>
+
+    <div style="margin: 15px 0;">
+        <div style="margin: 8px 0;">
+            <strong>Preparedness:</strong> {{3.preparedness_score}}/100
+            <span style="color: {{if(3.preparedness_score < 60; '#D32F2F'; if(3.preparedness_score < 75; '#FF9800'; '#4CAF50'))}};">
+                {{if(3.preparedness_score < 60; '🔴 Critical Gap'; if(3.preparedness_score < 75; '🟡 Moderate Gap'; '🟢 Strong'))}}
+            </span>
+            <div style="background: #e0e0e0; height: 8px; border-radius: 4px; margin-top: 3px;">
+                <div style="background: {{if(3.preparedness_score < 60; '#D32F2F'; if(3.preparedness_score < 75; '#FF9800'; '#4CAF50'))}}; width: {{3.preparedness_score}}%; height: 8px; border-radius: 4px;"></div>
+            </div>
+        </div>
+
+        <div style="margin: 8px 0;">
+            <strong>Communication:</strong> {{3.response_score}}/100
+            <span style="color: {{if(3.response_score < 60; '#D32F2F'; if(3.response_score < 75; '#FF9800'; '#4CAF50'))}};">
+                {{if(3.response_score < 60; '🔴 Critical Gap'; if(3.response_score < 75; '🟡 Moderate Gap'; '🟢 Strong'))}}
+            </span>
+            <div style="background: #e0e0e0; height: 8px; border-radius: 4px; margin-top: 3px;">
+                <div style="background: {{if(3.response_score < 60; '#D32F2F'; if(3.response_score < 75; '#FF9800'; '#4CAF50'))}}; width: {{3.response_score}}%; height: 8px; border-radius: 4px;"></div>
+            </div>
+        </div>
+
+        <div style="margin: 8px 0;">
+            <strong>Capacity:</strong> {{3.support_score}}/100
+            <span style="color: {{if(3.support_score < 60; '#D32F2F'; if(3.support_score < 75; '#FF9800'; '#4CAF50'))}};">
+                {{if(3.support_score < 60; '🔴 Critical Gap'; if(3.support_score < 75; '🟡 Moderate Gap'; '🟢 Strong'))}}
+            </span>
+            <div style="background: #e0e0e0; height: 8px; border-radius: 4px; margin-top: 3px;">
+                <div style="background: {{if(3.support_score < 60; '#D32F2F'; if(3.support_score < 75; '#FF9800'; '#4CAF50'))}}; width: {{3.support_score}}%; height: 8px; border-radius: 4px;"></div>
+            </div>
+        </div>
+
+        <div style="margin: 8px 0;">
+            <strong>Resilience:</strong> {{3.recovery_score}}/100
+            <span style="color: {{if(3.recovery_score < 60; '#D32F2F'; if(3.recovery_score < 75; '#FF9800'; '#4CAF50'))}};">
+                {{if(3.recovery_score < 60; '🔴 Critical Gap'; if(3.recovery_score < 75; '🟡 Moderate Gap'; '🟢 Strong'))}}
+            </span>
+            <div style="background: #e0e0e0; height: 8px; border-radius: 4px; margin-top: 3px;">
+                <div style="background: {{if(3.recovery_score < 60; '#D32F2F'; if(3.recovery_score < 75; '#FF9800'; '#4CAF50'))}}; width: {{3.recovery_score}}%; height: 8px; border-radius: 4px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <p style="margin: 10px 0 5px 0; font-size: 15px;">
+        <strong>Gap Level:</strong> <span style="color: {{if(3.gap_category = 'Critical'; '#D32F2F'; if(3.gap_category = 'Significant'; '#FF9800'; '#FFC107'))}};">{{3.gap_category}}</span><br>
+        <strong>Recommended Tier:</strong> {{3.recommended_tier}}<br>
+        <strong>Estimated Deal Value:</strong> ${{if(3.recommended_tier = "TIER 1"; "5,000"; if(3.recommended_tier = "TIER 2"; "20,000"; "75,000"))}}
+    </p>
+</div>
+
+<!-- Deal Information -->
+<div style="background: #e3f2fd; padding: 20px; border-left: 4px solid #2196F3; margin-bottom: 20px; border-radius: 5px;">
+    <h3 style="margin-top: 0; color: #2E476C;">HubSpot Deal Created</h3>
+    <table style="width: 100%; font-size: 15px;">
+        <tr><td style="padding: 5px 0; width: 30%;"><strong>Deal Name:</strong></td><td>{{3.organization}} - {{3.recommended_tier}}</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Pipeline:</strong></td><td>{{if(3.lead_score >= 70; "Active Sales"; "Nurture")}}</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Stage:</strong></td><td>Assessment Completed{{if(3.lead_score < 70; " - Nurture"; "")}}</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Amount:</strong></td><td>${{if(3.recommended_tier = "TIER 1"; "5,000"; if(3.recommended_tier = "TIER 2"; "20,000"; "75,000"))}}</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Priority:</strong></td><td>{{if(3.lead_score >= 80; "High"; if(3.lead_score >= 70; "Medium"; "Low"))}}</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Owner:</strong></td><td>Unassigned (Claim in HubSpot)</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Close Date:</strong></td><td>{{formatDate(addDays(now; 30); "MMMM D, YYYY")}}</td></tr>
+    </table>
+
+    <p style="margin: 15px 0 5px 0;">
+        <a href="https://app.hubspot.com/contacts/YOUR_PORTAL_ID/deal/{{19.objectId}}" style="display: inline-block; background: #2196F3; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+            → View Deal in HubSpot
+        </a>
+        <a href="https://app.hubspot.com/contacts/YOUR_PORTAL_ID/contact/{{17.vid}}" style="display: inline-block; background: #49AA91; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-left: 10px;">
+            → View Contact
+        </a>
+    </p>
+</div>
+
+<!-- Consultation Gameplan (Only show for HIGH and MEDIUM priority) -->
+{{if(3.lead_score >= 70; '<div style="background: #ffffff; padding: 20px; border: 2px solid #49AA91; border-radius: 8px; margin-bottom: 20px;">
+    <h3 style="margin-top: 0; color: #2E476C;">📋 Consultation Gameplan</h3>
+
+    <h4 style="color: #49AA91; margin: 15px 0 10px 0;">🎯 Focus Areas</h4>
+    <ul style="margin: 5px 0; padding-left: 20px;">
+        <li><strong>Top Gap:</strong> ' + 3.assessment_top_gap + '</li>
+        <li><strong>Sector-specific needs:</strong> ' + 3.org_info + '</li>
+        <li><strong>Service recommendation:</strong> ' + 3.recommended_service + '</li>
+    </ul>
+
+    <h4 style="color: #49AA91; margin: 15px 0 10px 0;">💡 Recommended Approach</h4>
+    <ol style="margin: 5px 0; padding-left: 20px;">
+        <li><strong>Immediate:</strong> Claim deal in HubSpot + send meetings link within ' + if(3.lead_score >= 80; '2 hours'; '4 hours') + '</li>
+        <li><strong>Pre-call:</strong> Research organization and recent incidents in their sector</li>
+        <li><strong>Prep:</strong> Review ' + 3.recommended_tier + ' case studies for ' + 3.org_info + '</li>
+        <li><strong>Discovery:</strong> Validate gaps, explore triggering events, present comprehensive solution</li>
+    </ol>
+
+    <h4 style="color: #49AA91; margin: 15px 0 10px 0;">🎯 Call Objectives</h4>
+    <ol style="margin: 5px 0; padding-left: 20px;">
+        <li>Validate assessment findings (confirm gaps are real concerns)</li>
+        <li>Uncover triggering events (what prompted them to take assessment?)</li>
+        <li>Understand decision-making process (who else needs to be involved?)</li>
+        <li>Present ' + 3.recommended_tier + ' partnership model</li>
+        <li>Schedule follow-up: Proposal presentation or stakeholder meeting</li>
+    </ol>
+</div>'; '')}}
+
+<!-- Next Steps Checklist -->
+<div style="background: #f1f8f4; padding: 20px; border-left: 4px solid #49AA91; margin-bottom: 20px; border-radius: 5px;">
+    <h3 style="margin-top: 0; color: #2E476C;">✅ Immediate Next Steps</h3>
+    <table style="width: 100%; font-size: 15px;">
+        <tr>
+            <td style="padding: 8px; width: 5%;">☐</td>
+            <td style="padding: 8px; width: 70%;"><strong>Claim deal in HubSpot</strong> (update deal owner to your name)</td>
+            <td style="padding: 8px; width: 25%; color: #D32F2F;"><strong>{{if(3.lead_score >= 80; "NOW"; if(3.lead_score >= 70; "Within 2 hours"; "Within 24 hours"))}}</strong></td>
+        </tr>
+        <tr>
+            <td style="padding: 8px;">☐</td>
+            <td style="padding: 8px;"><strong>Reply-all to coordinate</strong> "I've got this one" or "Who wants to take it?"</td>
+            <td style="padding: 8px; color: #D32F2F;"><strong>Within 1 hour</strong></td>
+        </tr>
+        {{if(3.lead_score >= 70; '<tr>
+            <td style="padding: 8px;">☐</td>
+            <td style="padding: 8px;"><strong>Send initial outreach email</strong> with meetings link</td>
+            <td style="padding: 8px; color: #D32F2F;"><strong>Within ' + if(3.lead_score >= 80; '2 hours'; '4 hours') + '</strong></td>
+        </tr>
+        <tr>
+            <td style="padding: 8px;">☐</td>
+            <td style="padding: 8px;"><strong>Research organization</strong> (website, recent news, sector info)</td>
+            <td style="padding: 8px; color: #FF9800;"><strong>Before call</strong></td>
+        </tr>
+        <tr>
+            <td style="padding: 8px;">☐</td>
+            <td style="padding: 8px;"><strong>Prepare ' + 3.recommended_tier + ' materials</strong> (case studies, pricing, proposal template)</td>
+            <td style="padding: 8px; color: #FF9800;"><strong>Before call</strong></td>
+        </tr>'; '<tr>
+            <td style="padding: 8px;">☐</td>
+            <td style="padding: 8px;"><strong>Verify Mailchimp nurture sequence</strong> is active for this contact</td>
+            <td style="padding: 8px; color: #4CAF50;"><strong>Within 24 hours</strong></td>
+        </tr>
+        <tr>
+            <td style="padding: 8px;">☐</td>
+            <td style="padding: 8px;"><strong>Schedule 30-day follow-up task</strong> to check engagement</td>
+            <td style="padding: 8px; color: #4CAF50;"><strong>Within 24 hours</strong></td>
+        </tr>'}}
+    </table>
+</div>
+
+<!-- Quick Action Buttons -->
+<div style="text-align: center; margin: 30px 0;">
+    <a href="mailto:{{3.email}}?subject=Your%20Assessment%20Results%20-%20Aftermath%20Solutions&body=Hi%20{{get(split(3.name; ' '); 1)}},%0D%0A%0D%0AThank%20you%20for%20completing%20our%20Organizational%20Resilience%20Equation.%20I'd%20love%20to%20discuss%20your%20results%20and%20how%20we%20can%20help%20strengthen%20your%20organization's%20preparedness.%0D%0A%0D%0ASchedule%20a%20free%2030-minute%20consultation:%20https://meetings-na2.hubspot.com/josh-garcia/aftermath-solutions%0D%0A%0D%0ABest,%0D%0AThe%20Aftermath%20Solutions%20Team"
+       style="display: inline-block; background: #49AA91; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; margin: 5px;">
+        📧 Send Outreach Email
+    </a>
+
+    <a href="https://meetings-na2.hubspot.com/josh-garcia/aftermath-solutions"
+       style="display: inline-block; background: #2196F3; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; margin: 5px;">
+        📅 Copy Meetings Link
+    </a>
+</div>
+
+<!-- Automation Notes -->
+<div style="background: #e8f5e9; padding: 15px; border-radius: 5px; margin-top: 20px;">
+    <p style="margin: 0; font-size: 13px; color: #2E7D32;">
+        <strong>🤖 Automated Actions Completed:</strong><br>
+        ✓ HubSpot contact created/updated<br>
+        ✓ Deal created in "{{if(3.lead_score >= 70; "Active Sales"; "Nurture")}}" pipeline<br>
+        ✓ Task created: Due {{if(3.lead_score >= 80; "tomorrow"; if(3.lead_score >= 70; "in 2 days"; "in 3 days"))}}<br>
+        ✓ Airtable backup record created<br>
+        ✓ Thank you email sent to contact<br>
+        ✓ Claude AI follow-up queued (sends tomorrow at 8am ET)<br>
+        {{if(3.wants_newsletter = true; '✓ Added to Mailchimp newsletter'; '')}}
+    </p>
+</div>
+
+<!-- Footer -->
+<div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #ddd; font-size: 13px; color: #666; background: #ffffff; padding: 20px; border-radius: 5px;">
+    <p><strong>Assessment ID:</strong> {{3.assessment_id}}</p>
+    <p><strong>Submitted:</strong> {{formatDate(3.assessment_completed; "MMMM D, YYYY [at] h:mm A")}}</p>
+    <p><strong>Questions about this lead?</strong> Reply-all to discuss with team</p>
+    <p style="margin-top: 15px; font-style: italic;">This lead was automatically created from assessment submission. All team members receive this notification.</p>
+</div>
+
+</body>
+</html>

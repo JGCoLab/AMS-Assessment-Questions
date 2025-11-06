@@ -12,8 +12,10 @@ This is a **complete end-to-end lead generation system** that:
 2. **Scores** organizational resilience gaps across 4 dimensions
 3. **Qualifies** leads automatically (hot/warm/cold)
 4. **Stores** data in HubSpot (PRIMARY) + Airtable (BACKUP)
-5. **Sends** personalized follow-up emails using Claude AI
-6. **Tracks** everything for sales team follow-up
+5. **🆕 Creates** deals and tasks automatically in HubSpot pipelines
+6. **🆕 Notifies** team immediately with consultation gameplan
+7. **Sends** personalized follow-up emails using Claude AI
+8. **Tracks** everything for sales team follow-up
 
 ### The Organizational Resilience Equation
 
@@ -46,22 +48,38 @@ Make.com Webhook Receives Data
 └─────────────────────────────────┘
     ↓
 ┌─────────────────────────────────┐
+│  🆕 DEAL & TASK AUTOMATION      │
+│  Priority Router (HIGH/MED/LOW) │
+└─────────────────────────────────┘
+    ↓
+    ├─→ HIGH Priority (score 80+ or consultation request)
+    │   ├─→ Create Deal in "Active Sales" pipeline (High priority)
+    │   ├─→ Create Task "Schedule Discovery Call" (due: 24h)
+    │   └─→ Send Team Email 🚨 with consultation gameplan
+    │
+    ├─→ MEDIUM Priority (score 70-79)
+    │   ├─→ Create Deal in "Active Sales" pipeline (Medium priority)
+    │   ├─→ Create Task "Review & Reach Out" (due: 48h)
+    │   └─→ Send Team Email ⚡ with outreach guidance
+    │
+    └─→ LOW Priority (score <70)
+        ├─→ Create Deal in "Nurture" pipeline (Low priority)
+        ├─→ Create Task "Add to Nurture Sequence" (due: 72h)
+        └─→ Send Team Email 📋 with nurture instructions
+    ↓
+┌─────────────────────────────────┐
 │  Airtable Backup Created        │ ← BACKUP & VERIFICATION
 │  (Assessment Raw Data table)    │
 └─────────────────────────────────┘
     ↓
 ┌─────────────────────────────────┐
 │  Immediate Thank You Email      │
+│  (sent to contact)              │
 └─────────────────────────────────┘
     ↓
 ┌─────────────────────────────────┐
 │  Airtable Email Queue Record    │
-│  (for 24h follow-up)            │
-└─────────────────────────────────┘
-    ↓
-┌─────────────────────────────────┐
-│  (If Hot Lead)                  │
-│  Google Chat Alert to Team      │
+│  (for 24h Claude follow-up)     │
 └─────────────────────────────────┘
 
     [ 24 HOURS LATER - 8am ET ]
@@ -115,6 +133,7 @@ Make.com Webhook Receives Data
 | File | Purpose |
 |------|---------|
 | `Aftermath_HubSpot_Implementation_Playbook.md` | **HubSpot setup guide** (PRIMARY CRM) |
+| `🆕 HUBSPOT-PIPELINE-SETUP-GUIDE.md` | **HubSpot pipelines & deal automation setup** |
 | `AIRTABLE-ASSESSMENT-TRACKING-SYSTEM.md` | **Airtable backup system** (redundancy & verification) |
 | `SCORING-LOGIC.md` | How assessment scores are calculated |
 
@@ -122,6 +141,14 @@ Make.com Webhook Receives Data
 
 | File | Purpose |
 |------|---------|
+| `MAKE-COM-COMPLETE-INTEGRATION-GUIDE.md` | **⭐ COMPLETE Make.com setup - All platforms connected** |
+| `🆕 MAKE-COM-DEAL-AUTOMATION-SETUP.md` | **Add automated deal/task creation to Make.com** |
+| `🆕 TEAM-EMAIL-HIGH-PRIORITY.html` | **✅ Final HIGH priority team notification (Module 25)** |
+| `🆕 TEAM-EMAIL-MEDIUM-PRIORITY.html` | **✅ Final MEDIUM priority team notification (Module 28)** |
+| `🆕 TEAM-EMAIL-LOW-PRIORITY.html` | **✅ Final LOW priority team notification (Module 32)** |
+| `🆕 TEAM-EMAIL-QUICK-REFERENCE.md` | **Quick reference for team email templates** |
+| `🆕 TEAM-EMAIL-TEMPLATES-FINAL-REVIEW.md` | **Detailed review of Cursor changes & bug fixes** |
+| `FIELD-MAPPING-REFERENCE.md` | Quick reference for field mappings (HubSpot, Airtable, Mailchimp) |
 | `CLAUDE-EMAIL-SYSTEM-PROMPT.md` | System prompt for Claude AI email generation |
 | `CLAUDE-USER-PROMPT-TEMPLATE.md` | User prompt template with variable mapping |
 | `CLAUDE-DESKTOP-PROMPTS.md` | All Claude Desktop prompts for setup tasks |
@@ -143,6 +170,9 @@ Make.com Webhook Receives Data
 | `IMPROVEMENTS.md` | Historical changes log |
 | `REMAINING-FEATURES.md` | Completed features tracking |
 | `TECHNICAL-IMPROVEMENTS.md` | Implementation summary |
+| `archive/team-emails/` | **Previous team email versions (simple table format)** |
+
+**Note:** The `archive/team-emails/` folder contains the original simple table versions of team notification emails without progress bars. Use these as fallback if the final versions cause display issues in email clients.
 
 ---
 
@@ -154,14 +184,16 @@ Make.com Webhook Receives Data
 
 1. **Read:** `GO-LIVE-CHECKLIST.md` - Complete setup guide
 2. **Deploy:** `assessment.html` to Vercel (see `VERCEL-DEPLOYMENT.md`)
-3. **Setup HubSpot:** Follow `Aftermath_HubSpot_Implementation_Playbook.md`
-4. **Setup Airtable:** Follow `AIRTABLE-ASSESSMENT-TRACKING-SYSTEM.md`
-5. **Setup Make.com Scenario 1:** Follow `MAKE-COM-SETUP-GUIDE.md`
-6. **Setup Make.com Scenario 2:** Follow `MAKE-COM-CLAUDE-EMAIL-SETUP.md`
-7. **Test:** Complete 3 test assessments end-to-end
-8. **Go Live:** Share assessment URL
+3. **Setup HubSpot Contact Properties:** Follow `Aftermath_HubSpot_Implementation_Playbook.md`
+4. **🆕 Setup HubSpot Pipelines:** Follow `HUBSPOT-PIPELINE-SETUP-GUIDE.md` (Active Sales + Nurture)
+5. **Setup Airtable:** Follow `AIRTABLE-ASSESSMENT-TRACKING-SYSTEM.md`
+6. **Setup Make.com - Base:** Follow `MAKE-COM-COMPLETE-INTEGRATION-GUIDE.md` ⭐ **All platforms connected!**
+7. **🆕 Setup Make.com - Deals:** Follow `MAKE-COM-DEAL-AUTOMATION-SETUP.md` (Add deal/task automation)
+8. **Reference:** Use `FIELD-MAPPING-REFERENCE.md` for quick field mapping lookup
+9. **Test:** Complete 3 test assessments end-to-end (HIGH, MEDIUM, LOW priority)
+10. **Go Live:** Share assessment URL
 
-**Estimated setup time:** 4-6 hours total
+**Estimated setup time:** 5-7 hours total (including new deal automation)
 
 ---
 
@@ -169,10 +201,12 @@ Make.com Webhook Receives Data
 
 **Sales Team Workflow:**
 
-1. **Check Google Chat** for hot lead alerts (lead score ≥ 70)
-2. **Review HubSpot** for new contacts from assessments
-3. **Check Airtable "Failed" view** for any email errors
-4. **Respond to personalized emails** within 24 hours (team is CC'd)
+1. **🆕 Check team email** (team@theaftermathsolutions.com) for new assessment notifications
+2. **🆕 Claim unassigned deals** in HubSpot ("Unassigned - Need Owner" view)
+3. **🆕 Complete tasks** in HubSpot task queue (prioritize HIGH → MEDIUM → LOW)
+4. **Review HubSpot deals** and move through pipeline stages as appropriate
+5. **Check Airtable "Failed" view** for any email errors
+6. **Respond to personalized emails** within 24 hours (team is CC'd on Claude emails)
 
 **Weekly Checks:**
 
@@ -656,6 +690,6 @@ This system is production-ready and battle-tested. Follow the setup guides in or
 
 ---
 
-*Last Updated: November 3, 2025*
+*Last Updated: January 5, 2025*
 *Project Status: Production Ready*
-*Version: 2.0*
+*Version: 2.1 - Now with automated HubSpot deal & task creation*

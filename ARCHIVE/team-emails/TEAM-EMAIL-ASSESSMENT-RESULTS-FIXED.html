@@ -1,0 +1,44 @@
+<!-- SIMPLIFIED Assessment Results Section - Replace in all 3 email templates -->
+
+<div style="background: #fff3cd; padding: 20px; border-left: 4px solid #ffc107; margin-bottom: 20px; border-radius: 5px;">
+    <h3 style="margin-top: 0; color: #2E476C;">Assessment Results</h3>
+
+    <table style="width: 100%; font-size: 15px; border-collapse: collapse;">
+        <tr>
+            <td colspan="2" style="padding: 10px 0;">
+                <strong style="font-size: 16px;">Overall Resilience: {{3.overall_score}}/100</strong>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="padding: 8px 0; width: 50%;"><strong>Preparedness:</strong></td>
+            <td style="padding: 8px 0;">{{3.preparedness_score}}/100</td>
+        </tr>
+
+        <tr>
+            <td style="padding: 8px 0;"><strong>Communication:</strong></td>
+            <td style="padding: 8px 0;">{{3.response_score}}/100</td>
+        </tr>
+
+        <tr>
+            <td style="padding: 8px 0;"><strong>Capacity:</strong></td>
+            <td style="padding: 8px 0;">{{3.support_score}}/100</td>
+        </tr>
+
+        <tr>
+            <td style="padding: 8px 0;"><strong>Resilience:</strong></td>
+            <td style="padding: 8px 0;">{{3.recovery_score}}/100</td>
+        </tr>
+
+        <tr>
+            <td colspan="2" style="padding-top: 15px; border-top: 1px solid #ddd;">
+                <p style="margin: 10px 0 5px 0; font-size: 15px;">
+                    <strong>Gap Level:</strong> {{3.gap_category}}<br>
+                    <strong>Top Gap:</strong> {{3.assessment_top_gap}}<br>
+                    <strong>Recommended Tier:</strong> {{3.recommended_tier}}<br>
+                    <strong>Estimated Deal Value:</strong> ${{if(3.recommended_tier = "TIER 1"; "5,000"; if(3.recommended_tier = "TIER 2"; "20,000"; "75,000"))}}
+                </p>
+            </td>
+        </tr>
+    </table>
+</div>

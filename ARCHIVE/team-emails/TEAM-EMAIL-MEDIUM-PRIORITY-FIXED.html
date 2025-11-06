@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>MEDIUM Priority Assessment</title>
+</head>
+<body style="font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto; padding: 20px; background: #f5f5f5;">
+
+<!-- Priority Badge - ORANGE for MEDIUM -->
+<div style="background: #FF9800; color: white; padding: 15px; text-align: center; border-radius: 8px; margin-bottom: 20px;">
+    <h2 style="margin: 0; font-size: 20px;">⚡ QUALIFIED LEAD - Review & Reach Out</h2>
+    <p style="margin: 5px 0 0 0; font-size: 14px;">Lead Score: {{3.lead_score}} (A Tier) | Response Required: 48 Hours</p>
+</div>
+
+<!-- Contact Summary -->
+<div style="background: #ffffff; padding: 20px; border-left: 4px solid #49AA91; margin-bottom: 20px; border-radius: 5px;">
+    <h3 style="margin-top: 0; color: #2E476C;">Contact Information</h3>
+    <table style="width: 100%; font-size: 15px;">
+        <tr><td style="padding: 5px 0; width: 30%;"><strong>Name:</strong></td><td>{{3.name}}</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Email:</strong></td><td><a href="mailto:{{3.email}}" style="color: #49AA91;">{{3.email}}</a></td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Organization:</strong></td><td>{{3.organization}}</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Industry:</strong></td><td>{{3.org_info}}</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Role:</strong></td><td>{{3.role}}</td></tr>
+    </table>
+</div>
+
+<!-- Assessment Results - FIXED VERSION -->
+<div style="background: #fff3cd; padding: 20px; border-left: 4px solid #ffc107; margin-bottom: 20px; border-radius: 5px;">
+    <h3 style="margin-top: 0; color: #2E476C;">Assessment Results</h3>
+
+    <table style="width: 100%; font-size: 15px; border-collapse: collapse;">
+        <tr>
+            <td colspan="2" style="padding: 10px 0;">
+                <strong style="font-size: 16px;">Overall Resilience: {{3.overall_score}}/100</strong>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="padding: 8px 0; width: 50%;"><strong>Preparedness:</strong></td>
+            <td style="padding: 8px 0;">{{3.preparedness_score}}/100</td>
+        </tr>
+
+        <tr>
+            <td style="padding: 8px 0;"><strong>Communication:</strong></td>
+            <td style="padding: 8px 0;">{{3.response_score}}/100</td>
+        </tr>
+
+        <tr>
+            <td style="padding: 8px 0;"><strong>Capacity:</strong></td>
+            <td style="padding: 8px 0;">{{3.support_score}}/100</td>
+        </tr>
+
+        <tr>
+            <td style="padding: 8px 0;"><strong>Resilience:</strong></td>
+            <td style="padding: 8px 0;">{{3.recovery_score}}/100</td>
+        </tr>
+
+        <tr>
+            <td colspan="2" style="padding-top: 15px; border-top: 1px solid #ddd;">
+                <p style="margin: 10px 0 5px 0; font-size: 15px; line-height: 1.8;">
+                    <strong>Gap Level:</strong> {{3.gap_category}}<br>
+                    <strong>Top Gap:</strong> {{3.assessment_top_gap}}<br>
+                    <strong>Recommended Tier:</strong> {{3.recommended_tier}}<br>
+                    <strong>Estimated Deal Value:</strong> ${{if(3.recommended_tier = "TIER 1"; "5,000"; if(3.recommended_tier = "TIER 2"; "20,000"; "75,000"))}}
+                </p>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!-- Deal Information -->
+<div style="background: #e3f2fd; padding: 20px; border-left: 4px solid #2196F3; margin-bottom: 20px; border-radius: 5px;">
+    <h3 style="margin-top: 0; color: #2E476C;">HubSpot Deal Created</h3>
+    <table style="width: 100%; font-size: 15px;">
+        <tr><td style="padding: 5px 0; width: 30%;"><strong>Deal Name:</strong></td><td>{{3.organization}} - {{3.recommended_tier}}</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Pipeline:</strong></td><td>Active Sales</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Stage:</strong></td><td>Assessment Completed</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Amount:</strong></td><td>${{if(3.recommended_tier = "TIER 1"; "5,000"; if(3.recommended_tier = "TIER 2"; "20,000"; "75,000"))}}</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Priority:</strong></td><td>Medium</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Owner:</strong></td><td>Unassigned (Claim in HubSpot)</td></tr>
+        <tr><td style="padding: 5px 0;"><strong>Close Date:</strong></td><td>{{formatDate(addDays(now; 30); "MMMM D, YYYY")}}</td></tr>
+    </table>
+
+    <p style="margin: 15px 0 5px 0; text-align: center;">
+        <a href="https://app.hubspot.com/contacts/243765901/deal/{{27.id}}" style="display: inline-block; background: #2196F3; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+            → View Deal in HubSpot
+        </a>
+        <a href="https://app.hubspot.com/contacts/243765901/contact/{{17.id}}" style="display: inline-block; background: #49AA91; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-left: 10px;">
+            → View Contact
+        </a>
+    </p>
+</div>
+
+<!-- Outreach Guidance -->
+<div style="background: #ffffff; padding: 20px; border: 2px solid #FF9800; border-radius: 8px; margin-bottom: 20px;">
+    <h3 style="margin-top: 0; color: #2E476C;">📋 Outreach Guidance</h3>
+
+    <h4 style="color: #FF9800; margin: 15px 0 10px 0;">🎯 Focus Areas</h4>
+    <ul style="margin: 5px 0; padding-left: 20px; line-height: 1.6;">
+        <li><strong>Top Gap:</strong> {{3.assessment_top_gap}}</li>
+        <li><strong>Sector:</strong> {{3.org_info}}</li>
+        <li><strong>Service:</strong> {{3.recommended_service}}</li>
+    </ul>
+
+    <h4 style="color: #FF9800; margin: 15px 0 10px 0;">💡 Recommended Approach</h4>
+    <ol style="margin: 5px 0; padding-left: 20px; line-height: 1.6;">
+        <li><strong>Within 4 hours:</strong> Claim deal + send personalized email</li>
+        <li><strong>Email tone:</strong> Educational, focus on assessment insights</li>
+        <li><strong>CTA:</strong> Offer free consultation to discuss results</li>
+        <li><strong>Follow-up:</strong> If no response in 3 days, send second touch</li>
+    </ol>
+
+    <h4 style="color: #FF9800; margin: 15px 0 10px 0;">📧 Email Talking Points</h4>
+    <ul style="margin: 5px 0; padding-left: 20px; line-height: 1.6;">
+        <li>Reference their specific assessment scores</li>
+        <li>Explain what results mean for their organization</li>
+        <li>Share relevant case study ({{3.org_info}} sector)</li>
+        <li>Offer consultation + resources (not pushy)</li>
+        <li>Include meetings link for easy scheduling</li>
+    </ul>
+</div>
+
+<!-- Next Steps -->
+<div style="background: #fff3e0; padding: 20px; border-left: 4px solid #FF9800; margin-bottom: 20px; border-radius: 5px;">
+    <h3 style="margin-top: 0; color: #2E476C;">✅ Immediate Next Steps</h3>
+    <table style="width: 100%; font-size: 15px;">
+        <tr>
+            <td style="padding: 8px; width: 5%;">☐</td>
+            <td style="padding: 8px; width: 70%;"><strong>Claim deal in HubSpot</strong></td>
+            <td style="padding: 8px; width: 25%; color: #FF9800;"><strong>Within 2 hours</strong></td>
+        </tr>
+        <tr>
+            <td style="padding: 8px;">☐</td>
+            <td style="padding: 8px;"><strong>Reply-all to coordinate</strong></td>
+            <td style="padding: 8px; color: #FF9800;"><strong>Within 2 hours</strong></td>
+        </tr>
+        <tr>
+            <td style="padding: 8px;">☐</td>
+            <td style="padding: 8px;"><strong>Send personalized email</strong> with consultation offer</td>
+            <td style="padding: 8px; color: #FF9800;"><strong>Within 4 hours</strong></td>
+        </tr>
+        <tr>
+            <td style="padding: 8px;">☐</td>
+            <td style="padding: 8px;"><strong>Research organization</strong></td>
+            <td style="padding: 8px; color: #4CAF50;"><strong>Before email</strong></td>
+        </tr>
+        <tr>
+            <td style="padding: 8px;">☐</td>
+            <td style="padding: 8px;"><strong>Prepare {{3.recommended_tier}} overview</strong></td>
+            <td style="padding: 8px; color: #4CAF50;"><strong>Within 24 hours</strong></td>
+        </tr>
+    </table>
+</div>
+
+<!-- Quick Action Buttons -->
+<div style="text-align: center; margin: 30px 0;">
+    <a href="mailto:{{3.email}}?subject=Your%20Assessment%20Results&body=Hi%20{{get(split(3.name; ' '); 1)}},%0D%0A%0D%0AThank%20you%20for%20completing%20our%20assessment.%0D%0A%0D%0ASchedule%20consultation:%20https://meetings-na2.hubspot.com/josh-garcia/aftermath-solutions"
+       style="display: inline-block; background: #49AA91; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; margin: 5px;">
+        📧 Send Outreach Email
+    </a>
+
+    <a href="https://meetings-na2.hubspot.com/josh-garcia/aftermath-solutions"
+       style="display: inline-block; background: #2196F3; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; margin: 5px;">
+        📅 Copy Meetings Link
+    </a>
+</div>
+
+<!-- Footer -->
+<div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #ddd; font-size: 13px; color: #666; background: #ffffff; padding: 20px; border-radius: 5px;">
+    <p style="line-height: 1.6;"><strong>Assessment ID:</strong> {{3.assessment_id}}<br>
+    <strong>Submitted:</strong> {{formatDate(3.assessment_completed; "MMMM D, YYYY [at] h:mm A")}}</p>
+    <p style="margin-top: 15px; font-style: italic;">This lead was automatically created from assessment submission. All team members receive this notification.</p>
+</div>
+
+</body>
+</html>
