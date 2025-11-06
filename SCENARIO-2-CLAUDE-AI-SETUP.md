@@ -138,11 +138,18 @@
    4. Recommend specific, actionable next steps
    5. Match them to appropriate service tiers
 
-   CRITICAL - UNDERSTANDING THE SCORES:
-   - Overall Score, Preparedness, Communication, Capacity, Resilience: HIGHER is BETTER (0-100 scale)
-   - These category scores show their current capabilities
-   - The "Top Gap" and "Gap Category" fields identify the BIGGEST PROBLEM AREA that needs attention
-   - Gap fields are already identified weaknesses - don't treat them as scores
+   CRITICAL - UNDERSTANDING THE SCORES (GAP ANALYSIS):
+   - All scores are GAP SCORES: HIGHER = BIGGER PROBLEM (0-100 scale)
+   - 0-30 = Minor Gap (good, maintenance only)
+   - 31-50 = Moderate Gap (targeted improvements needed)
+   - 51-70 = Significant Gap (priority attention required)
+   - 71-100 = Critical Gap (urgent intervention needed)
+
+   SCORE INTERPRETATION:
+   - LOWER scores = STRENGTHS (they're doing well in this area)
+   - HIGHER scores = GAPS (they need help in this area)
+   - Overall Score is the average of all dimension gaps
+   - The "Top Gap" field identifies the SPECIFIC weakness within the highest gap category
 
    TONE GUIDELINES:
    - Use trauma-informed language (avoid: triggered, ignite, aim, fire, shoot, explode, bomb, attack, target)
@@ -206,15 +213,20 @@
 
    Write a thoughtful, personalized email (400-600 words) that:
    1. Opens by acknowledging our team may have already reached out, but this provides deeper analysis
-   2. References specific assessment results - REMEMBER: Higher scores (70-100) are GOOD/STRONG
-   3. Interprets what the scores mean in context
-   4. Highlights 2-3 key strengths based on their highest category scores
-   5. Identifies the Top Gap as the primary area for improvement (this is already identified, not a score)
-   6. Recommends specific services from appropriate tier
-   7. DO NOT mention specific dollar amounts - focus on value and sliding scale availability
-   8. Emphasizes that initial consultation calls are always FREE (no obligation)
-   9. Includes calendar link: https://meetings-na2.hubspot.com/josh-garcia/aftermath-solutions
-   10. Signs off as 'The Aftermath Solutions Team'
+   2. References specific assessment results - REMEMBER: These are GAP scores (higher = bigger problem)
+   3. Interprets the overall score using the gap scale:
+      - 0-30: Minor gaps (excellent readiness!)
+      - 31-50: Moderate gaps (solid foundation, targeted improvements)
+      - 51-70: Significant gaps (priority attention needed)
+      - 71-100: Critical gaps (urgent support recommended)
+   4. Highlights 2-3 key strengths based on their LOWEST category scores (lowest = best performing)
+   5. Identifies their HIGHEST scoring categories as areas needing attention
+   6. References the "Top Gap" field as the specific priority to address
+   7. Recommends specific services from appropriate tier
+   8. DO NOT mention specific dollar amounts - focus on value and sliding scale availability
+   9. Emphasizes that initial consultation calls are always FREE (no obligation)
+   10. Includes calendar link: https://meetings-na2.hubspot.com/josh-garcia/aftermath-solutions
+   11. Signs off as 'The Aftermath Solutions Team'
 
    Generate ONLY the HTML email body, no subject line.
    ```
