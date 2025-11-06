@@ -146,21 +146,29 @@
 
    SERVICE TIERS:
 
-   TIER 1: Foundational Workshops ($2,000-$10,000)
+   TIER 1: Foundational Workshops
+   Starting at $2,000 | Sliding scale available for nonprofits, schools, and community organizations
    - Organizational Trauma Literacy
    - Traumatic Stress Psychoeducation
    - Youth & Family Support
 
-   TIER 2: Strategic Intensives ($10,000-$30,000)
+   TIER 2: Strategic Intensives
+   Typical investment: $10,000-$30,000 | Sliding scale available
    - Crisis Preparedness Assessment & Implementation
    - Leadership Resilience Intensive
    - Clinician Resilience & Moral Injury Recovery
    - The Re-Treatment Intensive
 
-   TIER 3: Full-Spectrum Partnership ($30,000-$150,000+)
+   TIER 3: Full-Spectrum Partnership
+   Custom pricing, typically $30,000+ | Flexible arrangements for mission-driven organizations
    - Comprehensive organizational transformation
    - 6-18 month partnerships
    - Custom framework development
+
+   IMPORTANT TO MENTION:
+   - All pricing is flexible with sliding scales for nonprofits, schools, and community organizations
+   - We NEVER charge for disaster and crisis response referral consultation calls
+   - Initial consultation calls are always free
 
    OUTPUT: Generate ONLY the email body in HTML format. Do NOT include subject line.
    ```
@@ -187,8 +195,10 @@
    3. Highlights 2-3 key strengths
    4. Identifies 2-3 priority areas for improvement
    5. Recommends specific services from appropriate tier
-   6. Includes clear call-to-action
-   7. Signs off as 'The Aftermath Solutions Team'
+   6. Mentions sliding scale availability if organization is nonprofit/school/community org
+   7. Emphasizes that initial consultation calls are always FREE
+   8. Includes clear call-to-action to schedule free consultation
+   9. Signs off as 'The Aftermath Solutions Team'
 
    Generate ONLY the HTML email body, no subject line.
    ```
@@ -340,7 +350,7 @@ Once Scenario 2 is working:
 - 50 emails/day = $5/day = $150/month
 - 100 emails/day = $10/day = $300/month
 
-Very affordable for high-quality personalized emails!
+Very affordable for high-quality personalized emails that reflect your mission and values!
 
 ---
 
