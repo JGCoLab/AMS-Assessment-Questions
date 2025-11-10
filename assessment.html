@@ -31,9 +31,6 @@
     <link rel="preconnect" href="https://snap.licdn.com" crossorigin>
     <link rel="preconnect" href="https://www.google.com" crossorigin>
 
-    <!-- Confetti Library -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
     <!-- Chart.js for visualization -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
@@ -1614,7 +1611,6 @@
             bookingURL: 'https://meetings-na2.hubspot.com/josh-garcia/aftermath-solutions',
             contactEmail: 'team@theaftermathsolutions.com',
             totalQuestions: 11, // Including conditional question
-            confettiAtQuestion: 5,
             debug: true, // Set to true for development debugging
             analytics: {
                 enabled: true,
@@ -2454,22 +2450,6 @@
             if (progressBar) {
                 progressBar.setAttribute('aria-valuenow', Math.round(progress).toString());
                 progressBar.setAttribute('aria-valuetext', `${state.currentQuestionIndex + 1} of ${totalQuestions} questions completed`);
-            }
-
-            // Fire confetti at midpoint
-            if (state.currentQuestionIndex + 1 === Math.floor(totalQuestions / 2) && !state.confettiFired) {
-                fireConfetti();
-                state.confettiFired = true;
-            }
-        }
-
-        function fireConfetti() {
-            if (typeof confetti !== 'undefined') {
-                confetti({
-                    particleCount: 100,
-                    spread: 70,
-                    origin: { y: 0.6 }
-                });
             }
         }
 
@@ -3648,17 +3628,6 @@
                     });
                 });
             }, 100);
-
-            // Fire celebration confetti
-            if (typeof confetti !== 'undefined') {
-                setTimeout(() => {
-                    confetti({
-                        particleCount: 150,
-                        spread: 80,
-                        origin: { y: 0.5 }
-                    });
-                }, 500);
-            }
         }
 
         // Print PDF Report - scrolls to top before printing
